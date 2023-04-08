@@ -1,4 +1,5 @@
 import MenuColumn from "../../Dashboard/Components/MenuColumn"
+import ArtistsTable from "../Sections/ArtistsTable"
 import MusicHeader from "../Sections/MusicHeader"
 
 
@@ -11,7 +12,7 @@ const ArtistsPage = () => {
           <div className="flex  gap-4 flex-col w-full">
          
              <MusicHeader />
-             
+             <ArtistsTable />
           </div>   
        
       </div>

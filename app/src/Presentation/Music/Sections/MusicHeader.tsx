@@ -37,7 +37,7 @@ const menuItems : MusicMenu [] = [
 
 const MusicHeader = ({menus = menuItems} : MusicHeaderProps) => {
     return (
-        <div className="w-full bg-white">
+        <div className="w-full">
             <div className="flex flex-col bg-fidarrgray-600 pb-4 w-full">
                 <div className="pl-8">
                   <HeaderSection title="Music" />
