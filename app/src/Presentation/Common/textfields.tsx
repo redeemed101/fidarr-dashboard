@@ -1,0 +1,60 @@
+import React from 'react';
+import EyeOff from "../../Assets/svgs/eye-off.svg";
+import Eye from "../../Assets/svgs/Eye.svg";
+
+type TextfieldProps = {
+    label: string,
+    placeholder: string,
+    type : string,
+    height : string,
+    width: string,
+    padX : Number,
+    padY: Number,
+    value: string
+
+}
+export function PrimaryTextField({value,label,placeholder, type, padY, padX,height,width} : TextfieldProps) {
+   return (
+    <div className="mb-4">
+        <label className="block text-gray-400 text-sm font-bold mb-2" htmlFor="username">
+            {label}
+        </label>
+      <input value={value} className={`shadow appearance-none border rounded-md h-${height} w-${width} py-${padY} px-${padX} text-black font-bold leading-tight focus:outline-none focus:shadow-outline`}  type={type} placeholder={placeholder} />
+    </div>
+   );
+}
+
+export function GrayedTextField({value,label,placeholder, type, padY, padX,height,width} : TextfieldProps) {
+    return (
+     <div className="mb-4">
+       
+       <input value={value} className={`bg-gray-600  shadow appearance-none border-none rounded-md h-${height} w-${width} py-${padY} px-${padX} text-black font-bold leading-tight focus:outline-none focus:shadow-outline`}  type={type} placeholder={placeholder} />
+     </div>
+    );
+    
+ }
+
+ type TogglePasswordTextfieldProps = {
+    show: boolean,
+    placeholder: string,
+    type : string,
+    height : string,
+    width: string,
+    padX : Number,
+    padY: Number,
+    value: string
+
+}
+
+ export function PasswordToggleField({value,show,placeholder, type, padY, padX,height,width} : TogglePasswordTextfieldProps){
+    return (
+        <div className="relative w-full opacity-100">
+            <div className="absolute inset-y-0 right-0 opacity-100 flex items-center px-2">
+              <input className="hidden js-password-toggle" id="toggle" type="checkbox" />
+              <img src={show ? EyeOff : Eye} alt="eye" className="bg-gray-600 opacity-100 hover:bg-gray-700 rounded px-2 py-1 text-sm text-gray-600 cursor-pointer" />
+              
+            </div>
+            <input value={value} className={`bg-gray-600 opacity-100 shadow leading-tight appearance-none border-none rounded-md h-${height} w-${width} py-${padY} px-${padX} text-black font-bold leading-tight focus:outline-none focus:shadow-outline w-full`}  type={type} placeholder={placeholder} />
+         </div>
+    )
+ }
