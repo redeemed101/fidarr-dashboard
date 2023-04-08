@@ -4,7 +4,7 @@ import { CreatorRevenueStatBoard, TrendsBoard,GeoBoard } from "../Components/Sta
 
 const StatBoardSection = () => {
     return (
-        <div className="h-5/6 items-center  gap-x-24 flex flex-row mx-auto bg-black justify-center">
+        <div className="h-full items-center  gap-x-24 flex flex-row mx-auto bg-black justify-center">
                 <CreatorRevenueStatBoard/>
                 
                 <TrendsBoard />

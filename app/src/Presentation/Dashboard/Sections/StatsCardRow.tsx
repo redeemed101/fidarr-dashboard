@@ -1,4 +1,4 @@
-import StatCard from "./StatCard"
+import StatCard from "../Components/StatCard"
 
 export type StatCardData =   {
     title : string,
@@ -52,7 +52,7 @@ export type StatCardData =   {
 export const StatsCardRow = ({options = opt} : StatsCardRowProps) => {
     return (
         <>
-          <div className="flex flex-row gap-6">
+          <div className="flex w-full  flex-row gap-6">
              {options.map(o =>  <StatCard title={o.title} number={o.number} increase={o.increase} options={o.options} selectedItem={o.selectedItem} upIncrease={o.upIncrease} onSelect={o.onSelect} /> )}
             
           </div>

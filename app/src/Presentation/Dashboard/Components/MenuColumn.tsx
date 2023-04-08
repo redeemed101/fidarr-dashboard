@@ -10,8 +10,8 @@ import Settings from "../../../Assets/svgs/settings.svg"
 const MenuColumn = () =>{
     return (
         <>
-          <div className="flex flex-col gap-4 items-center py-4 w-24 bg-gray-600">
-             <div className="mb-6">
+          <div style={{height:"inherit"}} className="flex flex-col gap-4 items-center py-4 w-24 bg-fidarrgray-900">
+             <div className="mb-24">
                 <img src={LogoIcon} alt="Logo" />
              </div>
              <MenuItem title="Overview" isSelected imgSrc={Activity} />

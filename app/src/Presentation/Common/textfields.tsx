@@ -70,7 +70,7 @@ export function GrayedTextField({value,label,placeholder, type, padY, padX,heigh
             </span>
             <input
                 className="w-full bg-white placeholder:font-italitc border border-slate-300 rounded-full py-2 pl-10 pr-4 focus:outline-none"
-                placeholder="Enter your keyword to search" type="text" />
+                placeholder="Search" type="text" />
         </label>
         </div>
     )

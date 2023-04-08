@@ -161,6 +161,12 @@ module.exports = {
       fuchsia: colors.fuchsia,
       pink: colors.pink,
       rose: colors.rose,
+      fidarrgray: {
+        900 : "#2A2A2A",
+        500 : "#444444",
+        300 : "#C8A3A2",
+        100 : "#904845"
+      }
     }),
     columns: {
       auto: 'auto',
