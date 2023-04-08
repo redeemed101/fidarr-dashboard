@@ -1,6 +1,7 @@
 import React from 'react';
 import EyeOff from "../../Assets/svgs/eye-off.svg";
 import Eye from "../../Assets/svgs/Eye.svg";
+import Search from "../../Assets/svgs/SearchIcon.svg"
 
 type TextfieldProps = {
     label: string,
@@ -56,5 +57,21 @@ export function GrayedTextField({value,label,placeholder, type, padY, padX,heigh
             </div>
             <input value={value} className={`bg-gray-600 opacity-100 shadow leading-tight appearance-none border-none rounded-md h-${height} w-${width} py-${padY} px-${padX} text-black font-bold leading-tight focus:outline-none focus:shadow-outline w-full`}  type={type} placeholder={placeholder} />
          </div>
+    )
+ }
+
+ export const SearchTextField = () => {
+    return (
+        <div>
+            <label className="relative block">
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                <img className="h-5 w-5 fill-black" src={Search} />
+                
+            </span>
+            <input
+                className="w-full bg-white placeholder:font-italitc border border-slate-300 rounded-full py-2 pl-10 pr-4 focus:outline-none"
+                placeholder="Enter your keyword to search" type="text" />
+        </label>
+        </div>
     )
  }

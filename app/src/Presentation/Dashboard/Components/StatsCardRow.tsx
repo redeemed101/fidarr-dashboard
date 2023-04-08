@@ -11,10 +11,45 @@ export type StatCardData =   {
  }
 
  interface StatsCardRowProps{
-      options : StatCardData[]
+      options? : StatCardData[]
  }
 
-export const StatsCardRow = ({options} : StatsCardRowProps) => {
+ let opt : StatCardData[] = [
+    {
+      title : "Subscribers",
+      number : "2M",
+      options : ["Total", "Total2"],
+      increase : "1.5%",
+      upIncrease : true,
+      selectedItem : "Total"
+    },
+    {
+      title : "Artists",
+      number : "500K",
+      options : ["Total", "Total2"],
+      increase : "-1.6%",
+      upIncrease : false,
+      selectedItem : "Total"
+  },
+  {
+    title : "Subscribers",
+    number : "500K",
+    options : ["Total", "Total2"],
+    increase : "10.6%",
+    upIncrease : true,
+    selectedItem : "Total"
+  },
+  {
+    title : "Tracks",
+    number : "500K",
+    options : ["Total", "Total2"],
+    increase : "1.6%",
+    upIncrease : true,
+    selectedItem : "Total"
+  }
+]
+
+export const StatsCardRow = ({options = opt} : StatsCardRowProps) => {
     return (
         <>
           <div className="flex flex-row gap-6">
