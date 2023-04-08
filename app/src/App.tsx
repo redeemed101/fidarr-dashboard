@@ -1,5 +1,6 @@
 
 import './App.css';
+import CreateArtistPage from './Presentation/Music/Pages/CreateArtistPage';
 import PlaylistsPage from './Presentation/Music/Pages/PlaylistsPage';
 
 
@@ -9,7 +10,7 @@ function App() {
   
   return (
       <div className='bg-black'>
-         <PlaylistsPage/>
+         <CreateArtistPage/>
        </div>
 
      

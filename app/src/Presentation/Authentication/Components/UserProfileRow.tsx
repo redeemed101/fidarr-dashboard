@@ -6,7 +6,7 @@ import UserCircularAvatar from "./UserCircularAvatar";
 const UserProfileRow = () => {
     return (
         <>
-          <div className="flex flex-row items-center gap-2">
+          <div className="flex flex-row items-center pb-2 gap-2">
              <p className="text-white font-bold">Enyo</p>
              <UserCircularAvatar/>
              <div className="">

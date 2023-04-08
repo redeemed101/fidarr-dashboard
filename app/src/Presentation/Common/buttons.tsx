@@ -16,6 +16,14 @@ export const PrimaryButton = ({title, height,width, padX, padY}  : PrimaryButton
    );
 }
 
+export const SecondaryButton = ({title, height,width, padX, padY}  : PrimaryButtonProps) => {
+  return (
+   <button className={`bg-white  text-black text-xs font-bold h-${height} w-${width} py-${padY} px-${padX} rounded-md`}>
+       {title}
+    </button>
+  );
+}
+
 type ButtonWithIconProps = {
     title : string,
     imageSrc : string
