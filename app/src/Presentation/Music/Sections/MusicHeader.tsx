@@ -6,8 +6,10 @@ import PlusIcon from "../../../Assets/svgs/PlusIcon.svg"
 
 
 type MusicHeaderProps = {
-   menus? : MusicMenu[]
+   menus : MusicMenu[],
+   buttonComp?: React.ReactNode;
 }
+
 
 export type MusicMenu = {
      title : string,
@@ -15,27 +17,9 @@ export type MusicMenu = {
      action? : () => void
 }
 
-const menuItems : MusicMenu [] = [
-    {
-        title : "Artists",
-        isSelected: true
-    },
-    {
-        title : "Tracks"
-    },
-    {
-        title : "Albums"
-    },
-    {
-        title : "Genres"
-    },
-    {
-        title : "Playlists"
-    }
 
-]
 
-const MusicHeader = ({menus = menuItems} : MusicHeaderProps) => {
+const MusicHeader = ({menus, buttonComp} : MusicHeaderProps) => {
     return (
         <div className="w-full">
             <div className="flex flex-col bg-fidarrgray-600 pb-4 w-full">
@@ -46,7 +30,7 @@ const MusicHeader = ({menus = menuItems} : MusicHeaderProps) => {
                             { menus.map(m => <MusicMenuItem title={m.title} isSelected={m.isSelected} /> )}
                         </div>
                         <div className="mr-4">
-                        <ButtonWithIcon imageSrc={PlusIcon} title="Create Artist" /> 
+                          {buttonComp}
                         </div>
                    </div>
             

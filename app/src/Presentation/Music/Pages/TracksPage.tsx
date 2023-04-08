@@ -3,16 +3,16 @@ import ArtistsTable from "../Sections/ArtistsTable"
 import MusicHeader, { MusicMenu } from "../Sections/MusicHeader"
 import { ButtonWithIcon } from "../../Common/buttons";
 import PlusIcon from "../../../Assets/svgs/PlusIcon.svg"
-
+import TracksTable from "../Sections/TracksTable";
 
 const menuItems : MusicMenu [] = [
     {
         title : "Artists",
-        isSelected: true
+        
     },
     {
         title : "Tracks",
-       
+        isSelected: true
     },
     {
         title : "Albums"
@@ -26,7 +26,7 @@ const menuItems : MusicMenu [] = [
 
 ]
 
-const ArtistsPage = () => {
+const TracksPage = () => {
     return (
        
        
@@ -34,12 +34,12 @@ const ArtistsPage = () => {
           <MenuColumn />
           <div className="flex  gap-4 flex-col w-full">
          
-             <MusicHeader menus={menuItems} buttonComp={ <ButtonWithIcon imageSrc={PlusIcon} title="Create Artist" /> } />
-             <ArtistsTable />
+             <MusicHeader menus={menuItems}  buttonComp={ <ButtonWithIcon imageSrc={PlusIcon} title="Upload Track" /> } />
+             <TracksTable />
           </div>   
        
       </div>
     )
 }
 
-export default ArtistsPage
+export default TracksPage

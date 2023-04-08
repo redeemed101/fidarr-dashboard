@@ -5,6 +5,8 @@ import RecoverPasswordPage from './Presentation/Authentication/Pages/RecoverPass
 import DashboardMainPage from './Presentation/Dashboard/Pages/DashboardMainPage';
 import Status403Page from './Presentation/Errors/Pages/Status403Page';
 import ArtistsPage from './Presentation/Music/Pages/ArtistsPage';
+import TracksPage from './Presentation/Music/Pages/TracksPage';
+import AlbumsTable from './Presentation/Music/Sections/AlbumsTable';
 import ArtistsTable from './Presentation/Music/Sections/ArtistsTable';
 import MusicHeader from './Presentation/Music/Sections/MusicHeader';
 
@@ -15,7 +17,7 @@ function App() {
   
   return (
       <div className='bg-black'>
-         <ArtistsPage/>
+         <AlbumsTable/>
        </div>
 
      
