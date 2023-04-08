@@ -11,7 +11,7 @@ const MenuColumn = () =>{
     return (
         <>
           <div style={{height:"inherit"}} className="flex flex-col gap-4 items-center py-4 w-24 bg-fidarrgray-900">
-             <div className="mb-24">
+             <div className="mb-12">
                 <img src={LogoIcon} alt="Logo" />
              </div>
              <MenuItem title="Overview" isSelected imgSrc={Activity} />

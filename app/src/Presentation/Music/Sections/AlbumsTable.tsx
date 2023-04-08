@@ -4,22 +4,22 @@ import SettingsIcon from "../../../Assets/svgs/TrackSettingsIcon.svg";
 import { ArtistCard } from "./ArtistsTable"
 
 
-type TrackRow = {
+type AlbumRow = {
     imgSrc : string,
     name : string,
     genre : string,
     streams : string,
-    duration : string,
+    tracks : string,
     releaseDate: string,
     lastUpdated: string
 }
-const tracks : TrackRow [] = [
+const tracks : AlbumRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
         genre : "Gospel",
         streams : "12M",
-        duration : "1:20",
+        tracks: "10",
         releaseDate : "March 24, 2023",
         lastUpdated : "March 24, 2023"
 
@@ -29,7 +29,7 @@ const tracks : TrackRow [] = [
         name : "Eben",
         genre : "Gospel",
         streams : "12M",
-        duration : "1:20",
+        tracks: "10",
         releaseDate : "March 24, 2023",
         lastUpdated : "March 24, 2023"
 
@@ -39,7 +39,7 @@ const tracks : TrackRow [] = [
         name : "Eben",
         genre : "Gospel",
         streams : "12M",
-        duration : "1:20",
+        tracks: "10",
         releaseDate : "March 24, 2023",
         lastUpdated : "March 24, 2023"
 
@@ -49,7 +49,7 @@ const tracks : TrackRow [] = [
         name : "Eben",
         genre : "Gospel",
         streams : "12M",
-        duration : "1:20",
+        tracks: "10",
         releaseDate : "March 24, 2023",
         lastUpdated : "March 24, 2023"
 
@@ -59,7 +59,7 @@ const tracks : TrackRow [] = [
         name : "Eben",
         genre : "Gospel",
         streams : "12M",
-        duration : "1:20",
+        tracks: "10",
         releaseDate : "March 24, 2023",
         lastUpdated : "March 24, 2023"
 
@@ -69,7 +69,7 @@ const tracks : TrackRow [] = [
         name : "Eben",
         genre : "Gospel",
         streams : "12M",
-        duration : "1:20",
+        tracks: "10",
         releaseDate : "March 24, 2023",
         lastUpdated : "March 24, 2023"
 
@@ -79,7 +79,7 @@ const tracks : TrackRow [] = [
         name : "Eben",
         genre : "Gospel",
         streams : "12M",
-        duration : "1:20",
+        tracks: "10",
         releaseDate : "March 24, 2023",
         lastUpdated : "March 24, 2023"
 
@@ -89,7 +89,7 @@ const tracks : TrackRow [] = [
         name : "Eben",
         genre : "Gospel",
         streams : "12M",
-        duration : "1:20",
+        tracks: "10",
         releaseDate : "March 24, 2023",
         lastUpdated : "March 24, 2023"
 
@@ -99,7 +99,7 @@ const tracks : TrackRow [] = [
         name : "Eben",
         genre : "Gospel",
         streams : "12M",
-        duration : "1:20",
+        tracks: "10",
         releaseDate : "March 24, 2023",
         lastUpdated : "March 24, 2023"
 
@@ -109,14 +109,14 @@ const tracks : TrackRow [] = [
         name : "Eben",
         genre : "Gospel",
         streams : "12M",
-        duration : "1:20",
+        tracks: "10",
         releaseDate : "March 24, 2023",
         lastUpdated : "March 24, 2023"
 
     }
 ]
 type AlbumsTableProps = {
-    rows? : TrackRow[],
+    rows? : AlbumRow[],
 
 }
 
@@ -133,10 +133,10 @@ const AlbumsTable = ({rows = tracks}: AlbumsTableProps) => {
                         </div>
                 
                     </th>
-                    <th>Track</th>
+                    <th>Album List</th>
                     <th>Streams</th>
-                    <th>Duration</th>
                     <th>Release Date</th>
+                    <th>Tracks</th>
                     <th>Last Updated</th>
                     <th>Actions</th>
                 </tr>
@@ -157,7 +157,7 @@ const AlbumsTable = ({rows = tracks}: AlbumsTableProps) => {
                     </div>
                 </td>
                 <td ><p>{track.streams}</p></td>
-                <td ><p>{track.duration}</p></td>
+                <td ><p>{track.tracks}</p></td>
                 <td ><p>{track.releaseDate}</p></td>
                 <td><p>{track.lastUpdated}</p></td>
                 <td>

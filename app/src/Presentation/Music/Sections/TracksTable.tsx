@@ -133,7 +133,7 @@ const TracksTable = ({rows = tracks}: TracksTableProps) => {
                         </div>
                 
                     </th>
-                    <th>Track</th>
+                    <th>Track List</th>
                     <th>Streams</th>
                     <th>Duration</th>
                     <th>Release Date</th>
