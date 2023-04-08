@@ -13,6 +13,7 @@ import UserProfileRow from './Presentation/Authentication/Components/UserProfile
 import NotificationItem from './Presentation/Common/NotificationItem';
 import HeaderSection from './Presentation/Dashboard/Sections/HeaderSection';
 import StatBoardSection from './Presentation/Dashboard/Sections/StatBoardSection';
+import DashboardMainPage from './Presentation/Dashboard/Pages/DashboardMainPage';
 
 
 const title: string = "Login"
@@ -20,17 +21,9 @@ const title: string = "Login"
 function App() {
   
   return (
-    <div className="h-auto bg-black">
-      <div style={{height:"inherit"}}  className="pb-4 flex flex-row gap-8">
-        <MenuColumn />
-        <div className="flex  gap-4 flex-col">
-            <HeaderSection />  
-            <StatsCardRow /> 
-            <StatBoardSection />
-            
-        </div>   
-     </div>
-    </div>
+     <>
+       <DashboardMainPage />
+     </>
   );
 }
 
