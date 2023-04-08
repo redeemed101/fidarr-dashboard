@@ -10,9 +10,23 @@ interface PrimaryButtonProps {
 }
 export const PrimaryButton = ({title, height,width, padX, padY}  : PrimaryButtonProps) => {
    return (
-    <button className={`bg-red-700 hover:bg-red-600 text-white font-bold h-${height} w-${width} py-${padY} px-${padX} rounded-md`}>
+    <button className={`bg-red-900 hover:bg-red-700 text-white font-bold h-${height} w-${width} py-${padY} px-${padX} rounded-md`}>
         {title}
      </button>
    );
+}
+
+type ButtonWithIconProps = {
+    title : string,
+    imageSrc : string
+}
+export const ButtonWithIcon = ({title, imageSrc} : ButtonWithIconProps) => {
+    return (
+        <button className="inline-flex items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white text-sm font-medium rounded-md">
+          <img src={imageSrc} />
+    
+        {title}
+      </button>
+    )
 }
 

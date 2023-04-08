@@ -1,5 +1,5 @@
 import MenuColumn from "../Components/MenuColumn"
-import HeaderSection from "../Sections/HeaderSection"
+import DashboardHeaderSection from "../Sections/HeaderSection"
 import StatBoardSection from "../Sections/StatBoardSection"
 import { StatsCardRow } from "../Sections/StatsCardRow"
 
@@ -11,10 +11,10 @@ const DashboardMainPage = () => {
         <div style={{height:"inherit"}}  className="pb-4 flex flex-row gap-8">
           <MenuColumn />
           <div className="flex  gap-4 flex-col">
-              <HeaderSection />  
+              <DashboardHeaderSection />  
               <StatsCardRow /> 
               <StatBoardSection />
-              
+              {/*<StatsCardRow /> */} 
           </div>   
        </div>
       </div>

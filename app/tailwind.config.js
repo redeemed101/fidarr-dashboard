@@ -163,6 +163,7 @@ module.exports = {
       rose: colors.rose,
       fidarrgray: {
         900 : "#2A2A2A",
+        600 : "#1E1E1E",
         500 : "#444444",
         300 : "#C8A3A2",
         100 : "#904845"

@@ -29,7 +29,7 @@ export function GrayedTextField({value,label,placeholder, type, padY, padX,heigh
     return (
      <div className="mb-4">
        
-       <input value={value} className={`bg-gray-600  shadow appearance-none border-none rounded-md h-${height} w-${width} py-${padY} px-${padX} text-black font-bold leading-tight focus:outline-none focus:shadow-outline`}  type={type} placeholder={placeholder} />
+       <input value={value} className={`bg-fidarrgray-900  shadow appearance-none border-none rounded-md h-${height} w-${width} py-${padY} px-${padX} text-fidarrgray-500 font-bold leading-tight focus:outline-none focus:shadow-outline`}  type={type} placeholder={placeholder} />
      </div>
     );
     
@@ -52,10 +52,10 @@ export function GrayedTextField({value,label,placeholder, type, padY, padX,heigh
         <div className="relative w-full opacity-100">
             <div className="absolute inset-y-0 right-0 opacity-100 flex items-center px-2">
               <input className="hidden js-password-toggle" id="toggle" type="checkbox" />
-              <img src={show ? EyeOff : Eye} alt="eye" className="bg-gray-600 opacity-100 hover:bg-gray-700 rounded px-2 py-1 text-sm text-gray-600 cursor-pointer" />
+              <img src={show ? EyeOff : Eye} alt="eye" className="bg-fidarrgray-900  opacity-100 hover:bg-gray-900 rounded px-2 py-1 text-sm text-gray-600 cursor-pointer" />
               
             </div>
-            <input value={value} className={`bg-gray-600 opacity-100 shadow leading-tight appearance-none border-none rounded-md h-${height} w-${width} py-${padY} px-${padX} text-black font-bold leading-tight focus:outline-none focus:shadow-outline w-full`}  type={type} placeholder={placeholder} />
+            <input value={value} className={`bg-fidarrgray-900  opacity-100 shadow leading-tight appearance-none border-none rounded-md h-${height} w-${width} py-${padY} px-${padX} text-fidarrgray-500 font-bold leading-tight focus:outline-none focus:shadow-outline w-full`}  type={type} placeholder={placeholder} />
          </div>
     )
  }

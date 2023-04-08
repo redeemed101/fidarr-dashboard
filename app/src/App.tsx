@@ -1,19 +1,11 @@
-import React from 'react';
-import logo from './logo.svg';
+
 import './App.css';
-import LoginPage from './Presentation/Authentication/Pages/login';
-import StatCard from './Presentation/Dashboard/Components/StatCard';
-import {StatsCardRow, StatCardData} from './Presentation/Dashboard/Sections/StatsCardRow';
-import MenuItem from './Presentation/Dashboard/Components/MenuItem';
-import MenuColumn from './Presentation/Dashboard/Components/MenuColumn';
-import {CreatorRevenueStatBoard, GeoBoard, TrendsBoard} from './Presentation/Dashboard/Components/StatBoards';
-import { SearchTextField } from './Presentation/Common/textfields';
-import UserCircularAvatar from './Presentation/Authentication/Components/UserCircularAvatar';
-import UserProfileRow from './Presentation/Authentication/Components/UserProfileRow';
-import NotificationItem from './Presentation/Common/NotificationItem';
-import HeaderSection from './Presentation/Dashboard/Sections/HeaderSection';
-import StatBoardSection from './Presentation/Dashboard/Sections/StatBoardSection';
+
+import RecoverPasswordPage from './Presentation/Authentication/Pages/RecoverPasswordPage';
 import DashboardMainPage from './Presentation/Dashboard/Pages/DashboardMainPage';
+import Status403Page from './Presentation/Errors/Pages/Status403Page';
+import ArtistsPage from './Presentation/Music/Pages/ArtistsPage';
+import MusicHeader from './Presentation/Music/Sections/MusicHeader';
 
 
 const title: string = "Login"
@@ -21,9 +13,11 @@ const title: string = "Login"
 function App() {
   
   return (
-     <>
-       <DashboardMainPage />
-     </>
+      <div className='h-screen bg-black'>
+         <ArtistsPage/>
+       </div>
+
+     
   );
 }
 

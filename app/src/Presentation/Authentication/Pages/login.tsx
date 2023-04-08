@@ -1,13 +1,12 @@
-import React from 'react';
+
 import FidarrLogo from "../../../Assets/svgs/FidarrLogo.svg";
-import EyeOff from "../../../Assets/svgs/eye-off.svg";
 import { PrimaryButton } from '../../Common/buttons';
 import { GrayedTextField, PasswordToggleField } from '../../Common/textfields';
 
 const LoginPage = () => {
     return (
         <div className="items-center  flex flex-col mx-auto bg-black h-screen">
-            <div className='py-20 w-3/5 items-center mx-auto flex flex-col'>
+            <div className='pt-32 w-3/5 items-center mx-auto flex flex-col'>
                 <div >
                    <img src={FidarrLogo} alt="Fidarr Logo" />
                 </div>
@@ -23,14 +22,14 @@ const LoginPage = () => {
                           
                         </div>
                         <div className='py-4 container flex items-center flex-col'>
-                            <a href="#" className="text-red-600 underline">Forgot Password?</a>
+                            <a href="#" className="text-red-900 underline">Forgot Password?</a>
                         </div>
                         <PrimaryButton title='Login' padY={2} padX={3} height="10" width="full" />
                     </div>
                     <div className="w-1/3 bg-red-900"></div>
                     
                 </div>
-                <div className='py-12'>
+                <div className='pt-32'>
                     <p className='text-white'>{new Date().getFullYear() + " Fidarr, Inc"}</p>
                 </div>
             </div>
