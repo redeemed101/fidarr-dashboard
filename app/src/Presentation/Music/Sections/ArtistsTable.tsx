@@ -140,8 +140,8 @@ type ArtistTableProps = {
 
 const ArtistsTable = ({rows = artists}: ArtistTableProps) => {
     return (
-        <div className="w-full">
-            <table className="table-auto text-white w-full">
+        <div className="flex flex-col w-full">
+            <table className="table-auto text-white w-11/12 self-end">
             <thead className="text-left">
                 <tr>
                     <th className="pr-12">

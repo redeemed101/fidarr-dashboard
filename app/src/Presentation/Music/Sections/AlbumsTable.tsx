@@ -122,8 +122,8 @@ type AlbumsTableProps = {
 
 const AlbumsTable = ({rows = tracks}: AlbumsTableProps) => {
     return (
-        <div className="w-full ml-4">
-            <table className="table-auto text-white w-full">
+        <div className="flex flex-col w-full">
+            <table className="table-auto text-white w-11/12 self-end">
             <thead className="text-left">
                 <tr>
                     <th className="pr-12">
@@ -157,8 +157,8 @@ const AlbumsTable = ({rows = tracks}: AlbumsTableProps) => {
                     </div>
                 </td>
                 <td ><p>{track.streams}</p></td>
-                <td ><p>{track.tracks}</p></td>
                 <td ><p>{track.releaseDate}</p></td>
+                <td ><p>{track.tracks}</p></td>                
                 <td><p>{track.lastUpdated}</p></td>
                 <td>
                     <div className="flex flex-row gap-2">
