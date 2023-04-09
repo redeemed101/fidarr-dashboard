@@ -20,7 +20,7 @@ export function PrimaryTextField({value,label,placeholder, type, padY, padX,heig
         <label className="block text-fidarrgray-900 text-sm font-bold mb-2" htmlFor="username">
             {label}
         </label>
-      <input value={value} className={`shadow appearance-none border rounded-md h-${height} w-${width} py-${padY} px-${padX} text-black font-bold leading-tight focus:outline-none focus:shadow-outline`}  type={type} placeholder={placeholder} />
+      <input value={value} className={`shadow appearance-none border rounded h-${height} w-${width} py-${padY} px-${padX} text-black font-bold leading-tight focus:outline-none focus:shadow-outline`}  type={type} placeholder={placeholder} />
     </div>
    );
 }
@@ -29,7 +29,7 @@ export function GrayedTextField({value,label,placeholder, type, padY, padX,heigh
     return (
      <div className="mb-4">
        
-       <input value={value} className={`bg-fidarrgray-900  shadow appearance-none border-none rounded-md h-${height} w-${width} py-${padY} px-${padX} text-fidarrgray-500 font-bold leading-tight focus:outline-none focus:shadow-outline`}  type={type} placeholder={placeholder} />
+       <input value={value} className={`bg-fidarrgray-900  shadow appearance-none border-none rounded h-${height} w-${width} py-${padY} px-${padX} text-fidarrgray-500 font-bold leading-tight focus:outline-none focus:shadow-outline`}  type={type} placeholder={placeholder} />
      </div>
     );
     
@@ -55,7 +55,7 @@ export function GrayedTextField({value,label,placeholder, type, padY, padX,heigh
               <img src={show ? EyeOff : Eye} alt="eye" className="bg-fidarrgray-900  opacity-100 hover:bg-gray-900 rounded px-2 py-1 text-sm text-gray-600 cursor-pointer" />
               
             </div>
-            <input value={value} className={`bg-fidarrgray-900  opacity-100 shadow leading-tight appearance-none border-none rounded-md h-${height} w-${width} py-${padY} px-${padX} text-fidarrgray-500 font-bold leading-tight focus:outline-none focus:shadow-outline w-full`}  type={type} placeholder={placeholder} />
+            <input value={value} className={`bg-fidarrgray-900  opacity-100 shadow leading-tight appearance-none border-none rounded h-${height} w-${width} py-${padY} px-${padX} text-fidarrgray-500 font-bold leading-tight focus:outline-none focus:shadow-outline w-full`}  type={type} placeholder={placeholder} />
          </div>
     )
  }

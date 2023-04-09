@@ -6,19 +6,20 @@ interface PrimaryButtonProps {
     width: string;
     padY: Number;
     padX: Number;
+    onClick?: () => void
 
 }
-export const PrimaryButton = ({title, height,width, padX, padY}  : PrimaryButtonProps) => {
+export const PrimaryButton = ({title, height,width, padX, padY, onClick}  : PrimaryButtonProps) => {
    return (
-    <button className={`bg-red-900 hover:bg-red-700 text-white font-bold h-${height} w-${width} py-${padY} px-${padX} rounded-md`}>
+    <button onClick={onClick} className={`bg-red-900 hover:bg-red-700 text-white font-bold h-${height} w-${width} py-${padY} px-${padX} rounded-md`}>
         {title}
      </button>
    );
 }
 
-export const SecondaryButton = ({title, height,width, padX, padY}  : PrimaryButtonProps) => {
+export const SecondaryButton = ({title, height,width, padX, padY,onClick}  : PrimaryButtonProps) => {
   return (
-   <button className={`bg-white  text-black text-xs font-bold h-${height} w-${width} py-${padY} px-${padX} rounded-md`}>
+   <button onClick={onClick} className={`bg-white  text-black text-xs font-bold h-${height} w-${width} py-${padY} px-${padX} rounded-md`}>
        {title}
     </button>
   );
