@@ -15,7 +15,7 @@ const CreateArtistPage = () => {
             <div className="bg-fidarrgray-600 pl-8">
               <HeaderSection title="Music" />
             </div>
-            <div className="flex flex-row items-center mx-auto ">
+            <div className="flex flex-row  mx-auto pt-12">
                 <div className="flex flex-col">
                   <p className="text-white font-bold pb-4">Create Artist</p>
                   <img className="rounded-md" src="https://randomuser.me/api/portraits/women/81.jpg" />
@@ -23,7 +23,7 @@ const CreateArtistPage = () => {
                     <SecondaryButton title='Upload Picture' padY={2} padX={2} height="auto" width="3/4" />
                   </div>
                 </div>
-                <div className="flex flex-col pl-4 pt-48">
+                <div className="flex flex-col pl-4 pt-12">
                   <div className="flex flex-row gap-4">
                    <PrimaryTextField type="text" value="" padX={6} padY={2} width="full" height="10" label="Name" placeholder="Name" />
                    <PrimaryTextField type="text" value="" padX={6} padY={2} width="full" height="10" label="Username" placeholder="Username" />

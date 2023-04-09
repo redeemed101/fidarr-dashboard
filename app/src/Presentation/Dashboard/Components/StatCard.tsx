@@ -23,8 +23,7 @@ const StatCard = ({title, number, increase, upIncrease, options, onSelect, selec
                
                <div className="ml-4 inline-block relative h-10 ">
                     <select value={selectedItem} onChange={onSelect} className="placeholder-white block appearance-none text-white text-xs font-bold w-full bg-fidarrgray-500  hover:border-fidarrgray-900 px-4 py-2 pr-2 rounded-md shadow leading-tight focus:outline-none focus:shadow-outline">
-                        <option selected>Total</option>
-                        
+                       
                         {options.map(o => (<option value={o}>{o}</option>))}
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 -mt-2 right-0 flex items-center -mx-0.5  text-gray-700">
