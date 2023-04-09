@@ -36,7 +36,7 @@ type TabProps = {
 
 const DetailsTab = ({switchTab, editAction} : TabProps) => {
     return (
-        <div className="flex flex-row  mx-auto ">
+        <div className="flex flex-row  mx-auto">
             <div className="flex flex-col">                   
                 <img className="rounded-md" src="https://randomuser.me/api/portraits/women/81.jpg" />
                 <div className="pt-4 w-full self-center">
@@ -148,7 +148,7 @@ const UploadAlbumPage = () => {
     };
     return (
        
-       <div className="h-auto">
+       <div className="h-auto bg-black">
         <div style={{height:"inherit"}}  className="pb-4 flex flex-row ">
           <MenuColumn />
           <div className="flex  gap-4 flex-col w-full">

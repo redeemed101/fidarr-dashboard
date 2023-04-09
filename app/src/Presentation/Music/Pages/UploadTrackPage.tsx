@@ -23,7 +23,7 @@ const genreOptions: PrimarySelectOption[] = [
 const UploadTrackPage = () => {
     return (
        
-       <div className="h-auto">
+       <div className="h-auto bg-black">
         <div style={{height:"inherit"}}  className="pb-4 flex flex-row ">
           <MenuColumn />
           <div className="flex  gap-4 flex-col w-full">

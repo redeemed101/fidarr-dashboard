@@ -5,6 +5,7 @@ import { ButtonWithIcon } from "../../Common/buttons";
 import PlusIcon from "../../../Assets/svgs/PlusIcon.svg"
 import { Link } from "react-router-dom";
 import { MusicMenu } from "../../../StateManagement/MusicMenu";
+import { useState } from "react";
 
 
 type MusicHeaderProps = {
@@ -17,7 +18,9 @@ type MusicHeaderProps = {
 
 
 
+
 const MusicHeader = ({menus, buttonComp} : MusicHeaderProps) => {
+    const [selectedMusicMenu, setSelectedMusicMenu] = useState(menus[0]);
     return (
         <div className="w-full">
             <div className="flex flex-col bg-fidarrgray-600 pb-4 w-full">
@@ -25,7 +28,7 @@ const MusicHeader = ({menus, buttonComp} : MusicHeaderProps) => {
                   <HeaderSection title="Music" />
                   <div className="flex flex-row pt-12 ml-4 items-center justify-between">
                         <div className="flex flex-row gap-6">
-                            { menus.map(m => <Link  to={m.route}><MusicMenuItem action={m.action} title={m.title} isSelected={m.isSelected} /></Link> )}
+                            { menus.map(m => <Link  to={m.route}><MusicMenuItem action={() => setSelectedMusicMenu(m)} title={m.title} isSelected={selectedMusicMenu == m} /></Link> )}
                         </div>
                         <div className="mr-4">
                           {buttonComp}

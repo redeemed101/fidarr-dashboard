@@ -5,6 +5,7 @@ import { ButtonWithIcon } from "../../Common/buttons";
 import PlusIcon from "../../../Assets/svgs/PlusIcon.svg"
 import TracksTable from "../Sections/TracksTable";
 import { menuItems } from "../../../StateManagement/MusicMenu";
+import { Link } from "react-router-dom";
 
 
 
@@ -16,7 +17,7 @@ const TracksPage = () => {
           <MenuColumn />
           <div className="flex  gap-4 flex-col w-full">
          
-             <MusicHeader menus={menuItems}  buttonComp={ <ButtonWithIcon imageSrc={PlusIcon} title="Upload Track" /> } />
+             <MusicHeader menus={menuItems}  buttonComp={ <Link to="/music/tracks/create"><ButtonWithIcon imageSrc={PlusIcon} title="Upload Track" /></Link> } />
              <TracksTable />
           </div>   
        

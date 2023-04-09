@@ -13,7 +13,7 @@ const HeaderSection = ({title}: HeaderSectionProps) => {
            <div className="flex flex-row justify-between items-center pt-4">
                <div className="flex flex-row gap-4 items-center">
                  <p className="text-white font-bold text-2xl">{title}</p>
-                 <div className="">
+                 <div className="w-80">
                    <SearchTextField />
                  </div>
                  <div className="h-12 w-12">

@@ -52,6 +52,26 @@ const dashboardRoutes : AuthRoutes[] = [
     {
       page : <PlaylistsPage />,
       route: "/music/playlists"
+    },
+    {
+      page : <CreateArtistPage />,
+      route: "/music/artists/create"
+    },
+    {
+      page : <UploadTrackPage />,
+      route: "/music/tracks/create"
+    },
+    {
+      page : <UploadAlbumPage />,
+      route: "/music/albums/create"
+    },
+    {
+      page : <CreateGenrePage />,
+      route: "/music/genres/create"
+    },
+    {
+      page : <CreatePaylistPage />,
+      route: "/music/playlists/create"
     }
 
 

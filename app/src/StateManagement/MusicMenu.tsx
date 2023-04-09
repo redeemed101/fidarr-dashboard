@@ -9,7 +9,6 @@ export type MusicMenu = {
 export const menuItems : MusicMenu [] = [
     {
         title : "Artists",
-        isSelected: true,
         route: "/music/artists"
     },
     {
