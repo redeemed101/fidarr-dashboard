@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from 'react';
+import { ReactNode, createContext, useContext, useState } from 'react';
 import { MenuItemProps } from '../Presentation/Dashboard/Components/MenuItem';
 
 import File from "../Assets/svgs/file.svg"
@@ -60,7 +60,7 @@ const menus : Menu[] = [
     }
 ]
 
-export const MenuStateProviderContext = createContext<MenuStateContextType | null>(null);
+export const MenuStateProviderContext = createContext<MenuStateContextType>({} as MenuStateContextType);
 
 
 const MenuStateProvider : React.FC<{ children: React.ReactNode }> = ({children}) => {
@@ -76,3 +76,7 @@ const MenuStateProvider : React.FC<{ children: React.ReactNode }> = ({children})
 };
 
 export default MenuStateProvider;
+
+export const useMenuState = () => {
+    return useContext(MenuStateProviderContext)
+}

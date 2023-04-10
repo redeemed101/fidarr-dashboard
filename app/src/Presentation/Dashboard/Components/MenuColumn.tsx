@@ -7,12 +7,13 @@ import Copy from "../../../Assets/svgs/copy.svg"
 import People from "../../../Assets/svgs/users.svg"
 import Settings from "../../../Assets/svgs/settings.svg"
 import { useContext } from "react"
-import { MenuStateContextType, MenuStateProviderContext } from "../../../StateManagement/MenuStateProvider"
+import { MenuStateContextType, MenuStateProviderContext, useMenuState } from "../../../StateManagement/MenuStateProvider"
 
 
 
 const MenuColumn = () =>{
-    const {selectedMenu, setSelectedMenu,menus} = useContext(MenuStateProviderContext) as MenuStateContextType
+    //const {selectedMenu, setSelectedMenu,menus} = useContext(MenuStateProviderContext) as MenuStateContextType
+    const {selectedMenu, setSelectedMenu,menus} = useMenuState()
     return (
         <>
           <div style={{height:"inherit"}} className="flex flex-col gap-4 items-center py-4 w-24 bg-fidarrgray-900">

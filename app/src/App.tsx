@@ -96,7 +96,7 @@ function App() {
           <Route path="/login" element={<LoginPage /> } />
           <Route element={<MenuContextLayout />}>
             {
-              dashboardRoutes.map(r => (<Route path={r.route} element= {r.page}/>))
+              dashboardRoutes.map(r => (<Route  path={r.route} element= {r.page}/>))
             }
           </Route>
       </Routes>
