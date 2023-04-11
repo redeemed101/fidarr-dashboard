@@ -14,6 +14,9 @@ import ArtistsPage from './Presentation/Music/Pages/ArtistsPage';
 import AlbumsPage from './Presentation/Music/Pages/AlbumsPage';
 import GenresPage from './Presentation/Music/Pages/GenresPage';
 import TracksPage from './Presentation/Music/Pages/TracksPage';
+import LocationsPage from './Presentation/CMS/Pages/LocationsPage';
+import ChannelsPage from './Presentation/CMS/Pages/ChannelsPage';
+import ContentPage from './Presentation/CMS/Pages/ContentPage';
 
 
 
@@ -72,7 +75,24 @@ const dashboardRoutes : AuthRoutes[] = [
     {
       page : <CreatePaylistPage />,
       route: "/music/playlists/create"
-    }
+    },
+
+    {
+      page : <LocationsPage />,
+      route: "/cms"
+    },
+    {
+      page : <LocationsPage />,
+      route: "/cms/locations"
+    },
+    {
+      page : <ChannelsPage />,
+      route: "/cms/channels"
+    },
+    {
+      page : <ContentPage />,
+      route: "/cms/content"
+    },
 
 
 ]

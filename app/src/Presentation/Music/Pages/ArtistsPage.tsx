@@ -13,7 +13,7 @@ const ArtistsPage = () => {
        
         <div style={{height:"inherit"}}  className="pb-4 w-full flex flex-row bg-black">
           <MenuColumn />
-          <div className="flex   gap-4 flex-col w-full">
+          <div className="flex gap-4 flex-col w-full">
          
              <MusicHeader selectedType={MusicMenuType.Artists} menus={menuItems} buttonComp={ <Link to="/music/artists/create"><ButtonWithIcon imageSrc={PlusIcon} title="Create Artist" /></Link> } />
              <ArtistsTable />
