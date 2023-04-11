@@ -3,7 +3,7 @@ import ArtistsTable from "../Sections/ArtistsTable"
 import MusicHeader from "../Sections/MusicHeader"
 import { ButtonWithIcon } from "../../Common/buttons";
 import PlusIcon from "../../../Assets/svgs/PlusIcon.svg"
-import { MusicMenu, menuItems } from "../../../StateManagement/MusicMenu";
+import { MusicMenu, MusicMenuType, menuItems } from "../../../StateManagement/MusicMenu";
 import { Link } from "react-router-dom";
 
 
@@ -15,7 +15,7 @@ const ArtistsPage = () => {
           <MenuColumn />
           <div className="flex   gap-4 flex-col w-full">
          
-             <MusicHeader menus={menuItems} buttonComp={ <Link to="/music/artists/create"><ButtonWithIcon imageSrc={PlusIcon} title="Create Artist" /></Link> } />
+             <MusicHeader selectedType={MusicMenuType.Artists} menus={menuItems} buttonComp={ <Link to="/music/artists/create"><ButtonWithIcon imageSrc={PlusIcon} title="Create Artist" /></Link> } />
              <ArtistsTable />
           </div>   
        

@@ -4,13 +4,14 @@ import MusicMenuItem from "../Components/MusicMenuItem";
 import { ButtonWithIcon } from "../../Common/buttons";
 import PlusIcon from "../../../Assets/svgs/PlusIcon.svg"
 import { Link } from "react-router-dom";
-import { MusicMenu } from "../../../StateManagement/MusicMenu";
+import { MusicMenu, MusicMenuType } from "../../../StateManagement/MusicMenu";
 import { useState } from "react";
 
 
 type MusicHeaderProps = {
    menus : MusicMenu[],
-   buttonComp?: React.ReactNode;
+   buttonComp?: React.ReactNode,
+   selectedType: MusicMenuType
 }
 
 
@@ -19,8 +20,9 @@ type MusicHeaderProps = {
 
 
 
-const MusicHeader = ({menus, buttonComp} : MusicHeaderProps) => {
-    const [selectedMusicMenu, setSelectedMusicMenu] = useState(menus[0]);
+const MusicHeader = ({menus, buttonComp, selectedType} : MusicHeaderProps) => {
+    const initial : MusicMenu | undefined = menus.find(m => m.type == selectedType)
+    const [selectedMusicMenu, setSelectedMusicMenu] = useState(initial);
     return (
         <div className="w-full">
             <div className="flex flex-col bg-fidarrgray-600 pb-4 w-full">
