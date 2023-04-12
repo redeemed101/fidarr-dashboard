@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/fidarr-dashboard/static/css/main.738cfbb2.css",
-    "main.js": "/fidarr-dashboard/static/js/main.eec29aaf.js",
+    "main.js": "/fidarr-dashboard/static/js/main.93b4aca5.js",
     "static/js/787.333065c8.chunk.js": "/fidarr-dashboard/static/js/787.333065c8.chunk.js",
     "static/media/LocationPlaylist1.svg": "/fidarr-dashboard/static/media/LocationPlaylist1.4de87bbe3a142eab547effd67d91a3bc.svg",
     "static/media/FidarrLogo.svg": "/fidarr-dashboard/static/media/FidarrLogo.3cca20ea893b6ee5b2987983918e337e.svg",
@@ -33,11 +33,11 @@
     "static/media/PlusIcon.svg": "/fidarr-dashboard/static/media/PlusIcon.a8b130ea1b3a7b6c84d44f10675433c5.svg",
     "static/media/CircleIcon.svg": "/fidarr-dashboard/static/media/CircleIcon.1bf97dd64685a3545e483f1a281644e0.svg",
     "main.738cfbb2.css.map": "/fidarr-dashboard/static/css/main.738cfbb2.css.map",
-    "main.eec29aaf.js.map": "/fidarr-dashboard/static/js/main.eec29aaf.js.map",
+    "main.93b4aca5.js.map": "/fidarr-dashboard/static/js/main.93b4aca5.js.map",
     "787.333065c8.chunk.js.map": "/fidarr-dashboard/static/js/787.333065c8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.738cfbb2.css",
-    "static/js/main.eec29aaf.js"
+    "static/js/main.93b4aca5.js"
   ]
 }
