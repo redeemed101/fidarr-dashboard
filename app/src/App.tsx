@@ -17,6 +17,7 @@ import TracksPage from './Presentation/Music/Pages/TracksPage';
 import LocationsPage from './Presentation/CMS/Pages/LocationsPage';
 import ChannelsPage from './Presentation/CMS/Pages/ChannelsPage';
 import ContentPage from './Presentation/CMS/Pages/ContentPage';
+import withErrorBoundary, { ErrorBoundary } from './HoCs/Errors/WithErrorBoundary';
 
 
 
@@ -86,7 +87,7 @@ const dashboardRoutes : AuthRoutes[] = [
       route: "/cms/locations"
     },
     {
-      page : <ChannelsPage />,
+      page : <ErrorBoundary><ChannelsPage /></ErrorBoundary>,
       route: "/cms/channels"
     },
     {
@@ -126,4 +127,4 @@ function App() {
   );
 }
 
-export default App;
+export default withErrorBoundary(App);
