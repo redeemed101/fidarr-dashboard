@@ -1,10 +1,12 @@
 {
   "files": {
-    "main.css": "/fidarr-dashboard/static/css/main.1fcf1d4b.css",
-    "main.js": "/fidarr-dashboard/static/js/main.8d520654.js",
+    "main.css": "/fidarr-dashboard/static/css/main.738cfbb2.css",
+    "main.js": "/fidarr-dashboard/static/js/main.eec29aaf.js",
     "static/js/787.333065c8.chunk.js": "/fidarr-dashboard/static/js/787.333065c8.chunk.js",
+    "static/media/LocationPlaylist1.svg": "/fidarr-dashboard/static/media/LocationPlaylist1.4de87bbe3a142eab547effd67d91a3bc.svg",
     "static/media/FidarrLogo.svg": "/fidarr-dashboard/static/media/FidarrLogo.3cca20ea893b6ee5b2987983918e337e.svg",
     "static/media/fiddarIcon.svg": "/fidarr-dashboard/static/media/fiddarIcon.6b2739b96e61f9c1d893f10bce1df2e0.svg",
+    "static/media/Genre1.svg": "/fidarr-dashboard/static/media/Genre1.0a90a6cff9281c93dc8b584e5f0dd869.svg",
     "static/media/settings.svg": "/fidarr-dashboard/static/media/settings.b81ba2cd8ca1fd8470a32d454ce4640c.svg",
     "static/media/Eye.svg": "/fidarr-dashboard/static/media/Eye.3f3b382441dbb471d8cdd6d1eecb1558.svg",
     "static/media/users.svg": "/fidarr-dashboard/static/media/users.a81941a792407bb2573a7b3da4e21204.svg",
@@ -22,6 +24,7 @@
     "static/media/EditIcon.svg": "/fidarr-dashboard/static/media/EditIcon.4a1bde78e0488bf2b933d13ae528350f.svg",
     "static/media/AlbumsIcon.svg": "/fidarr-dashboard/static/media/AlbumsIcon.0bd92b4100be831ee63c40b63ea8a553.svg",
     "static/media/SearchIcon.svg": "/fidarr-dashboard/static/media/SearchIcon.f58d28d44f824a32f0e5b62f9ffad239.svg",
+    "static/media/FilledListIcon.svg": "/fidarr-dashboard/static/media/FilledListIcon.404b3ce27629dc68c55ca7c24b74e917.svg",
     "static/media/TrackSettingsIcon.svg": "/fidarr-dashboard/static/media/TrackSettingsIcon.a8c73d85813e83ce81831d4ae28ade42.svg",
     "static/media/DeleteIcon.svg": "/fidarr-dashboard/static/media/DeleteIcon.b16b79d621766162b3858969def847bb.svg",
     "static/media/FolderPlusIcon.svg": "/fidarr-dashboard/static/media/FolderPlusIcon.9a564a4576517b7090f7adc0c82d91f7.svg",
@@ -29,12 +32,12 @@
     "static/media/activity.svg": "/fidarr-dashboard/static/media/activity.586ecb96ead2ef9c015dd1bf382acdf3.svg",
     "static/media/PlusIcon.svg": "/fidarr-dashboard/static/media/PlusIcon.a8b130ea1b3a7b6c84d44f10675433c5.svg",
     "static/media/CircleIcon.svg": "/fidarr-dashboard/static/media/CircleIcon.1bf97dd64685a3545e483f1a281644e0.svg",
-    "main.1fcf1d4b.css.map": "/fidarr-dashboard/static/css/main.1fcf1d4b.css.map",
-    "main.8d520654.js.map": "/fidarr-dashboard/static/js/main.8d520654.js.map",
+    "main.738cfbb2.css.map": "/fidarr-dashboard/static/css/main.738cfbb2.css.map",
+    "main.eec29aaf.js.map": "/fidarr-dashboard/static/js/main.eec29aaf.js.map",
     "787.333065c8.chunk.js.map": "/fidarr-dashboard/static/js/787.333065c8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1fcf1d4b.css",
-    "static/js/main.8d520654.js"
+    "static/css/main.738cfbb2.css",
+    "static/js/main.eec29aaf.js"
   ]
 }
