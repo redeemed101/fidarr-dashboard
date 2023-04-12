@@ -20,12 +20,13 @@ import ContentPage from './Presentation/CMS/Pages/ContentPage';
 import withErrorBoundary, { ErrorBoundary } from './HoCs/Errors/WithErrorBoundary';
 import LocationMusicHomePage from './Presentation/CMS/Pages/LocationMusicHomePage';
 import LocationGenresPage from './Presentation/CMS/Pages/LocationGenresPage';
-import ChannelPlaylistsPage from './Presentation/CMS/Pages/ChannelPlaylistsPage';
+import ChannelPlaylistPage from './Presentation/CMS/Pages/ChannelPlaylistPage';
 import LocationHomePage from './Presentation/CMS/Pages/LocationHomePage';
 import LocationPlaylistPage from './Presentation/CMS/Pages/LocationPlaylistPage';
 import LocationChartPage from './Presentation/CMS/Pages/LocationChartPage';
 import LocationMoodsPage from './Presentation/CMS/Pages/LocationMoodsPage';
 import LocationSlidersPage from './Presentation/CMS/Pages/LocationSlidersPage';
+import ChannelGenrePage from './Presentation/CMS/Pages/ChannelGenrePage';
 
 
 
@@ -97,6 +98,14 @@ const dashboardRoutes : AuthRoutes[] = [
     {
       page : <ErrorBoundary><ChannelsPage /></ErrorBoundary>,
       route: "/cms/channels"
+    },
+    {
+      page : <ChannelGenrePage />,
+      route: "/cms/channels/genres/:id"
+    },
+    {
+      page : <ChannelPlaylistPage />,
+      route: "/cms/channels/playlists/:id"
     },
     {
       page : <ContentPage />,

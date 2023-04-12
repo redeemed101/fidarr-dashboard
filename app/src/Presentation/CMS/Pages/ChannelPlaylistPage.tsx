@@ -18,7 +18,7 @@ const contentOptions : PrimarySelectOption[] = [
         value: "Home"
     }
 ]
-const ChannelPlaylistsPage = () => {
+const ChannelPlaylistPage = () => {
     const { id } = useParams();
     const next = async (direction: ScrollDirection) => {}
     const ref = useInfiniteScroll<LegacyRef<HTMLDivElement>>({
@@ -33,7 +33,7 @@ const ChannelPlaylistsPage = () => {
         <MenuColumn />
         <div className="flex   gap-4 flex-col w-full">
        
-            <CMSHeader selectedType={CMSMenuType.Locations} menus={cmsMenuItems}/>
+            <CMSHeader selectedType={CMSMenuType.Content} menus={cmsMenuItems}/>
             <div className="flex flex-col w-3/4 px-12 gap-4 mx-auto">
                
                <div className="flex flex-row items-center justify-between w-full">
@@ -83,4 +83,4 @@ const ChannelPlaylistsPage = () => {
     )
 }
 
-export default ChannelPlaylistsPage
+export default ChannelPlaylistPage
