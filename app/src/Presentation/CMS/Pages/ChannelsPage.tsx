@@ -11,7 +11,7 @@ import withErrorBoundary from "../../../HoCs/Errors/WithErrorBoundary"
 
 const ChannelsPage = () => {
     return(
-        <div style={{height:"inherit"}}  className="pb-4 w-full flex flex-row bg-black">
+        <div  className="pb-4 w-full flex flex-row bg-black h-screen">
         {/*<BreakThings />*/}
         <MenuColumn />
         <div className="flex   gap-4 flex-col w-full">
