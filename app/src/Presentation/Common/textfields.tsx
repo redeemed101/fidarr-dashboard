@@ -4,8 +4,9 @@ import Eye from "../../Assets/svgs/Eye.svg";
 import Search from "../../Assets/svgs/SearchIcon.svg"
 
 type TextfieldProps = {
-    label: string,
+    label?: string,
     placeholder: string,
+    marginBottom?: string,
     type : string,
     height : string,
     width: string,
@@ -14,12 +15,13 @@ type TextfieldProps = {
     value: string
 
 }
-export function PrimaryTextField({value,label,placeholder, type, padY, padX,height,width} : TextfieldProps) {
+export function PrimaryTextField({value,label,placeholder, type, padY, padX,height,width, marginBottom = "4"} : TextfieldProps) {
    return (
-    <div className="mb-4">
-        <label className="block text-fidarrgray-900 text-sm font-bold mb-1" htmlFor="username">
-            {label}
-        </label>
+    <div className={`mb-${marginBottom}`}>
+        {label != null ? <label className="block text-fidarrgray-900 text-sm font-bold mb-1" htmlFor="username">
+            {label}        
+           </label> : ""
+        }
       <input value={value} className={`shadow appearance-none border rounded h-${height} w-${width} py-${padY} px-${padX} text-black font-bold leading-tight focus:outline-none focus:shadow-outline`}  type={type} placeholder={placeholder} />
     </div>
    );

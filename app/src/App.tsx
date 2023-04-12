@@ -18,9 +18,14 @@ import LocationsPage from './Presentation/CMS/Pages/LocationsPage';
 import ChannelsPage from './Presentation/CMS/Pages/ChannelsPage';
 import ContentPage from './Presentation/CMS/Pages/ContentPage';
 import withErrorBoundary, { ErrorBoundary } from './HoCs/Errors/WithErrorBoundary';
-import LocationPage from './Presentation/CMS/Pages/LocationPage';
+import LocationMusicHomePage from './Presentation/CMS/Pages/LocationMusicHomePage';
 import LocationGenresPage from './Presentation/CMS/Pages/LocationGenresPage';
 import ChannelPlaylistsPage from './Presentation/CMS/Pages/ChannelPlaylistsPage';
+import LocationHomePage from './Presentation/CMS/Pages/LocationHomePage';
+import LocationPlaylistPage from './Presentation/CMS/Pages/LocationPlaylistPage';
+import LocationChartPage from './Presentation/CMS/Pages/LocationChartPage';
+import LocationMoodsPage from './Presentation/CMS/Pages/LocationMoodsPage';
+import LocationSlidersPage from './Presentation/CMS/Pages/LocationSlidersPage';
 
 
 
@@ -98,8 +103,32 @@ const dashboardRoutes : AuthRoutes[] = [
       route: "/cms/content"
     } ,
     {
-      page : <ChannelPlaylistsPage />,
-      route: "/cms/locations/:id"
+      page : <LocationMusicHomePage />,
+      route: "/cms/locations/musicHome"
+    },
+    {
+      page : <LocationHomePage />,
+      route: "/cms/locations/home"
+    },
+    {
+      page : <LocationGenresPage />,
+      route: "/cms/locations/genres"
+    },
+    {
+      page : <LocationPlaylistPage />,
+      route: "/cms/locations/playlists"
+    },
+    {
+      page : <LocationChartPage />,
+      route: "/cms/locations/charts"
+    },
+    {
+      page : <LocationMoodsPage />,
+      route: "/cms/locations/moods"
+    },
+    {
+      page : <LocationSlidersPage />,
+      route: "/cms/locations/sliders"
     }
 
 

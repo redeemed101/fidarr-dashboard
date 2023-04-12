@@ -18,7 +18,7 @@ const contentOptions : PrimarySelectOption[] = [
         value: "Home"
     }
 ]
-const LocationGenresPage = () => {
+const LocationMoodsPage = () => {
     const { id } = useParams();
     const next = async (direction: ScrollDirection) => {}
     const ref = useInfiniteScroll<LegacyRef<HTMLDivElement>>({
@@ -37,7 +37,7 @@ const LocationGenresPage = () => {
             <div className="flex flex-col w-3/4 px-12 gap-4 mx-auto">
                
                <div className="flex flex-row items-center justify-between w-full">
-                  <p className="font-bold text-white">Genres</p>
+                  <p className="font-bold text-white">Moods</p>
                   <div className="flex flex-row gap-2 items-center">
                     <p className="font-bold text-white text-sm">Location : Music Home</p>
                     <PrimaryButton title='Save' padY={2} padX={6} height="10" width="100" />
@@ -62,7 +62,7 @@ const LocationGenresPage = () => {
                                        <img src={ListIcon} />
                                 </div>
                         </div>
-                        <p className="left-1/4 top-3/4 absolute font-bold text-white uppercase text-sm">Christian/Gospel</p>
+                        <p className="left-1/4 top-3/4 absolute font-bold text-white uppercase text-sm">Chill</p>
                    </div>)
                 }
                       
@@ -78,4 +78,4 @@ const LocationGenresPage = () => {
     )
 }
 
-export default LocationGenresPage
+export default LocationMoodsPage

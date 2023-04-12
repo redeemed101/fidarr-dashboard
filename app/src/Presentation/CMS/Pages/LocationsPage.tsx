@@ -8,7 +8,7 @@ import LocationsTable from "../Sections/LocationsTable"
 
 const LocationsPage = () => {
     return(
-        <div style={{height:"inherit"}}  className="pb-4 w-full flex flex-row bg-black h-screen">
+        <div  className="pb-4 w-full flex flex-row bg-black h-screen">
         <MenuColumn />
         <div className="flex   gap-4 flex-col w-full">
        

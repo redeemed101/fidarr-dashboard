@@ -9,56 +9,64 @@ type LocationRow = {
     id: string,
     name : string,
     location : string,
-    lastUpdated: string
+    lastUpdated: string,
+    route: string
 }
 const locations: LocationRow [] = [
     {
         id: "1234",
         name : "Content Feed",
         location : "Home Page",
-        lastUpdated : "March 24, 2023"
+        lastUpdated : "March 24, 2023",
+        route:"/cms/locations/home"
 
     },
     {
         id: "12345",
         name : "Slider",
         location : "Music Home",
-        lastUpdated : "March 24, 2023"
+        lastUpdated : "March 24, 2023",
+        route:"/cms/locations/sliders"
 
     },
     {
         id: "123456",
         name : "Genres",
         location : "Music Home",
-        lastUpdated : "March 24, 2023"
+        lastUpdated : "March 24, 2023",
+        route:"/cms/locations/genres"
 
     },
     {
         id: "1234567",
         name : "Moods",
         location : "Music Home",
-        lastUpdated : "March 24, 2023"
+        lastUpdated : "March 24, 2023",
+        route:"/cms/locations/moods"
 
     },
     {
         id: "12345678",
         name : "Charts",
         location : "Music Home",
-        lastUpdated : "March 24, 2023"
+        lastUpdated : "March 24, 2023",
+        route:"/cms/locations/charts"
 
     },
      {
         id: "123456789",
         name : "Content Feed",
         location : "Music Home",
-        lastUpdated : "March 24, 2023"
+        lastUpdated : "March 24, 2023",
+        route:"/cms/locations/musicHome"
 
     },
     {
         id: "1234567890",
         name : "Playlists",
         location : "Music Home",
-        lastUpdated : "March 24, 2023"
+        lastUpdated : "March 24, 2023",
+        route:"/cms/locations/playlists"
 
     }
    
@@ -93,7 +101,7 @@ const LocationsTable = ({rows = locations}: LocationsTableProps) => {
                     <div className="flex flex-row gap-2">
                         
                         <div className="cursor-pointer">
-                          <Link to={`/cms/locations/${location.id}`}><img src={EditIcon} /></Link>
+                          <Link to={location.route}><img src={EditIcon} /></Link>
                         </div>
                         <div className="cursor-pointer">
                            <img src={DeleteIcon} />

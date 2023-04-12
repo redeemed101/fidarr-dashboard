@@ -17,7 +17,7 @@ const contentOptions : PrimarySelectOption[] = [
         value: "Home"
     }
 ]
-const LocationPage = () => {
+const LocationHomePage = () => {
     const { id } = useParams();
     const next = async (direction: ScrollDirection) => {}
     const ref = useInfiniteScroll<LegacyRef<HTMLDivElement>>({
@@ -38,7 +38,7 @@ const LocationPage = () => {
                <div className="flex flex-row items-center justify-between w-full">
                   <p className="font-bold text-white">Content Feed</p>
                   <div className="flex flex-row gap-2 items-center">
-                    <p className="font-bold text-white text-sm">Location : Music Home</p>
+                    <p className="font-bold text-white text-sm">Location : Home Page</p>
                     <PrimaryButton title='Save' padY={2} padX={6} height="10" width="100" />
                   </div>
                </div>
@@ -54,7 +54,7 @@ const LocationPage = () => {
                         <div className="flex flex-col  bg-red-900 gap-2 rounded">
                             <div className="flex flex-col px-4 gap-2">
                                 <div>
-                                    <p className="font-bold text-white text-sm">New Releases</p>
+                                    <p className="font-bold text-white text-sm">For You</p>
                                     <p className="text-fidarrgray-300 text-sm">Content</p>
                                 </div>
                                 <div className="flex flex-row gap-2 items-baseline">
@@ -91,7 +91,7 @@ const LocationPage = () => {
                         <div className="flex flex-col  bg-red-900 gap-2 rounded">
                             <div className="flex flex-col px-4 gap-2">
                                 <div>
-                                    <p className="font-bold text-white text-sm">New Releases</p>
+                                    <p className="font-bold text-white text-sm">Top Singles</p>
                                     <p className="text-fidarrgray-300 text-sm">Content</p>
                                 </div>
                                 <div className="flex flex-row gap-2 items-baseline">
@@ -136,4 +136,4 @@ const LocationPage = () => {
     )
 }
 
-export default LocationPage
+export default LocationHomePage

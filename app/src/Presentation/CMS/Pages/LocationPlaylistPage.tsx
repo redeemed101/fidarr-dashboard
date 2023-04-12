@@ -6,10 +6,10 @@ import { ButtonWithIcon, PrimaryButton } from "../../Common/buttons"
 import EditIcon from "../../../Assets/svgs/EditIcon.svg"
 import DeleteIcon from "../../../Assets/svgs/DeleteIcon.svg"
 import PrimarySelect, { PrimarySelectOption } from "../../Common/select"
-import { SearchTextField } from "../../Common/textfields"
+import { PrimaryTextField, SearchTextField } from "../../Common/textfields"
 import useInfiniteScroll, { ScrollDirection } from "react-easy-infinite-scroll-hook"
 import ListIcon from "../../../Assets/svgs/FilledListIcon.svg"
-import Genre1 from "../../../Assets/svgs/Genre1.svg"
+import Playlist1 from "../../../Assets/svgs/LocationPlaylist1.svg"
 import { LegacyRef } from "react"
 
 const contentOptions : PrimarySelectOption[] = [
@@ -18,13 +18,12 @@ const contentOptions : PrimarySelectOption[] = [
         value: "Home"
     }
 ]
-const LocationGenresPage = () => {
+const LocationPlaylistPage = () => {
     const { id } = useParams();
     const next = async (direction: ScrollDirection) => {}
     const ref = useInfiniteScroll<LegacyRef<HTMLDivElement>>({
         // Function to fetch more items
-        next,
-        
+        next,        
         columnCount: 100,      
         hasMore: { down: true },
       });
@@ -37,23 +36,28 @@ const LocationGenresPage = () => {
             <div className="flex flex-col w-3/4 px-12 gap-4 mx-auto">
                
                <div className="flex flex-row items-center justify-between w-full">
-                  <p className="font-bold text-white">Genres</p>
+                  <p className="font-bold text-white">Playlists</p>
                   <div className="flex flex-row gap-2 items-center">
-                    <p className="font-bold text-white text-sm">Location : Music Home</p>
+                    
                     <PrimaryButton title='Save' padY={2} padX={6} height="10" width="100" />
                   </div>
                </div>
 
-               <div className="flex flex-row items-center gap-2 w-full">
+               <div className="flex flex-row items-start gap-2 w-full">
                   <PrimarySelect options={contentOptions} label="Content Type" width="1/4" padX={3} />
-                  <div className="w-3/4 mt-6">
-                    <SearchTextField />
+                  <div className="w-1/4">
+                      <PrimaryTextField type="text" value="" padX={6} padY={2} width="full" height="12" label="Tag" placeholder="Tag" />
                   </div>
                </div>
+               
+               <div className="w-full">
+                  <SearchTextField />
+               </div>
+
                <div className="flex grid grid-cols-4 gap-4">
                {
                  [...Array(12)].map((x,i) => <div className="flex flex-col relative">
-                      <img src={Genre1} />
+                      <img src={Playlist1} />
                       <div className="flex flex-row gap-1 pt-2 pr-2 absolute top-0 right-0">
                                 <div className="cursor-pointer">
                                     <img src={DeleteIcon} />
@@ -78,4 +82,4 @@ const LocationGenresPage = () => {
     )
 }
 
-export default LocationGenresPage
+export default LocationPlaylistPage
