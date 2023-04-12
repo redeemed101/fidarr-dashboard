@@ -18,6 +18,9 @@ import LocationsPage from './Presentation/CMS/Pages/LocationsPage';
 import ChannelsPage from './Presentation/CMS/Pages/ChannelsPage';
 import ContentPage from './Presentation/CMS/Pages/ContentPage';
 import withErrorBoundary, { ErrorBoundary } from './HoCs/Errors/WithErrorBoundary';
+import LocationPage from './Presentation/CMS/Pages/LocationPage';
+import LocationGenresPage from './Presentation/CMS/Pages/LocationGenresPage';
+import ChannelPlaylistsPage from './Presentation/CMS/Pages/ChannelPlaylistsPage';
 
 
 
@@ -93,7 +96,11 @@ const dashboardRoutes : AuthRoutes[] = [
     {
       page : <ContentPage />,
       route: "/cms/content"
-    },
+    } ,
+    {
+      page : <ChannelPlaylistsPage />,
+      route: "/cms/locations/:id"
+    }
 
 
 ]
