@@ -1,11 +1,12 @@
 {
   "files": {
-    "main.css": "/fidarr-dashboard/static/css/main.738cfbb2.css",
-    "main.js": "/fidarr-dashboard/static/js/main.93b4aca5.js",
+    "main.css": "/fidarr-dashboard/static/css/main.c7f2a7c7.css",
+    "main.js": "/fidarr-dashboard/static/js/main.aa2f037b.js",
     "static/js/787.333065c8.chunk.js": "/fidarr-dashboard/static/js/787.333065c8.chunk.js",
     "static/media/LocationPlaylist1.svg": "/fidarr-dashboard/static/media/LocationPlaylist1.4de87bbe3a142eab547effd67d91a3bc.svg",
     "static/media/FidarrLogo.svg": "/fidarr-dashboard/static/media/FidarrLogo.3cca20ea893b6ee5b2987983918e337e.svg",
     "static/media/fiddarIcon.svg": "/fidarr-dashboard/static/media/fiddarIcon.6b2739b96e61f9c1d893f10bce1df2e0.svg",
+    "static/media/Playlist1.svg": "/fidarr-dashboard/static/media/Playlist1.8fe81d19d0ff8b42b02b97936b8e6c50.svg",
     "static/media/Genre1.svg": "/fidarr-dashboard/static/media/Genre1.0a90a6cff9281c93dc8b584e5f0dd869.svg",
     "static/media/settings.svg": "/fidarr-dashboard/static/media/settings.b81ba2cd8ca1fd8470a32d454ce4640c.svg",
     "static/media/Eye.svg": "/fidarr-dashboard/static/media/Eye.3f3b382441dbb471d8cdd6d1eecb1558.svg",
@@ -32,12 +33,12 @@
     "static/media/activity.svg": "/fidarr-dashboard/static/media/activity.586ecb96ead2ef9c015dd1bf382acdf3.svg",
     "static/media/PlusIcon.svg": "/fidarr-dashboard/static/media/PlusIcon.a8b130ea1b3a7b6c84d44f10675433c5.svg",
     "static/media/CircleIcon.svg": "/fidarr-dashboard/static/media/CircleIcon.1bf97dd64685a3545e483f1a281644e0.svg",
-    "main.738cfbb2.css.map": "/fidarr-dashboard/static/css/main.738cfbb2.css.map",
-    "main.93b4aca5.js.map": "/fidarr-dashboard/static/js/main.93b4aca5.js.map",
+    "main.c7f2a7c7.css.map": "/fidarr-dashboard/static/css/main.c7f2a7c7.css.map",
+    "main.aa2f037b.js.map": "/fidarr-dashboard/static/js/main.aa2f037b.js.map",
     "787.333065c8.chunk.js.map": "/fidarr-dashboard/static/js/787.333065c8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.738cfbb2.css",
-    "static/js/main.93b4aca5.js"
+    "static/css/main.c7f2a7c7.css",
+    "static/js/main.aa2f037b.js"
   ]
 }
