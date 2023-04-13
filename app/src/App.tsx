@@ -27,6 +27,10 @@ import LocationChartPage from './Presentation/CMS/Pages/LocationChartPage';
 import LocationMoodsPage from './Presentation/CMS/Pages/LocationMoodsPage';
 import LocationSlidersPage from './Presentation/CMS/Pages/LocationSlidersPage';
 import ChannelGenrePage from './Presentation/CMS/Pages/ChannelGenrePage';
+import ContentPlaylistsPage from './Presentation/CMS/Pages/ContentPlaylistsPage';
+import ContentTracksPage from './Presentation/CMS/Pages/ContentTracksPage';
+import ContentArtistsPage from './Presentation/CMS/Pages/ContentArtistsPage';
+import ContentAlbumsPage from './Presentation/CMS/Pages/ContentAlbumsPage';
 
 
 
@@ -40,7 +44,7 @@ type AuthRoutes = {
 const dashboardRoutes : AuthRoutes[] = [
     {
       page : <DashboardMainPage />,
-      route: "/"
+      route: "/dashboard"
     },
     {
       page : <ArtistsPage />,
@@ -112,6 +116,22 @@ const dashboardRoutes : AuthRoutes[] = [
       route: "/cms/content"
     } ,
     {
+      page : <ContentPlaylistsPage />,
+      route: "/cms/content/playlists/:id"
+    } ,
+    {
+      page : <ContentTracksPage />,
+      route: "/cms/content/tracks/:id"
+    } ,
+    {
+      page : <ContentArtistsPage />,
+      route: "/cms/content/artists/:id"
+    } ,
+    {
+      page : <ContentAlbumsPage />,
+      route: "/cms/content/albums/:id"
+    } ,
+    {
       page : <LocationMusicHomePage />,
       route: "/cms/locations/musicHome"
     },
@@ -159,12 +179,13 @@ function App() {
   return (
     
        <Routes>
-          <Route path="/login" element={<LoginPage /> } />
+          
           <Route element={<MenuContextLayout />}>
             {
               dashboardRoutes.map(r => (<Route  path={r.route} element= {r.page}/>))
             }
           </Route>
+          <Route path="/" element={<LoginPage /> } />
       </Routes>
    
    

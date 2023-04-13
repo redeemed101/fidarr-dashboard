@@ -64,7 +64,7 @@ export function GrayedTextField({value,label,placeholder, type, padY, padX,heigh
 
  export const SearchTextField = () => {
     return (
-        <div>
+        <div className='w-full'>
             <label className="relative block">
             <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                 <img className="h-5 w-5 fill-black" src={Search} />
@@ -73,7 +73,7 @@ export function GrayedTextField({value,label,placeholder, type, padY, padX,heigh
             <input
                 className="w-full bg-white placeholder:font-italitc border border-slate-300 rounded-full py-2 pl-10 pr-4 focus:outline-none"
                 placeholder="Search" type="text" />
-        </label>
+            </label>
         </div>
     )
  }

@@ -14,7 +14,7 @@ type PrimarySelectProps = {
 const PrimarySelect = ({label, options, value, width, padX} : PrimarySelectProps) => {
     return (
         <div className={`w-${width}  px-${padX} mb-6 md:mb-0` }>
-            <label className=" tracking-wide text-fidarrgray-900 text-xs font-bold mb-2" htmlFor="grid-state">
+            <label className=" tracking-wide text-white opacity-60 text-xs font-bold mb-2" htmlFor="grid-state">
                 {label}
             </label>
         <div className="relative">

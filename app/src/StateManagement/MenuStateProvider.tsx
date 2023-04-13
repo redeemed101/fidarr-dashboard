@@ -7,6 +7,7 @@ import Music from "../Assets/svgs/headphones.svg"
 import Copy from "../Assets/svgs/copy.svg"
 import People from "../Assets/svgs/users.svg"
 import Settings from "../Assets/svgs/settings.svg"
+import { useLocalStorage } from './storage/localStorage';
 
 
 export type MenuStateContextType = {
@@ -60,13 +61,19 @@ const menus : Menu[] = [
     }
 ]
 
+export const StorageKey : string = "menuState"
+
 export const MenuStateProviderContext = createContext<MenuStateContextType>({} as MenuStateContextType);
 
 
 const MenuStateProvider : React.FC<{ children: React.ReactNode }> = ({children}) => {
+      const {item, setItem} = useLocalStorage<string>(StorageKey)
     // this state will be shared with all components 
-       const [selectedMenu, setSelectedMenu] = useState(menus[0].key);
-         
+       const [selectedMenu, setMenu] = useState(item || menus[0].key);
+       const setSelectedMenu = (key : string) => {
+            setMenu(key)
+            setItem(key)
+       }         
         return (
                     // this is the provider providing state
             <MenuStateProviderContext.Provider value={{selectedMenu, setSelectedMenu,menus}}>

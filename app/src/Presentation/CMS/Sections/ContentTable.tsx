@@ -1,81 +1,70 @@
 import EditIcon from "../../../Assets/svgs/EditIcon.svg"
 import DeleteIcon from "../../../Assets/svgs/DeleteIcon.svg"
 import SettingsIcon from "../../../Assets/svgs/TrackSettingsIcon.svg";
+import { Link } from "react-router-dom";
 
-
+enum ContentType{
+    Playlist = "Playlists",
+    Artist = "Artists",
+    Track = "Tracks",
+    Album = "Albums"
+}
 
 type ContentRow = {
-  
+    id : string,
     name : string,
-    contentType: string,
     tag: string,
     autoUpdate: boolean,
-    lastUpdated: string
+    lastUpdated: string,
+    type: ContentType
 }
 const Content: ContentRow [] = [
     {
-        
+        id:"1234",
         name : "New Singles",
-        contentType: "Tracks",
         tag: "#Rock",
         autoUpdate: true,
-        lastUpdated : "March 24, 2023"
+        lastUpdated : "March 24, 2023",
+        type: ContentType.Track
 
     },
     {
-        
-        name : "New Singles",
-        contentType: "Tracks",
+        id:"1234",
+        name : "New Albums",
         tag: "#Rock",
         autoUpdate: true,
-        lastUpdated : "March 24, 2023"
+        lastUpdated : "March 24, 2023",
+        type: ContentType.Album
 
     },
     {
-        
+        id:"1234",
         name : "New Singles",
-        contentType: "Tracks",
         tag: "#Rock",
         autoUpdate: true,
-        lastUpdated : "March 24, 2023"
+        lastUpdated : "March 24, 2023",
+        type: ContentType.Track
 
     },
     {
-        
-        name : "New Singles",
-        contentType: "Tracks",
+        id:"1234",
+        name : "Playlist",
         tag: "#Rock",
         autoUpdate: true,
-        lastUpdated : "March 24, 2023"
+        lastUpdated : "March 24, 2023",
+        type: ContentType.Playlist
 
     },
     {
-        
-        name : "New Singles",
-        contentType: "Tracks",
+        id:"1234",
+        name : "Popular Artists",
         tag: "#Rock",
         autoUpdate: true,
-        lastUpdated : "March 24, 2023"
+        lastUpdated : "March 24, 2023",
+        type: ContentType.Artist
 
     },
-    {
-        
-        name : "New Singles",
-        contentType: "Tracks",
-        tag: "#Rock",
-        autoUpdate: true,
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        
-        name : "New Singles",
-        contentType: "Tracks",
-        tag: "#Rock",
-        autoUpdate: true,
-        lastUpdated : "March 24, 2023"
-
-    },
+   
    
 ]
 type ContentTableProps = {
@@ -100,11 +89,12 @@ const ContentTable = ({rows = Content}: ContentTableProps) => {
             </thead>
             <tbody >
                 {
+               
                 rows.map( content => 
                 <tr className="text-left ">
                
                 <td className="py-4"><p>{content.name}</p></td>
-                <td><p>{content.contentType}</p></td>
+                <td><p>{content.type}</p></td>
                 <td><p>{content.tag}</p></td>
                 <td><p>{content.autoUpdate ? "Yes" : "No"}</p></td>
                 <td><p>{content.lastUpdated}</p></td>
@@ -112,7 +102,17 @@ const ContentTable = ({rows = Content}: ContentTableProps) => {
                     <div className="flex flex-row gap-2">
                         
                         <div className="cursor-pointer">
-                          <img src={EditIcon} />
+                          <Link to= {(() => {
+                                switch (content.type) {
+                                case ContentType.Album:   return `/cms/content/albums/${content.id}`;
+                                case ContentType.Artist:  return `/cms/content/artists/${content.id}`;
+                                case ContentType.Playlist:   return `/cms/content/playlists/${content.id}`;
+                                case ContentType.Track:   return `/cms/content/tracks/${content.id}`;
+                                default:      return `/cms/content/tracks/${content.id}`;
+                                }
+                            })()}>
+                            <img src={EditIcon} />
+                          </Link>
                         </div>
                         <div className="cursor-pointer">
                            <img src={DeleteIcon} />

@@ -25,7 +25,7 @@ const ChannelGenrePage = () => {
         <MenuColumn />
         <div className="flex   gap-4 flex-col w-full">
        
-            <CMSHeader selectedType={CMSMenuType.Locations} menus={cmsMenuItems}/>
+            <CMSHeader selectedType={CMSMenuType.Channels} menus={cmsMenuItems}/>
             <div className="flex flex-col w-3/4 px-12 gap-4 mx-auto">
                
                <div className="flex flex-row items-center justify-between w-full">

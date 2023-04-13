@@ -1,4 +1,5 @@
 
+import { Link } from "react-router-dom";
 import FidarrLogo from "../../../Assets/svgs/FidarrLogo.svg";
 import { PrimaryButton } from '../../Common/buttons';
 import { GrayedTextField, PasswordToggleField } from '../../Common/textfields';
@@ -24,7 +25,7 @@ const LoginPage = () => {
                         <div className='py-4 container flex items-center flex-col'>
                             <a href="#" className="text-red-900 underline">Forgot Password?</a>
                         </div>
-                        <PrimaryButton title='Login' padY={2} padX={3} height="10" width="full" />
+                        <Link to="/dashboard"><PrimaryButton title='Login' padY={2} padX={3} height="10" width="full" /></Link>
                     </div>
                     <div className="w-1/3 bg-red-900"></div>
                     
