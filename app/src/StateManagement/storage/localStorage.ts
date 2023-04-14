@@ -13,8 +13,12 @@ export const useLocalStorage = <T>(key: string) => {
         sessionStorage.setItem(key, JSON.stringify(item))
         setItem(item)
       }
+    const deleteItem = () => {
+        sessionStorage.removeItem(key)
+    }
       return {
         setItem: saveItem,
+        deleteItem : deleteItem,
         item
       }
     }

@@ -10,7 +10,7 @@ const LoginPage = () => {
             <div className='pt-32 w-3/5 items-center mx-auto flex flex-col'>
                 <div >
                    <img src={FidarrLogo} alt="Fidarr Logo" />
-                </div>
+                </div>  
                 <div className='my-6'>
                     <h6 className="text-white font-bold">Welcome Back</h6>
                 </div>

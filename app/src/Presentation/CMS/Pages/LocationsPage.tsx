@@ -12,7 +12,7 @@ const LocationsPage = () => {
         <MenuColumn />
         <div className="flex   gap-4 flex-col w-full">
        
-           <CMSHeader selectedType={CMSMenuType.Locations} menus={cmsMenuItems} buttonComp={ <Link to="/music/artists/create"></Link> } />
+           <CMSHeader selectedType={CMSMenuType.Locations} menus={cmsMenuItems}  />
            <LocationsTable />
         </div>   
      

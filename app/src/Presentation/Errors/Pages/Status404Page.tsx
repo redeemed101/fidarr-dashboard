@@ -16,7 +16,7 @@ const Status400Page = () => {
                 </div>
             </div>
             <div>
-              <PrimaryButton title='Go To Overview' padY={2} padX={3} height="10" width="40" />
+              <PrimaryButton title='Go To Overview' padY={2} padX={4} height="10" width="48" />
             </div>
          </div>
         </div>

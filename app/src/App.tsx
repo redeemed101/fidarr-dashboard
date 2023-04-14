@@ -31,6 +31,9 @@ import ContentPlaylistsPage from './Presentation/CMS/Pages/ContentPlaylistsPage'
 import ContentTracksPage from './Presentation/CMS/Pages/ContentTracksPage';
 import ContentArtistsPage from './Presentation/CMS/Pages/ContentArtistsPage';
 import ContentAlbumsPage from './Presentation/CMS/Pages/ContentAlbumsPage';
+import Status404Page from './Presentation/Errors/Pages/Status404Page';
+import PeopleAccountsPage from './Presentation/People/Pages/PeopleAccountsPage';
+import PeopleSubscribersPage from './Presentation/People/Pages/PeopleSubscribersPage';
 
 
 
@@ -158,6 +161,18 @@ const dashboardRoutes : AuthRoutes[] = [
     {
       page : <LocationSlidersPage />,
       route: "/cms/locations/sliders"
+    },
+    {
+      page : <PeopleAccountsPage />,
+      route: "/people"
+    },
+    {
+      page : <PeopleAccountsPage />,
+      route: "/people/accounts"
+    },
+    {
+      page : <PeopleSubscribersPage />,
+      route: "/people/subscribers"
     }
 
 
@@ -186,6 +201,8 @@ function App() {
             }
           </Route>
           <Route path="/" element={<LoginPage /> } />
+          <Route path="*" element={<Status404Page />} />
+
       </Routes>
    
    

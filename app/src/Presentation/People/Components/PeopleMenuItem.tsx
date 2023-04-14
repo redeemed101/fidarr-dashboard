@@ -1,10 +1,9 @@
-
-type CMSItemProps = {
+type PeopleItemProps = {
     title : string,
     isSelected? : boolean,
     action? : () => void
 }
-const CMSMenuItem = ({title,isSelected, action}: CMSItemProps) => {
+const PeopleMenuItem = ({title,isSelected, action}: PeopleItemProps) => {
     return (
         <div onClick={action} className={`flex flex-col hover:bg-fidarrgray-100 items-center py-2 ${ isSelected ? "bg-red-900" : "" } rounded-md w-32`}>
      
@@ -15,4 +14,4 @@ const CMSMenuItem = ({title,isSelected, action}: CMSItemProps) => {
     )
 }
 
-export default CMSMenuItem
+export default PeopleMenuItem
