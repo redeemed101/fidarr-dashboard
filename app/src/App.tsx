@@ -34,6 +34,9 @@ import ContentAlbumsPage from './Presentation/CMS/Pages/ContentAlbumsPage';
 import Status404Page from './Presentation/Errors/Pages/Status404Page';
 import PeopleAccountsPage from './Presentation/People/Pages/PeopleAccountsPage';
 import PeopleSubscribersPage from './Presentation/People/Pages/PeopleSubscribersPage';
+import FilesPage from './Presentation/Files/Pages/FilesPage';
+import ProfilePage from './Presentation/Settings/Pages/ProfilePage';
+import TeamPage from './Presentation/Settings/Pages/TeamPage';
 
 
 
@@ -173,6 +176,22 @@ const dashboardRoutes : AuthRoutes[] = [
     {
       page : <PeopleSubscribersPage />,
       route: "/people/subscribers"
+    },
+    {
+      page : <FilesPage />,
+      route: "/files"
+    },
+    {
+      page : <ProfilePage />,
+      route: "/settings"
+    },
+    {
+      page : <ProfilePage />,
+      route: "/settings/profile"
+    },
+    {
+      page : <TeamPage />,
+      route: "/settings/team"
     }
 
 

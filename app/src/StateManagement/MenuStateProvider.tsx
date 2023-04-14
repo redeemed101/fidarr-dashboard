@@ -26,7 +26,7 @@ const menus : Menu[] = [
     {
         title : "Overview",
         imgSrc : Activity,
-        route : "/",
+        route : "/dashboard",
         key: "OVERVIEW"
     },
     {
