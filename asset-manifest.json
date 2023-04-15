@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/fidarr-dashboard/static/css/main.57210bba.css",
-    "main.js": "/fidarr-dashboard/static/js/main.f03e3382.js",
+    "main.css": "/fidarr-dashboard/static/css/main.11f3bd36.css",
+    "main.js": "/fidarr-dashboard/static/js/main.46de5234.js",
     "static/media/LocationPlaylist1.svg": "/fidarr-dashboard/static/media/LocationPlaylist1.4de87bbe3a142eab547effd67d91a3bc.svg",
     "static/media/FidarrLogo.svg": "/fidarr-dashboard/static/media/FidarrLogo.3cca20ea893b6ee5b2987983918e337e.svg",
     "static/media/fiddarIcon.svg": "/fidarr-dashboard/static/media/fiddarIcon.6b2739b96e61f9c1d893f10bce1df2e0.svg",
@@ -33,11 +33,11 @@
     "static/media/activity.svg": "/fidarr-dashboard/static/media/activity.586ecb96ead2ef9c015dd1bf382acdf3.svg",
     "static/media/PlusIcon.svg": "/fidarr-dashboard/static/media/PlusIcon.a8b130ea1b3a7b6c84d44f10675433c5.svg",
     "static/media/CircleIcon.svg": "/fidarr-dashboard/static/media/CircleIcon.1bf97dd64685a3545e483f1a281644e0.svg",
-    "main.57210bba.css.map": "/fidarr-dashboard/static/css/main.57210bba.css.map",
-    "main.f03e3382.js.map": "/fidarr-dashboard/static/js/main.f03e3382.js.map"
+    "main.11f3bd36.css.map": "/fidarr-dashboard/static/css/main.11f3bd36.css.map",
+    "main.46de5234.js.map": "/fidarr-dashboard/static/js/main.46de5234.js.map"
   },
   "entrypoints": [
-    "static/css/main.57210bba.css",
-    "static/js/main.f03e3382.js"
+    "static/css/main.11f3bd36.css",
+    "static/js/main.46de5234.js"
   ]
 }
