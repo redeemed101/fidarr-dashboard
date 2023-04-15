@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.7.12",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
@@ -16,6 +17,7 @@
     "@types/react-dom": "^18.0.11",
     "axios": "^1.3.5",
     "faker": "^6.6.6",
+    "graphql": "^16.6.0",
     "graphql-request": "^5.2.0",
     "inversify": "^6.0.1",
     "react": "^18.2.0",
@@ -38,7 +40,11 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "codegen-artists": "graphql-codegen --config codegen_artists.yml",
+    "codegen-albums": "graphql-codegen --config codegen_albums.yml",
+    "codegen-genres": "graphql-codegen --config codegen_genres.yml"
   },
   "eslintConfig": {
     "extends": [
@@ -69,6 +75,9 @@
     ]
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "3.3.0",
+    "@graphql-codegen/client-preset": "3.0.0",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@storybook/addon-essentials": "^7.0.2",
     "@storybook/addon-interactions": "^7.0.2",
     "@storybook/addon-links": "^7.0.2",

@@ -5,6 +5,22 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { ErrorBoundary } from './HoCs/Errors/WithErrorBoundary';
+import { ApolloClient, ApolloLink, ApolloProvider, HttpLink, InMemoryCache } from '@apollo/client';
+
+const artistsQL = new HttpLink({
+  uri: 'https://9ee7-102-70-3-142.ngrok-free.app/api/artistql',
+})
+const genreQL = new HttpLink({
+  uri: 'https://9ee7-102-70-3-142.ngrok-free.app/api/genreql',
+})
+const albumsQL = new HttpLink({
+  uri: 'https://9ee7-102-70-3-142.ngrok-free.app/api/albumql',
+})
+const client = new ApolloClient({
+  link: ApolloLink.from([artistsQL, genreQL,albumsQL])
+  ,
+  cache: new InMemoryCache(),
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,7 +28,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter basename={process.env.PUBLIC_URL}>
-     <App />
+     <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
     </BrowserRouter>
    
   </React.StrictMode>

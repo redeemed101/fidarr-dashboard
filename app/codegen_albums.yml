@@ -1,0 +1,12 @@
+overwrite: true
+schema: "https://9ee7-102-70-3-142.ngrok-free.app/api/albumql"
+documents: "src/Data/DataSource/GraphQL/Albums/*.ts"
+generates:
+  src/Data/DataSource/GraphQL/Generated/Albums/:
+    preset: "client"
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      withHooks: true

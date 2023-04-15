@@ -1,0 +1,12 @@
+overwrite: true
+schema: "https://9ee7-102-70-3-142.ngrok-free.app/api/artistql"
+documents: "src/Data/DataSource/GraphQL/Artists/*.ts"
+generates:
+  src/Data/DataSource/GraphQL/Generated/Artists/:
+    preset: "client"
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      withHooks: true
