@@ -4,6 +4,7 @@ import MenuColumn from "../../Dashboard/Components/MenuColumn"
 import PeopleHeader from "../Sections/PeopleHeader"
 import { ButtonWithIcon } from "../../Common/buttons"
 import PlusIcon from "../../../Assets/svgs/PlusIcon.svg"
+import SubscribersTable from "../Sections/SubscribersTable"
 
 const PeopleSubscribersPage = () => {
     return(
@@ -12,7 +13,7 @@ const PeopleSubscribersPage = () => {
         <div className="flex   gap-4 flex-col w-full">
        
            <PeopleHeader selectedType={PeopleMenuType.Subscribers} menus={peopleMenuItems}  />
-           
+           <SubscribersTable />
         </div>   
      
         </div>

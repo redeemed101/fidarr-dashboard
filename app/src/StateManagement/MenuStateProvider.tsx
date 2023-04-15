@@ -47,12 +47,12 @@ const menus : Menu[] = [
         route: "/people",
         key: "PEOPLE"
     },
-    {
+    /*{
         title : "Files",
         imgSrc : File,
         route: "/files",
         key: "FILES"
-    },
+    },*/
     {
         title: "Settings",
         imgSrc : Settings,

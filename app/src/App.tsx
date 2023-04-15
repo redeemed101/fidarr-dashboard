@@ -37,6 +37,7 @@ import PeopleSubscribersPage from './Presentation/People/Pages/PeopleSubscribers
 import FilesPage from './Presentation/Files/Pages/FilesPage';
 import ProfilePage from './Presentation/Settings/Pages/ProfilePage';
 import TeamPage from './Presentation/Settings/Pages/TeamPage';
+import CreateTeamMemberPage from './Presentation/Settings/Pages/CreateTeamMemberPage';
 
 
 
@@ -192,6 +193,10 @@ const dashboardRoutes : AuthRoutes[] = [
     {
       page : <TeamPage />,
       route: "/settings/team"
+    },
+    {
+      page : <CreateTeamMemberPage />,
+      route: "/settings/team/create"
     }
 
 
