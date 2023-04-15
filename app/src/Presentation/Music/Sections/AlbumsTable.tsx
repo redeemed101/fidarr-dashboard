@@ -4,10 +4,10 @@ import SettingsIcon from "../../../Assets/svgs/TrackSettingsIcon.svg";
 import { ArtistCard } from "./ArtistsTable"
 
 
-type AlbumRow = {
+export type AlbumRow = {
     imgSrc : string,
     name : string,
-    genre : string,
+    artist: string,
     streams : string,
     tracks : string,
     releaseDate: string,
@@ -16,8 +16,8 @@ type AlbumRow = {
 const tracks : AlbumRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        genre : "Gospel",
+        name : "Victory",
+        artist : "Eben",
         streams : "12M",
         tracks: "10",
         releaseDate : "March 24, 2023",
@@ -27,7 +27,7 @@ const tracks : AlbumRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        artist : "Eben",
         streams : "12M",
         tracks: "10",
         releaseDate : "March 24, 2023",
@@ -37,7 +37,7 @@ const tracks : AlbumRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        artist : "Eben",
         streams : "12M",
         tracks: "10",
         releaseDate : "March 24, 2023",
@@ -47,7 +47,7 @@ const tracks : AlbumRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        artist : "Eben",
         streams : "12M",
         tracks: "10",
         releaseDate : "March 24, 2023",
@@ -57,7 +57,7 @@ const tracks : AlbumRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        artist : "Eben",
         streams : "12M",
         tracks: "10",
         releaseDate : "March 24, 2023",
@@ -67,7 +67,7 @@ const tracks : AlbumRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        artist : "Eben",
         streams : "12M",
         tracks: "10",
         releaseDate : "March 24, 2023",
@@ -77,7 +77,7 @@ const tracks : AlbumRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        artist : "Eben",
         streams : "12M",
         tracks: "10",
         releaseDate : "March 24, 2023",
@@ -87,7 +87,7 @@ const tracks : AlbumRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        artist : "Eben",
         streams : "12M",
         tracks: "10",
         releaseDate : "March 24, 2023",
@@ -97,7 +97,7 @@ const tracks : AlbumRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        artist : "Eben",
         streams : "12M",
         tracks: "10",
         releaseDate : "March 24, 2023",
@@ -107,21 +107,43 @@ const tracks : AlbumRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        artist : "Eben",
         streams : "12M",
         tracks: "10",
         releaseDate : "March 24, 2023",
         lastUpdated : "March 24, 2023"
 
     }
+
 ]
+type AlbumCardProps = {
+    imgSrc : string,
+    name: string,
+    artist: string
+}
+export const AlbumCard = ({imgSrc,name, artist} : AlbumCardProps) => {
+    return (
+        <div className="w-16 h-auto">
+        <div className="flex flex-row items-center gap-2">
+
+            <img className="rounded-md" src={imgSrc}/>
+            <div className="flex flex-col">
+                <p className="text-white font-bold">{name}</p>
+                <p className="text-fidarrgray-500 font-xs">by {artist}</p>
+            </div>
+        </div>
+        </div>
+    )
+}
+
+
 type AlbumsTableProps = {
     rows? : AlbumRow[],
     
 }
 
 const AlbumsTable = ({rows = tracks}: AlbumsTableProps) => {
-    
+
     return (
         <div className="flex flex-col w-full">
             <table className="table-auto text-white w-11/12 self-end">
@@ -154,7 +176,7 @@ const AlbumsTable = ({rows = tracks}: AlbumsTableProps) => {
                 </td>
                 <td className="border-t-0 border-l-0 border-r-0 text-xs whitespace-nowrap py-4">
                     <div >
-                       <ArtistCard name={track.name} imgSrc={track.imgSrc} genre={track.genre} />
+                       <AlbumCard name={track.name} imgSrc={track.imgSrc} artist={track.artist} />
                     </div>
                 </td>
                 <td ><p>{track.streams}</p></td>
