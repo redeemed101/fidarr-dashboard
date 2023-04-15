@@ -117,10 +117,11 @@ const tracks : AlbumRow [] = [
 ]
 type AlbumsTableProps = {
     rows? : AlbumRow[],
-
+    
 }
 
 const AlbumsTable = ({rows = tracks}: AlbumsTableProps) => {
+    
     return (
         <div className="flex flex-col w-full">
             <table className="table-auto text-white w-11/12 self-end">

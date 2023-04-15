@@ -7,10 +7,13 @@ import TracksTable from "../Sections/TracksTable";
 import { MusicMenuType, menuItems } from "../../../StateManagement/MusicMenu";
 import AlbumsTable from "../Sections/AlbumsTable";
 import { Link } from "react-router-dom";
+import { useAlbumModelController } from "../hooks/useAlbumModelController";
+import { albumRepository } from "../../../main";
 
 
 
 const AlbumsPage = () => {
+    const {currentAlbums, getMoreAlbumsPaginated} = useAlbumModelController(albumRepository)
     return (
        
        
