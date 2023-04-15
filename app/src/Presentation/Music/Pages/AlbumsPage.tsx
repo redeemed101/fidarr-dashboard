@@ -18,7 +18,7 @@ const AlbumsPage = () => {
     return (
        
        
-        <div style={{height:"inherit"}}  className="pb-4 flex flex-row bg-black">
+        <div style={{height:"inherit"}}  className="pb-4 flex flex-row bg-black min-h-screen">
           <MenuColumn />
           <div className="flex  gap-4 flex-col w-full">
            
