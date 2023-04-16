@@ -4,8 +4,9 @@ import { AlbumRepository } from "../../../../Domain/Repository/Music/AlbumReposi
 import { type AlbumDataSource } from "../../../DataSource/Music/Albums/AlbumDataSource";
 import { TYPES } from "../../../../DI/types";
 import { Album } from "../../../../Domain/Model/Music";
-import { graphQLclient } from "../../../DataSource/GraphQL/Client/client";
+import { graphQLAlbumClient } from "../../../DataSource/GraphQL/Client/client";
 import { GetAlbumsPaginatedDocument, GetAlbumsPaginatedQueryResult } from "../../../DataSource/GraphQL/Generated/Albums/graphql";
+import { BASE_URL } from "../../../DataSource/API/constant";
 
 
 @injectable()
@@ -23,7 +24,7 @@ export class AlbumRepositoryImpl implements AlbumRepository{
         const albumResponse = await this._dataSource.getAlbumsPaginated(page,size)
         return albumResponse.albumsPaginated.map(a => {
            return  {
-              imgSrc: a.artworkPath,
+              imgSrc: `${BASE_URL}${a.artworkPath}`,
               name: a.name,
               artist: a.artist?.name ?? "",
               genre: a.genres?.map(g => g?.name ?? "") ?? [""],

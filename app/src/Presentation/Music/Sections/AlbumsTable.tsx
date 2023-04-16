@@ -123,11 +123,11 @@ type AlbumCardProps = {
 }
 export const AlbumCard = ({imgSrc,name, artist} : AlbumCardProps) => {
     return (
-        <div className="w-16 h-auto">
+        <div className="w-auto h-auto">
         <div className="flex flex-row items-center gap-2">
 
-            <img className="rounded-md" src={imgSrc}/>
-            <div className="flex flex-col">
+            <img className="rounded-md w-16 h-16" src={imgSrc}/>
+            <div className="flex flex-col w-auto">
                 <p className="text-white font-bold">{name}</p>
                 <p className="text-fidarrgray-500 font-xs">by {artist}</p>
             </div>

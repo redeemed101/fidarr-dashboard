@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import { AlbumDataSource } from "./AlbumDataSource";
 import { AlbumResponse } from "./AlbumResponse";
-import { graphQLclient } from "../../GraphQL/Client/client";
+import { graphQLAlbumClient } from "../../GraphQL/Client/client";
 import { Album, GetAlbumsPaginatedDocument, GetAlbumsPaginatedQueryResult } from "../../GraphQL/Generated/Albums/graphql";
 
 export interface AlbumsPaginated {
@@ -10,7 +10,7 @@ export interface AlbumsPaginated {
 @injectable()
 export class AlbumDataSourceImpl implements AlbumDataSource{
     async getAlbumsPaginated(page: number, size: number): Promise<AlbumsPaginated> {
-        const result = await graphQLclient.query<GetAlbumsPaginatedQueryResult>({
+        const result = await graphQLAlbumClient.query<GetAlbumsPaginatedQueryResult>({
             query : GetAlbumsPaginatedDocument,
             variables: {
                 page: page,
