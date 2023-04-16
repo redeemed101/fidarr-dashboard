@@ -1,144 +1,36 @@
 import EditIcon from "../../../Assets/svgs/EditIcon.svg"
 import DeleteIcon from "../../../Assets/svgs/DeleteIcon.svg"
 import SettingsIcon from "../../../Assets/svgs/TrackSettingsIcon.svg";
+import { Artist } from "../../../Domain/Model/Music";
 
 export type ArtistCardProps = {
     imgSrc : string,
     name : string,
-    genre : string,
+    genres : string[],
 }
-export const ArtistCard = ({imgSrc,name, genre} : ArtistCardProps) => {
+export const ArtistCard = ({imgSrc,name, genres} : ArtistCardProps) => {
     return (
-        <div className="w-16 h-auto">
+        <div className="w-auto h-auto">
         <div className="flex flex-row items-center gap-2">
 
-            <img className="rounded-md" src={imgSrc}/>
+            <img className="rounded-md w-16 h-16" src={imgSrc}/>
             <div className="flex flex-col">
                 <p className="text-white font-bold">{name}</p>
-                <p className="text-fidarrgray-500 font-xs">{genre}</p>
+                <p className="text-fidarrgray-500 font-xs">{genres.map(a => a,)}</p>
             </div>
         </div>
         </div>
     )
 }
 
-type ArtistRow = {
-    imgSrc : string,
-    name : string,
-    genre : string,
-    streams : string,
-    tracks : string,
-    albums: string,
-    lastUpdated: string
-}
-const artists : ArtistRow [] = [
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        genre : "Gospel",
-        streams : "12M",
-        tracks : "120",
-        albums : "6",
-        lastUpdated : "March 24, 2023"
 
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        genre : "Gospel",
-        streams : "12M",
-        tracks : "120",
-        albums : "6",
-        lastUpdated : "March 24, 2023"
 
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        genre : "Gospel",
-        streams : "12M",
-        tracks : "120",
-        albums : "6",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        genre : "Gospel",
-        streams : "12M",
-        tracks : "120",
-        albums : "6",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        genre : "Gospel",
-        streams : "12M",
-        tracks : "120",
-        albums : "6",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        genre : "Gospel",
-        streams : "12M",
-        tracks : "120",
-        albums : "6",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        genre : "Gospel",
-        streams : "12M",
-        tracks : "120",
-        albums : "6",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        genre : "Gospel",
-        streams : "12M",
-        tracks : "120",
-        albums : "6",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        genre : "Gospel",
-        streams : "12M",
-        tracks : "120",
-        albums : "6",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        genre : "Gospel",
-        streams : "12M",
-        tracks : "120",
-        albums : "6",
-        lastUpdated : "March 24, 2023"
-
-    }
-]
 type ArtistTableProps = {
-    rows? : ArtistRow[],
+    rows : Artist[],
 
 }
 
-const ArtistsTable = ({rows = artists}: ArtistTableProps) => {
+const ArtistsTable = ({rows}: ArtistTableProps) => {
     return (
         <div className="flex flex-col w-full">
             <table className="table-auto text-white w-11/12 self-end">
@@ -171,7 +63,7 @@ const ArtistsTable = ({rows = artists}: ArtistTableProps) => {
                 </td>
                 <td className="border-t-0 border-l-0 border-r-0 text-xs whitespace-nowrap py-4">
                     <div >
-                       <ArtistCard name={artist.name} imgSrc={artist.imgSrc} genre={artist.genre} />
+                       <ArtistCard name={artist.name} imgSrc={artist.imgSrc} genres={artist.genres} />
                     </div>
                 </td>
                 <td ><p>{artist.streams}</p></td>

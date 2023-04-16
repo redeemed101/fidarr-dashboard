@@ -8,6 +8,7 @@ export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K]
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 const defaultOptions = {} as const;
+/** All built-in and custom scalars, mapped to their actual values */
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -16,6 +17,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The `DateTime` scalar type represents a date and time. `DateTime` expects timestamps to be formatted in accordance with the [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) standard. */
+  DateTime: any;
 };
 
 export type Album = {
@@ -23,16 +26,22 @@ export type Album = {
   artist?: Maybe<Artist>;
   /** Artwork. */
   artworkPath: Scalars['String'];
+  /** Date Created */
+  dateCreated: Scalars['DateTime'];
   /** Description */
   description: Scalars['String'];
   genres?: Maybe<Array<Maybe<Genre>>>;
   /**  Id. */
   id: Scalars['String'];
+  /** Last Updated */
+  lastUpdated: Scalars['DateTime'];
   likes?: Maybe<Array<Maybe<AlbumLike>>>;
   /** Name. */
   name: Scalars['String'];
   /** Path. */
   path: Scalars['String'];
+  /** Release Date */
+  releaseDate: Scalars['DateTime'];
   songs?: Maybe<Array<Maybe<Song>>>;
   streams?: Maybe<Array<Maybe<AlbumStream>>>;
 };
@@ -51,6 +60,9 @@ export type AlbumStream = {
 
 export type Artist = {
   __typename?: 'Artist';
+  albums?: Maybe<Array<Maybe<Album>>>;
+  /** Date Created. */
+  dateCreated: Scalars['DateTime'];
   genres?: Maybe<Array<Maybe<Genre>>>;
   /**  Id. */
   id: Scalars['String'];
@@ -58,8 +70,11 @@ export type Artist = {
   imagePath: Scalars['String'];
   /**  Is the account claimed */
   isProfileClaimed: Scalars['Boolean'];
+  /** Last Updated. */
+  lastUpdated: Scalars['DateTime'];
   /** Name. */
   name: Scalars['String'];
+  songs?: Maybe<Array<Maybe<Song>>>;
   /**  Artist User Id. */
   userId: Scalars['String'];
 };
@@ -167,7 +182,7 @@ export type GetArtistsPaginatedQueryVariables = Exact<{
 }>;
 
 
-export type GetArtistsPaginatedQuery = { __typename?: 'ArtistQuery', artistsPaginated?: Array<{ __typename?: 'Artist', id: string, name: string, userId: string, imagePath: string, isProfileClaimed: boolean } | null> | null };
+export type GetArtistsPaginatedQuery = { __typename?: 'ArtistQuery', artistsPaginated?: Array<{ __typename?: 'Artist', id: string, name: string, imagePath: string, isProfileClaimed: boolean, lastUpdated: any, dateCreated: any, genres?: Array<{ __typename?: 'Genre', id: string, name: string } | null> | null, songs?: Array<{ __typename?: 'Song', id: string, name: string, path: string, artworkPath: string, streams?: Array<{ __typename?: 'SongStream', id: string } | null> | null } | null> | null, albums?: Array<{ __typename?: 'Album', id: string, name: string, artworkPath: string, lastUpdated: any, releaseDate: any, dateCreated: any, streams?: Array<{ __typename?: 'AlbumStream', id: string } | null> | null } | null> | null } | null> | null };
 
 
 export const GetArtistsPaginatedDocument = gql`
@@ -175,9 +190,34 @@ export const GetArtistsPaginatedDocument = gql`
   artistsPaginated(page: $page, size: $size) {
     id
     name
-    userId
     imagePath
     isProfileClaimed
+    lastUpdated
+    dateCreated
+    genres {
+      id
+      name
+    }
+    songs {
+      id
+      name
+      path
+      artworkPath
+      streams {
+        id
+      }
+    }
+    albums {
+      id
+      name
+      streams {
+        id
+      }
+      artworkPath
+      lastUpdated
+      releaseDate
+      dateCreated
+    }
   }
 }
     `;

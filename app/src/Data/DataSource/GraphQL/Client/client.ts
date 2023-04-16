@@ -1,5 +1,5 @@
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from "@apollo/client";
-import { ALBUM_GRAPH_URL, BASE_URL, GENRE_GRAPH_URL, SONG_GRAPH_URL } from "../../API/constant";
+import { ALBUM_GRAPH_URL, ARTIST_GRAPH_URL, BASE_URL, GENRE_GRAPH_URL, SONG_GRAPH_URL } from "../../API/constant";
 
 
 
@@ -19,7 +19,7 @@ import { ALBUM_GRAPH_URL, BASE_URL, GENRE_GRAPH_URL, SONG_GRAPH_URL } from "../.
   });
 
   const artistQL = new HttpLink({
-    uri: `${BASE_URL}${ALBUM_GRAPH_URL}`,
+    uri: `${BASE_URL}${ARTIST_GRAPH_URL}`,
   })
   export const graphQLArtistClient = new ApolloClient({
     link: artistQL

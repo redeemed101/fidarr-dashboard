@@ -1,12 +1,9 @@
 import { injectable } from "inversify";
-import { AlbumDataSource } from "./AlbumDataSource";
-import { AlbumResponse } from "./AlbumResponse";
+import { AlbumDataSource, AlbumsPaginated } from "./AlbumDataSource";
 import { graphQLAlbumClient } from "../../GraphQL/Client/client";
 import { Album, GetAlbumsPaginatedDocument, GetAlbumsPaginatedQueryResult } from "../../GraphQL/Generated/Albums/graphql";
 
-export interface AlbumsPaginated {
-    albumsPaginated : Album[]
-}
+
 @injectable()
 export class AlbumDataSourceImpl implements AlbumDataSource{
     async getAlbumsPaginated(page: number, size: number): Promise<AlbumsPaginated> {

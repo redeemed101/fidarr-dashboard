@@ -13,109 +13,7 @@ export type AlbumRow = {
     releaseDate: string,
     lastUpdated: string
 }
-const tracks : AlbumRow [] = [
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Victory",
-        artist : "Eben",
-        streams : "12M",
-        tracks: "10",
-        releaseDate : "March 24, 2023",
-        lastUpdated : "March 24, 2023"
 
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        artist : "Eben",
-        streams : "12M",
-        tracks: "10",
-        releaseDate : "March 24, 2023",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        artist : "Eben",
-        streams : "12M",
-        tracks: "10",
-        releaseDate : "March 24, 2023",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        artist : "Eben",
-        streams : "12M",
-        tracks: "10",
-        releaseDate : "March 24, 2023",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        artist : "Eben",
-        streams : "12M",
-        tracks: "10",
-        releaseDate : "March 24, 2023",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        artist : "Eben",
-        streams : "12M",
-        tracks: "10",
-        releaseDate : "March 24, 2023",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        artist : "Eben",
-        streams : "12M",
-        tracks: "10",
-        releaseDate : "March 24, 2023",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        artist : "Eben",
-        streams : "12M",
-        tracks: "10",
-        releaseDate : "March 24, 2023",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        artist : "Eben",
-        streams : "12M",
-        tracks: "10",
-        releaseDate : "March 24, 2023",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        artist : "Eben",
-        streams : "12M",
-        tracks: "10",
-        releaseDate : "March 24, 2023",
-        lastUpdated : "March 24, 2023"
-
-    }
-
-]
 type AlbumCardProps = {
     imgSrc : string,
     name: string,
@@ -138,11 +36,11 @@ export const AlbumCard = ({imgSrc,name, artist} : AlbumCardProps) => {
 
 
 type AlbumsTableProps = {
-    rows? : AlbumRow[],
+    rows : AlbumRow[],
     
 }
 
-const AlbumsTable = ({rows = tracks}: AlbumsTableProps) => {
+const AlbumsTable = ({rows}: AlbumsTableProps) => {
 
     return (
         <div className="flex flex-col w-full">

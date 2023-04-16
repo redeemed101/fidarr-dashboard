@@ -5,8 +5,34 @@ export const QUERY_ARTISTS_PAGINATED = gql`query getArtistsPaginated($page:Int!,
     artistsPaginated(page:$page,size:$size){
         id
         name
-        userId
         imagePath
         isProfileClaimed
+        lastUpdated
+        dateCreated
+        genres{
+          id
+          name
+        }
+      songs{
+        
+         id
+         name
+         path
+         artworkPath
+         streams{
+          id
+        }
+      }
+      albums{
+         id
+        name
+        streams{
+          id
+        }
+        artworkPath
+        lastUpdated
+        releaseDate
+        dateCreated
+      }
     }
 }`

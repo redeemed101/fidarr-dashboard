@@ -7,7 +7,7 @@ import { ArtistCard } from "./ArtistsTable"
 type TrackRow = {
     imgSrc : string,
     name : string,
-    genre : string,
+    genres : string[],
     streams : string,
     duration : string,
     releaseDate: string,
@@ -17,7 +17,7 @@ const tracks : TrackRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        genres : ["Gospel"],
         streams : "12M",
         duration : "1:20",
         releaseDate : "March 24, 2023",
@@ -27,7 +27,7 @@ const tracks : TrackRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        genres : ["Gospel"],
         streams : "12M",
         duration : "1:20",
         releaseDate : "March 24, 2023",
@@ -37,7 +37,7 @@ const tracks : TrackRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        genres : ["Gospel"],
         streams : "12M",
         duration : "1:20",
         releaseDate : "March 24, 2023",
@@ -47,7 +47,7 @@ const tracks : TrackRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        genres : ["Gospel"],
         streams : "12M",
         duration : "1:20",
         releaseDate : "March 24, 2023",
@@ -57,7 +57,7 @@ const tracks : TrackRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        genres : ["Gospel"],
         streams : "12M",
         duration : "1:20",
         releaseDate : "March 24, 2023",
@@ -67,7 +67,7 @@ const tracks : TrackRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        genres : ["Gospel"],
         streams : "12M",
         duration : "1:20",
         releaseDate : "March 24, 2023",
@@ -77,7 +77,7 @@ const tracks : TrackRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        genres : ["Gospel"],
         streams : "12M",
         duration : "1:20",
         releaseDate : "March 24, 2023",
@@ -87,7 +87,7 @@ const tracks : TrackRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        genres : ["Gospel"],
         streams : "12M",
         duration : "1:20",
         releaseDate : "March 24, 2023",
@@ -97,7 +97,7 @@ const tracks : TrackRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        genres : ["Gospel"],
         streams : "12M",
         duration : "1:20",
         releaseDate : "March 24, 2023",
@@ -107,7 +107,7 @@ const tracks : TrackRow [] = [
     {
         imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
         name : "Eben",
-        genre : "Gospel",
+        genres : ["Gospel"],
         streams : "12M",
         duration : "1:20",
         releaseDate : "March 24, 2023",
@@ -153,7 +153,7 @@ const TracksTable = ({rows = tracks}: TracksTableProps) => {
                 </td>
                 <td className="border-t-0 border-l-0 border-r-0 text-xs whitespace-nowrap py-4">
                     <div >
-                       <ArtistCard name={track.name} imgSrc={track.imgSrc} genre={track.genre} />
+                       <ArtistCard name={track.name} imgSrc={track.imgSrc} genres={track.genres} />
                     </div>
                 </td>
                 <td ><p>{track.streams}</p></td>
