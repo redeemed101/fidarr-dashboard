@@ -1,21 +1,31 @@
 import React, {useState} from 'react'
 
-
+export type TokenObject = {
+  token : string,
+  refreshToken: string
+}
 export const useToken = () => {
     const getToken =() =>{
         const tokenString : string | null = sessionStorage.getItem('token')
-        const userToken  = JSON.parse(tokenString!)
-        return userToken?.token
+        const userTokenObj : TokenObject  = JSON.parse(tokenString!)
+        return userTokenObj?.token
+    } 
+    const getRefreshToken =() =>{
+      const tokenString : string | null = sessionStorage.getItem('token')
+      const userTokenObj : TokenObject = JSON.parse(tokenString!)
+      return userTokenObj?.refreshToken
     } 
 
-    const [token, setToken] = useState(getToken())
-    const saveToken = (userToken : any)  => {
-        sessionStorage.setItem('token', JSON.stringify(userToken))
-        setToken(userToken.token)
+    const [tokenObj, setTokenObj] = useState<TokenObject>({token: getToken(), refreshToken : getRefreshToken()})
+    const saveTokenObj = (token : string, refreshToken: string)  => {
+        sessionStorage.setItem('token', JSON.stringify({ token: token, refreshToken: refreshToken}))
+        setTokenObj({ token: token, refreshToken: refreshToken})
       }
       return {
-        setToken: saveToken,
-        token
+        setTokenObj: saveTokenObj,
+        tokenObj,
+        getRefreshToken,
+        getToken
       }
     }
 
