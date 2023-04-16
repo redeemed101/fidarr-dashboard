@@ -7,8 +7,21 @@ export const QUERY_ALBUMS_PAGINATED = gql`query getAlbumsPaginated($page:Int,$si
         name
         artworkPath
         path
+        lastUpdated
+        dateCreated
+        releaseDate
+        streams{
+            id
+        }
         likes{
             userId
+        }
+        artist{
+            id
+            name
+        }
+        genres{
+            name
         }
         songs{
             id

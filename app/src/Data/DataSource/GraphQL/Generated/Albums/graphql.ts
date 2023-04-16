@@ -8,6 +8,7 @@ export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K]
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 const defaultOptions = {} as const;
+/** All built-in and custom scalars, mapped to their actual values */
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -16,6 +17,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The `DateTime` scalar type represents a date and time. `DateTime` expects timestamps to be formatted in accordance with the [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) standard. */
+  DateTime: any;
 };
 
 export type Album = {
@@ -23,16 +26,22 @@ export type Album = {
   artist?: Maybe<Artist>;
   /** Artwork. */
   artworkPath: Scalars['String'];
+  /** Date Created */
+  dateCreated: Scalars['DateTime'];
   /** Description */
   description: Scalars['String'];
   genres?: Maybe<Array<Maybe<Genre>>>;
   /**  Id. */
   id: Scalars['String'];
+  /** Last Updated */
+  lastUpdated: Scalars['DateTime'];
   likes?: Maybe<Array<Maybe<AlbumLike>>>;
   /** Name. */
   name: Scalars['String'];
   /** Path. */
   path: Scalars['String'];
+  /** Release Date */
+  releaseDate: Scalars['DateTime'];
   songs?: Maybe<Array<Maybe<Song>>>;
   streams?: Maybe<Array<Maybe<AlbumStream>>>;
 };
@@ -136,7 +145,7 @@ export type GetAlbumsPaginatedQueryVariables = Exact<{
 }>;
 
 
-export type GetAlbumsPaginatedQuery = { __typename?: 'AlbumQuery', albumsPaginated?: Array<{ __typename?: 'Album', id: string, name: string, artworkPath: string, path: string, likes?: Array<{ __typename?: 'AlbumLike', userId: string } | null> | null, songs?: Array<{ __typename?: 'Song', id: string, name: string, path: string, artworkPath: string, artist?: { __typename?: 'Artist', name: string, imagePath: string, id: string } | null, likes?: Array<{ __typename?: 'SongLike', userId: string } | null> | null, streams?: Array<{ __typename?: 'SongStream', id: string } | null> | null, featurungArtists?: Array<{ __typename?: 'Artist', id: string, name: string, imagePath: string } | null> | null, genres?: Array<{ __typename?: 'Genre', id: string, name: string } | null> | null } | null> | null } | null> | null };
+export type GetAlbumsPaginatedQuery = { __typename?: 'AlbumQuery', albumsPaginated?: Array<{ __typename?: 'Album', id: string, name: string, artworkPath: string, path: string, lastUpdated: any, dateCreated: any, releaseDate: any, streams?: Array<{ __typename?: 'AlbumStream', id: string } | null> | null, likes?: Array<{ __typename?: 'AlbumLike', userId: string } | null> | null, artist?: { __typename?: 'Artist', id: string, name: string } | null, genres?: Array<{ __typename?: 'Genre', name: string } | null> | null, songs?: Array<{ __typename?: 'Song', id: string, name: string, path: string, artworkPath: string, artist?: { __typename?: 'Artist', name: string, imagePath: string, id: string } | null, likes?: Array<{ __typename?: 'SongLike', userId: string } | null> | null, streams?: Array<{ __typename?: 'SongStream', id: string } | null> | null, featurungArtists?: Array<{ __typename?: 'Artist', id: string, name: string, imagePath: string } | null> | null, genres?: Array<{ __typename?: 'Genre', id: string, name: string } | null> | null } | null> | null } | null> | null };
 
 
 export const GetAlbumsPaginatedDocument = gql`
@@ -146,8 +155,21 @@ export const GetAlbumsPaginatedDocument = gql`
     name
     artworkPath
     path
+    lastUpdated
+    dateCreated
+    releaseDate
+    streams {
+      id
+    }
     likes {
       userId
+    }
+    artist {
+      id
+      name
+    }
+    genres {
+      name
     }
     songs {
       id

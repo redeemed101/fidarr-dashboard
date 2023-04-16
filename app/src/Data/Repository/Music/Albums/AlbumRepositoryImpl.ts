@@ -5,7 +5,7 @@ import { type AlbumDataSource } from "../../../DataSource/Music/Albums/AlbumData
 import { TYPES } from "../../../../DI/types";
 import { Album } from "../../../../Domain/Model/Music";
 import { graphQLclient } from "../../../DataSource/GraphQL/Client/client";
-import { GetAlbumsPaginatedDocument } from "../../../DataSource/GraphQL/Generated/Albums/graphql";
+import { GetAlbumsPaginatedDocument, GetAlbumsPaginatedQueryResult } from "../../../DataSource/GraphQL/Generated/Albums/graphql";
 
 
 @injectable()
@@ -18,16 +18,20 @@ export class AlbumRepositoryImpl implements AlbumRepository{
         this._dataSource = dataSource
     }
     async getAlbumsPaginated(page: number, size: number): Promise<Album[]> {
-        const result = await graphQLclient.query({
-            query : GetAlbumsPaginatedDocument,
-            variables: {
-                page: page,
-                size: size
-            }
-        })
-        const data = result.data
-        console.log(result)
+        
+
         const albumResponse = await this._dataSource.getAlbumsPaginated(page,size)
-        return albumResponse.toAlbumModels();
+        return albumResponse.albumsPaginated.map(a => {
+           return  {
+              imgSrc: a.artworkPath,
+              name: a.name,
+              artist: a.artist?.name ?? "",
+              genre: a.genres?.map(g => g?.name ?? "") ?? [""],
+              streams: a.streams?.length.toString() ?? "0",
+              tracks: a.songs?.length ?? 0,
+              releaseDate: a.releaseDate,
+              lastUpdated: a.lastUpdated
+            }
+       });
     }
 }
