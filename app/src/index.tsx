@@ -29,7 +29,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter basename={process.env.PUBLIC_URL}>
      <ApolloProvider client={client}>
-        <App />
+      <ErrorBoundary>
+         <App />
+      </ErrorBoundary>        
       </ApolloProvider>
     </BrowserRouter>
    

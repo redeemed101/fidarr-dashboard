@@ -15,6 +15,7 @@ export class ArtistRepositoryImpl implements ArtistRepository{
         this._dataSource = dataSource
     }
     async getArtistsPaginated(page: number, size: number): Promise<Artist[]> {
+        try{
          const artistsResponse = await this._dataSource.getArtistsPaginated(page,size);
          return artistsResponse.artistsPaginated.map( a => {
              return {
@@ -28,5 +29,10 @@ export class ArtistRepositoryImpl implements ArtistRepository{
 
              }
          })
+        }
+        catch(err : any){
+           console.log(`Error fetching: ${err}`)
+           throw Error("Error fetching data")
+        }
     }
 }

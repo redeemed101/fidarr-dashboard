@@ -9,11 +9,12 @@ import AlbumsTable , {AlbumRow} from "../Sections/AlbumsTable";
 import { Link } from "react-router-dom";
 import { useAlbumModelController } from "../hooks/useAlbumModelController";
 import { albumRepository } from "../../../main";
+import { RequestStatus } from "../hooks/common";
 
 
 
 const AlbumsPage = () => {
-    const {currentAlbums, getMoreAlbumsPaginated} = useAlbumModelController(albumRepository)
+    const {currentAlbums,fetchStatus, getMoreAlbumsPaginated} = useAlbumModelController(albumRepository)
    
     return (
        
@@ -23,20 +24,24 @@ const AlbumsPage = () => {
           <div className="flex  gap-4 flex-col w-full">
            
              <MusicHeader  selectedType={MusicMenuType.Albums} menus={menuItems}  buttonComp={ <Link to="/music/albums/create"><ButtonWithIcon imageSrc={PlusIcon} title="Upload Album" /></Link> } />
-             <AlbumsTable rows={currentAlbums.map( (a) =>
-                      {
-                        return {
-                          imgSrc : a.imgSrc,
-                          name : a.name,
-                          artist : a.artist,
-                          streams : a.streams,
-                          tracks: `${a.tracks}`,
-                          releaseDate : a.releaseDate,
-                          lastUpdated : a.lastUpdated
-                      }
-                
+             
+              {fetchStatus == RequestStatus.Loading ? <div className="mx-auto"><p className="text-white">Loading...</p></div> :
+                   <AlbumsTable rows={currentAlbums.map( (a) =>
+                    {
+                      return {
+                        imgSrc : a.imgSrc,
+                        name : a.name,
+                        artist : a.artist,
+                        streams : a.streams,
+                        tracks: `${a.tracks}`,
+                        releaseDate : a.releaseDate,
+                        lastUpdated : a.lastUpdated
                     }
-              )} />
+              
+                  }
+                 )} />
+              }
+              {fetchStatus == RequestStatus.Error ? <div className="mx-auto"><p className="text-red-600">Error fetching data</p></div> : ""}
           </div>   
        
       </div>

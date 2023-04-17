@@ -15,7 +15,17 @@ const authLink = setContext((_, { headers }) => {
     }
   });
 
-  const resetToken = onError(({ graphQLErrors, networkError, operation, forward }) => {
+  const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+      graphQLErrors.forEach(({ message, locations, path }) =>
+        console.log(
+          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+        )
+      );
+    if (networkError) console.log(`[Network error]: ${networkError}`);
+  });
+
+  const resetTokenLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
     if (graphQLErrors) {
       for (let err of graphQLErrors) {
         switch (err.extensions.code) {
@@ -49,7 +59,7 @@ const authLink = setContext((_, { headers }) => {
   authLink.concat(albumsQL)
 
   export const graphQLAlbumClient = new ApolloClient({
-    link:  authLink.concat(albumsQL)
+    link:  ApolloLink.from([ errorLink, authLink,albumsQL])
     ,
     cache: new InMemoryCache(),
   });
@@ -58,7 +68,7 @@ const authLink = setContext((_, { headers }) => {
     uri: `${BASE_URL}${ARTIST_GRAPH_URL}`,
   })
   export const graphQLArtistClient = new ApolloClient({
-    link:  authLink.concat(artistQL),
+    link:   ApolloLink.from([ errorLink, authLink,artistQL]),
     cache: new InMemoryCache(),
 
   });
@@ -67,7 +77,7 @@ const authLink = setContext((_, { headers }) => {
     uri: `${BASE_URL}${GENRE_GRAPH_URL}`,
   })
   export const graphQLGenreClient = new ApolloClient({
-    link:  authLink.concat(genreQL)
+    link:   ApolloLink.from([ errorLink, authLink,genreQL])
     ,
     cache: new InMemoryCache(),
   });
@@ -76,7 +86,7 @@ const authLink = setContext((_, { headers }) => {
     uri: `${BASE_URL}${SONG_GRAPH_URL}`,
   })
   export const graphQLSongClient = new ApolloClient({
-    link:  authLink.concat(songQL)
+    link:   ApolloLink.from([ errorLink, authLink,songQL])
     ,
     cache: new InMemoryCache(),
   });
