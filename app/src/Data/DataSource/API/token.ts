@@ -4,25 +4,37 @@ export type TokenObject = {
   token : string,
   refreshToken: string
 }
-export const useToken = () => {
-    const getToken =() =>{
+export const tokenManager = {
+    getToken : () =>{
         const tokenString : string | null = sessionStorage.getItem('token')
         const userTokenObj : TokenObject  = JSON.parse(tokenString!)
         return userTokenObj?.token
-    } 
-    const getRefreshToken =() =>{
-      const tokenString : string | null = sessionStorage.getItem('token')
-      const userTokenObj : TokenObject = JSON.parse(tokenString!)
-      return userTokenObj?.refreshToken
-    } 
-
-    const [tokenObj, setTokenObj] = useState<TokenObject>({token: getToken(), refreshToken : getRefreshToken()})
-    const saveTokenObj = (token : string, refreshToken: string)  => {
-        sessionStorage.setItem('token', JSON.stringify({ token: token, refreshToken: refreshToken}))
+     },
+    getRefreshToken : () =>{
+        const tokenString : string | null = sessionStorage.getItem('token')
+        const userTokenObj : TokenObject = JSON.parse(tokenString!)
+        return userTokenObj?.refreshToken
+    }, 
+    saveTokenObj : (token : string, refreshToken: string)  => {
+      sessionStorage.setItem('token', JSON.stringify({ token: token, refreshToken: refreshToken}))
+      //setTokenObj({ token: token, refreshToken: refreshToken})
+    }
+}
+export const useToken = () => {
+   
+    const getRefreshToken = () => {
+      return tokenManager.getRefreshToken()
+    }
+    const getToken = () => {
+      return tokenManager.getToken()
+    }
+    const [tokenObj, setTokenObj] = useState<TokenObject>({token: tokenManager.getToken(), refreshToken : tokenManager.getRefreshToken()})
+    const saveTokenObjState = (token : string, refreshToken: string)  => {
+        tokenManager.saveTokenObj(token,refreshToken)
         setTokenObj({ token: token, refreshToken: refreshToken})
       }
       return {
-        setTokenObj: saveTokenObj,
+        setTokenObj: saveTokenObjState,
         tokenObj,
         getRefreshToken,
         getToken

@@ -3,24 +3,24 @@ AxiosInstance,
 AxiosRequestConfig,
 AxiosResponse,
 InternalAxiosRequestConfig} from 'axios'
-import {useToken} from './token'
+import {tokenManager} from './token'
 import { BASE_URL } from './constant'
 import Params from './params'
 import IEntity from './ientity'
 
-const {tokenObj, setTokenObj} = useToken()
+
 
 const postConfig : Params = {
     baseUrl: BASE_URL,
     headers: {
-                "Authorization": `Bearer ${tokenObj.token}`,
+                "Authorization": `Bearer ${tokenManager.getToken()}`,
             },
     method: 'post'
 }
 const getConfig : Params = {
     baseUrl: BASE_URL,
         headers: {
-            "Authorization": `Bearer ${tokenObj.token}`
+            "Authorization": `Bearer ${tokenManager.getToken()}`
         },
     method: 'get'
 }
@@ -73,7 +73,7 @@ export  const postAPI = async (url: string, data : any) : Promise<IEntity> =>{
   const onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     
     if(config.headers != null)
-        config.headers!.Authorization = `Bearer ${tokenObj.token}`;
+        config.headers!.Authorization = `Bearer ${tokenManager.getToken()}`;
   
     return config;
   };
@@ -95,12 +95,12 @@ export  const postAPI = async (url: string, data : any) : Promise<IEntity> =>{
   
         try {
           const rs = await axios.post(`${BASE_URL}/Token/refresh`, {
-            refresh_token: tokenObj.refreshToken,
+            refresh_token: tokenManager.getRefreshToken(),
           });
   
           const { token, refreshToken } = rs.data;
           
-          setTokenObj(token,refreshToken)
+          tokenManager.saveTokenObj(token,refreshToken)
   
           //return;
         } catch (_error) {
