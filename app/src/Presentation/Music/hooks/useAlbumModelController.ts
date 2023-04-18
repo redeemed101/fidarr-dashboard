@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { AlbumRepository } from "../../../Domain/Repository/Music/AlbumRepository";
 import { Album } from "../../../Domain/Model/Music";
 import { RequestStatus, useGetData } from "./common";
+import { PAGE_SIZE } from "../../../Data/Utils/constants";
 
 
 export const useAlbumModelController = (repository : AlbumRepository) => {
 
-    
-    const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getAlbumsPaginated(1, 100));
+    const [currentPage, setCurrentPage] = useState(1);
+    console.log("Current Page number ", currentPage)
+    const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getAlbumsPaging(currentPage, PAGE_SIZE));
     //const [currentAlbums, setAlbums] = useState<Album[]>([]);
     /*useEffect(() => {
         async function init() {
@@ -16,26 +18,38 @@ export const useAlbumModelController = (repository : AlbumRepository) => {
         }
         init();
       }, [repository]);*/
-
-    const getMoreAlbumsPaginated = async (page: number, size: number) =>  {
+      
+    const getMoreAlbumsPaginated = async () =>  {
       try{
-        setFetchStatus(RequestStatus.Loading)
-        const data = await repository.getAlbumsPaginated(page, size);
+        //setFetchStatus(RequestStatus.Loading)
+        const newPage = currentPage + 1;
+        setCurrentPage(newPage)
+        console.log("Page number ", currentPage, " ", newPage)
+        const response = await repository.getAlbumsPaging(newPage, PAGE_SIZE);
         setFetchStatus(RequestStatus.Success)
-        setData(data);
+        const oldData = data.data
+        const responseData = response.data
+        const newData = oldData.concat(responseData)
+        console.log("New data ", newData)
+        setData({count: response.count, data :newData});
         }catch(e : any){ setFetchStatus(RequestStatus.Error)}        
     }
-    const refreshAlbumsPaginated = async (page: number, size: number) =>  {
+    const refreshAlbumsPaginated = async () =>  {
       try{
         setFetchStatus(RequestStatus.Loading)
-        const data = await repository.getAlbumsPaginated(page, size);
+        const response = await repository.getAlbumsPaging(currentPage, PAGE_SIZE);
         setFetchStatus(RequestStatus.Success)
-        setData(data);
+        setData({count: response.count, data : response.data});
         }catch(e : any){ setFetchStatus(RequestStatus.Error)}     
     }
+    console.log("Data is here ",data, "count ", data.count)
+    console.log("Has more",data.count/(currentPage * PAGE_SIZE) > 1) 
     return {
-        currentAlbums : data as Album[],
+        currentAlbums : data.data as Album[],
+        count: data.count,
         fetchStatus,
+        currentPage,
+        setCurrentPage,
         getMoreAlbumsPaginated,
         refreshAlbumsPaginated
       };

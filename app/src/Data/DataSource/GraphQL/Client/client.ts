@@ -28,6 +28,7 @@ const authLink = setContext((_, { headers }) => {
   const resetTokenLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
     if (graphQLErrors) {
       for (let err of graphQLErrors) {
+    
         switch (err.extensions.code) {
           // Apollo Server sets code to UNAUTHENTICATED
           // when an AuthenticationError is thrown in a resolver

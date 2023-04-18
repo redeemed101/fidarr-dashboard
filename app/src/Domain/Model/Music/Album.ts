@@ -11,3 +11,8 @@ export type Album = {
     lastUpdated: string
 }
 
+export interface AlbumPage{
+    data : Album[],
+    count: number
+}
+

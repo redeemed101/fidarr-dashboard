@@ -8,7 +8,6 @@ export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K]
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 const defaultOptions = {} as const;
-/** All built-in and custom scalars, mapped to their actual values */
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -52,12 +51,21 @@ export type AlbumLike = {
   userId: Scalars['String'];
 };
 
+export type AlbumPaging = {
+  __typename?: 'AlbumPaging';
+  albums?: Maybe<Array<Maybe<Album>>>;
+  /**  Count. */
+  count: Scalars['Int'];
+};
+
 export type AlbumQuery = {
   __typename?: 'AlbumQuery';
   album?: Maybe<Album>;
   albums?: Maybe<Array<Maybe<Album>>>;
   albumsPaginated?: Maybe<Array<Maybe<Album>>>;
+  albumsPaging?: Maybe<AlbumPaging>;
   trendingAlbumsPaginated?: Maybe<Array<Maybe<Album>>>;
+  trendingAlbumsPaging?: Maybe<AlbumPaging>;
 };
 
 
@@ -72,7 +80,19 @@ export type AlbumQueryAlbumsPaginatedArgs = {
 };
 
 
+export type AlbumQueryAlbumsPagingArgs = {
+  page?: InputMaybe<Scalars['Int']>;
+  size?: InputMaybe<Scalars['Int']>;
+};
+
+
 export type AlbumQueryTrendingAlbumsPaginatedArgs = {
+  page?: InputMaybe<Scalars['Int']>;
+  size?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type AlbumQueryTrendingAlbumsPagingArgs = {
   page?: InputMaybe<Scalars['Int']>;
   size?: InputMaybe<Scalars['Int']>;
 };
@@ -85,6 +105,9 @@ export type AlbumStream = {
 
 export type Artist = {
   __typename?: 'Artist';
+  albums?: Maybe<Array<Maybe<Album>>>;
+  /** Date Created. */
+  dateCreated: Scalars['DateTime'];
   genres?: Maybe<Array<Maybe<Genre>>>;
   /**  Id. */
   id: Scalars['String'];
@@ -92,8 +115,11 @@ export type Artist = {
   imagePath: Scalars['String'];
   /**  Is the account claimed */
   isProfileClaimed: Scalars['Boolean'];
+  /** Last Updated. */
+  lastUpdated: Scalars['DateTime'];
   /** Name. */
   name: Scalars['String'];
+  songs?: Maybe<Array<Maybe<Song>>>;
   /**  Artist User Id. */
   userId: Scalars['String'];
 };
@@ -139,6 +165,14 @@ export type SongStream = {
   id: Scalars['String'];
 };
 
+export type GetAlbumPagingQueryVariables = Exact<{
+  page?: InputMaybe<Scalars['Int']>;
+  size?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type GetAlbumPagingQuery = { __typename?: 'AlbumQuery', albumsPaging?: { __typename?: 'AlbumPaging', count: number, albums?: Array<{ __typename?: 'Album', id: string, name: string, artworkPath: string, path: string, lastUpdated: any, dateCreated: any, releaseDate: any, streams?: Array<{ __typename?: 'AlbumStream', id: string } | null> | null, likes?: Array<{ __typename?: 'AlbumLike', userId: string } | null> | null, artist?: { __typename?: 'Artist', id: string, name: string } | null, genres?: Array<{ __typename?: 'Genre', name: string } | null> | null, songs?: Array<{ __typename?: 'Song', id: string, name: string, path: string, artworkPath: string, artist?: { __typename?: 'Artist', name: string, imagePath: string, id: string } | null, likes?: Array<{ __typename?: 'SongLike', userId: string } | null> | null, streams?: Array<{ __typename?: 'SongStream', id: string } | null> | null, featurungArtists?: Array<{ __typename?: 'Artist', id: string, name: string, imagePath: string } | null> | null, genres?: Array<{ __typename?: 'Genre', id: string, name: string } | null> | null } | null> | null } | null> | null } | null };
+
 export type GetAlbumsPaginatedQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']>;
   size?: InputMaybe<Scalars['Int']>;
@@ -148,6 +182,90 @@ export type GetAlbumsPaginatedQueryVariables = Exact<{
 export type GetAlbumsPaginatedQuery = { __typename?: 'AlbumQuery', albumsPaginated?: Array<{ __typename?: 'Album', id: string, name: string, artworkPath: string, path: string, lastUpdated: any, dateCreated: any, releaseDate: any, streams?: Array<{ __typename?: 'AlbumStream', id: string } | null> | null, likes?: Array<{ __typename?: 'AlbumLike', userId: string } | null> | null, artist?: { __typename?: 'Artist', id: string, name: string } | null, genres?: Array<{ __typename?: 'Genre', name: string } | null> | null, songs?: Array<{ __typename?: 'Song', id: string, name: string, path: string, artworkPath: string, artist?: { __typename?: 'Artist', name: string, imagePath: string, id: string } | null, likes?: Array<{ __typename?: 'SongLike', userId: string } | null> | null, streams?: Array<{ __typename?: 'SongStream', id: string } | null> | null, featurungArtists?: Array<{ __typename?: 'Artist', id: string, name: string, imagePath: string } | null> | null, genres?: Array<{ __typename?: 'Genre', id: string, name: string } | null> | null } | null> | null } | null> | null };
 
 
+export const GetAlbumPagingDocument = gql`
+    query getAlbumPaging($page: Int, $size: Int) {
+  albumsPaging(page: $page, size: $size) {
+    count
+    albums {
+      id
+      name
+      artworkPath
+      path
+      lastUpdated
+      dateCreated
+      releaseDate
+      streams {
+        id
+      }
+      likes {
+        userId
+      }
+      artist {
+        id
+        name
+      }
+      genres {
+        name
+      }
+      songs {
+        id
+        name
+        path
+        artworkPath
+        artist {
+          name
+          imagePath
+          id
+        }
+        likes {
+          userId
+        }
+        streams {
+          id
+        }
+        featurungArtists {
+          id
+          name
+          imagePath
+        }
+        genres {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAlbumPagingQuery__
+ *
+ * To run a query within a React component, call `useGetAlbumPagingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAlbumPagingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAlbumPagingQuery({
+ *   variables: {
+ *      page: // value for 'page'
+ *      size: // value for 'size'
+ *   },
+ * });
+ */
+export function useGetAlbumPagingQuery(baseOptions?: Apollo.QueryHookOptions<GetAlbumPagingQuery, GetAlbumPagingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAlbumPagingQuery, GetAlbumPagingQueryVariables>(GetAlbumPagingDocument, options);
+      }
+export function useGetAlbumPagingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAlbumPagingQuery, GetAlbumPagingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAlbumPagingQuery, GetAlbumPagingQueryVariables>(GetAlbumPagingDocument, options);
+        }
+export type GetAlbumPagingQueryHookResult = ReturnType<typeof useGetAlbumPagingQuery>;
+export type GetAlbumPagingLazyQueryHookResult = ReturnType<typeof useGetAlbumPagingLazyQuery>;
+export type GetAlbumPagingQueryResult = Apollo.QueryResult<GetAlbumPagingQuery, GetAlbumPagingQueryVariables>;
 export const GetAlbumsPaginatedDocument = gql`
     query getAlbumsPaginated($page: Int, $size: Int) {
   albumsPaginated(page: $page, size: $size) {

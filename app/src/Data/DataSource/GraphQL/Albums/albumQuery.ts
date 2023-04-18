@@ -1,6 +1,62 @@
 
 import { gql } from '@apollo/client';
 
+export const QUERY_ALBUM_PAGING = gql`
+query getAlbumPaging($page:Int,$size:Int){
+  albumsPaging(page:$page,size:$size){
+    count,
+    albums{
+       id
+      name
+      artworkPath
+      path
+      lastUpdated
+      dateCreated
+      releaseDate
+      streams{
+          id
+      }
+      likes{
+          userId
+      }
+      artist{
+          id
+          name
+      }
+      genres{
+          name
+      }
+      songs{
+          id
+          name
+          path
+          artworkPath
+          artist{
+              name
+              imagePath
+              id
+          }
+          likes{
+              userId
+          }
+          streams{
+              id
+          }
+          featurungArtists{
+              id
+              name
+              imagePath
+          }
+          genres{
+              id
+              name
+          }
+      }
+    }
+  }
+}
+
+`
 export const QUERY_ALBUMS_PAGINATED = gql`query getAlbumsPaginated($page:Int,$size:Int){
     albumsPaginated(page:$page,size:$size){
         id

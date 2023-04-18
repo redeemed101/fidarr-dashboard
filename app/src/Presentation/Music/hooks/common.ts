@@ -6,18 +6,29 @@ export enum RequestStatus {
     Success
 }
 
+export const fetchMoreData = (moreDataFn: () => Promise<any>) => {
+      
+}
+export interface PagedData {
+    count: number,
+    data: any[]
+}
 export const useGetData = (dataFn: () => Promise<any>) => {
     const [fetchStatus, setFetchStatus] = useState<RequestStatus>();
-    const [data, setData] = useState<any[]>([]);
+    const [data, setData] = useState<PagedData>({count: 0, data: []});
     const fn = useCallback(dataFn,[])
     useEffect(() => {
         async function init() {
           try{
           setFetchStatus(RequestStatus.Loading)
           const data = await fn();
-          setFetchStatus(RequestStatus.Success)
-          setData(data);
-          }catch(e : any){ setFetchStatus(RequestStatus.Error)}
+          console.log(data as PagedData)
+          setFetchStatus(RequestStatus.Success)         
+          setData(data as PagedData);
+          }catch(e : any){ 
+            console.log(e)
+            setFetchStatus(RequestStatus.Error)
+          }
         }
         init();
       }, [fn]);
