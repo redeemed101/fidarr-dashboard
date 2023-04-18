@@ -21,7 +21,7 @@ export const useAlbumModelController = (repository : AlbumRepository) => {
       
     const getMoreAlbumsPaginated = async () =>  {
       try{
-        //setFetchStatus(RequestStatus.Loading)
+       
         const newPage = currentPage + 1;
         setCurrentPage(newPage)
         console.log("Page number ", currentPage, " ", newPage)

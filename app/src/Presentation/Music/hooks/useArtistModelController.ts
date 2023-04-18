@@ -3,36 +3,43 @@ import { AlbumRepository } from "../../../Domain/Repository/Music/AlbumRepositor
 import { Artist } from "../../../Domain/Model/Music";
 import { ArtistRepository } from "../../../Domain/Repository/Music/ArtistRepository";
 import { RequestStatus, useGetData } from "./common";
+import { PAGE_SIZE } from "../../../Data/Utils/constants";
 
 
 export const useArtistModelController = (repository : ArtistRepository) => {
 
-    const [currentArtists, setArtists] = useState<Artist[]>([]);
-    const [status, setStatus] = useState<RequestStatus>();
-    //const {fetchStatus, data} = useGetData(() => repository.getArtistsPaginated(1, 100));
-    useEffect(() => {
-        async function init() {
-          try{
-          setStatus(RequestStatus.Loading)
-          const artists = await repository.getArtistsPaginated(1, 100);
-          setStatus(RequestStatus.Success)
-          setArtists(artists);
-          }catch(e : any){ setStatus(RequestStatus.Error)}
-        }
-        init();
-      }, [repository]);
+    const [currentPage, setCurrentPage] = useState(1); const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getArtistsPaging(currentPage, PAGE_SIZE));
+    
 
-    const getMoreArtistsPaginated = async (page: number, size: number) =>  {
-          const albums = await repository.getArtistsPaginated(page, size);
-          setArtists(albums)
+    const getMoreArtistsPaginated = async () =>  {
+      try{
+       
+        const newPage = currentPage + 1;
+        setCurrentPage(newPage)
+        console.log("Page number ", currentPage, " ", newPage)
+        const response = await repository.getArtistsPaging(newPage, PAGE_SIZE);
+        setFetchStatus(RequestStatus.Success)
+        const oldData = data.data
+        const responseData = response.data
+        const newData = oldData.concat(responseData)
+        console.log("New data ", newData)
+        setData({count: response.count, data :newData});
+        }catch(e : any){ setFetchStatus(RequestStatus.Error)}     
     }
-    const refreshArtistsPaginated = async (page: number, size: number) =>  {
-        const albums = await repository.getArtistsPaginated(page, size);
-        setArtists(albums)
+    const refreshArtistsPaginated = async () =>  {
+      try{
+        setFetchStatus(RequestStatus.Loading)
+        const response = await repository.getArtistsPaging(currentPage, PAGE_SIZE);
+        setFetchStatus(RequestStatus.Success)
+        setData({count: response.count, data : response.data});
+        }catch(e : any){ setFetchStatus(RequestStatus.Error)}    
   }
     return {
-        currentArtists, //: data as Artist[],
-        status,
+        currentArtists : data.data as Artist[],
+        count: data.count,
+        fetchStatus,
+        currentPage,
+        setCurrentPage,
         getMoreArtistsPaginated,
         refreshArtistsPaginated
       };

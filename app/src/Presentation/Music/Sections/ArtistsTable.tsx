@@ -2,6 +2,8 @@ import EditIcon from "../../../Assets/svgs/EditIcon.svg"
 import DeleteIcon from "../../../Assets/svgs/DeleteIcon.svg"
 import SettingsIcon from "../../../Assets/svgs/TrackSettingsIcon.svg";
 import { Artist } from "../../../Domain/Model/Music";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { PAGE_SIZE } from "../../../Data/Utils/constants";
 
 export type ArtistCardProps = {
     imgSrc : string,
@@ -27,13 +29,23 @@ export const ArtistCard = ({imgSrc,name, genres} : ArtistCardProps) => {
 
 type ArtistTableProps = {
     rows : Artist[],
+    currentPage: number,
+    totalCount: number,
+    loadMore : () => void
 
 }
 
-const ArtistsTable = ({rows}: ArtistTableProps) => {
+const ArtistsTable = ({rows, currentPage, totalCount, loadMore}: ArtistTableProps) => {
     return (
         <div className="flex flex-col w-full">
-            <table className="table-auto text-white w-11/12 self-end">
+         <div className="w-11/12  self-end">
+          <InfiniteScroll
+                dataLength={rows.length}
+                next={() => loadMore()}
+                hasMore={totalCount/(currentPage * PAGE_SIZE) > 1}
+                loader={<h4 className="text-white text-bold mx-auto">Loading more items...</h4>}
+           >
+            <table className="table-auto text-white w-full">
             <thead className="text-left">
                 <tr>
                     <th className="pr-12">
@@ -89,6 +101,8 @@ const ArtistsTable = ({rows}: ArtistTableProps) => {
                
             </tbody>
             </table>
+            </InfiniteScroll>
+            </div>
         </div>
     )
 }

@@ -11,7 +11,7 @@ import { RequestStatus } from "../hooks/common";
 
 
 const ArtistsPage = () => {
-  const {currentArtists, status, getMoreArtistsPaginated} = useArtistModelController(artistRepository)
+  const {currentArtists, fetchStatus,currentPage, count, getMoreArtistsPaginated} = useArtistModelController(artistRepository)
    
     return (
        
@@ -21,8 +21,9 @@ const ArtistsPage = () => {
           <div className="flex gap-4 flex-col w-full">
          
              <MusicHeader selectedType={MusicMenuType.Artists} menus={menuItems} buttonComp={ <Link to="/music/artists/create"><ButtonWithIcon imageSrc={PlusIcon} title="Create Artist" /></Link> } />
-             {status == RequestStatus.Loading ? <div className="mx-auto"><p className="text-white">Loading...</p></div> : <ArtistsTable rows={currentArtists} />  }
-             {status == RequestStatus.Error ? <div className="mx-auto"><p className="text-red-600">Error fetching data</p></div> : ""}
+             {fetchStatus == RequestStatus.Loading ? <div className="mx-auto"><p className="text-white">Loading...</p></div> : 
+             <ArtistsTable totalCount={count} currentPage={currentPage} loadMore={getMoreArtistsPaginated} rows={currentArtists} />  }
+             {fetchStatus == RequestStatus.Error ? <div className="mx-auto"><p className="text-red-600">Error fetching data</p></div> : ""}
           </div>   
        
       </div>

@@ -8,4 +8,7 @@ export type Artist = {
     albums: number,
     lastUpdated: string
 }
-
+export interface ArtistPage{
+    data : Artist[],
+    count: number
+}
