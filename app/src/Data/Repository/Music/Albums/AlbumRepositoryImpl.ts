@@ -8,6 +8,7 @@ import { graphQLAlbumClient } from "../../../DataSource/GraphQL/Client/client";
 import { GetAlbumsPaginatedDocument, GetAlbumsPaginatedQueryResult } from "../../../DataSource/GraphQL/Generated/Albums/graphql";
 import { BASE_URL } from "../../../DataSource/API/constant";
 import { AlbumPage } from "../../../../Domain/Model/Music/Album";
+import moment from "moment";
 
 
 @injectable()
@@ -30,8 +31,8 @@ export class AlbumRepositoryImpl implements AlbumRepository{
               genre: a.genres?.map(g => g?.name ?? "") ?? [""],
               streams: a.streams?.length.toString() ?? "0",
               tracks: a.songs?.length ?? 0,
-              releaseDate: a.releaseDate,
-              lastUpdated: a.lastUpdated
+              releaseDate:moment(Date.parse(a.releaseDate)).format('MMMM DD, YYYY'),
+              lastUpdated: moment(Date.parse(a.lastUpdated)).format('MMMM DD, YYYY')
             }
        });
        return {
