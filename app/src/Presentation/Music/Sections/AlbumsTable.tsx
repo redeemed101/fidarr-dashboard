@@ -41,11 +41,12 @@ type AlbumsTableProps = {
     rows : AlbumRow[],
     currentPage: number,
     totalCount: number,
-    loadMore : () => void
+    loadMore : () => void,
+    refresh : () => void
     
 }
 
-const AlbumsTable = ({rows, currentPage, totalCount, loadMore}: AlbumsTableProps) => {
+const AlbumsTable = ({rows, currentPage, totalCount, loadMore,refresh}: AlbumsTableProps) => {
 
     return (
         <div className="flex flex-col w-full">
@@ -55,6 +56,15 @@ const AlbumsTable = ({rows, currentPage, totalCount, loadMore}: AlbumsTableProps
                 next={() => loadMore()}
                 hasMore={totalCount/(currentPage * PAGE_SIZE) > 1}
                 loader={<h4 className="text-white text-bold mx-auto">Loading more items...</h4>}
+                refreshFunction={refresh}
+                pullDownToRefresh
+                pullDownToRefreshThreshold={50}
+                pullDownToRefreshContent={
+                       <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
+                }
+                releaseToRefreshContent={
+                  <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
+               } 
            >
             <table className="table-auto text-white w-full">
             <thead className="text-left">

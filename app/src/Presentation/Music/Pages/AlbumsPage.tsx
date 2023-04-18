@@ -14,7 +14,7 @@ import { RequestStatus } from "../hooks/common";
 
 
 const AlbumsPage = () => {
-    const {currentAlbums,fetchStatus,currentPage, count, getMoreAlbumsPaginated} = useAlbumModelController(albumRepository)
+    const {currentAlbums,fetchStatus,currentPage, count,refreshAlbumsPaginated, getMoreAlbumsPaginated} = useAlbumModelController(albumRepository)
    
     return (
        
@@ -26,7 +26,7 @@ const AlbumsPage = () => {
              <MusicHeader  selectedType={MusicMenuType.Albums} menus={menuItems}  buttonComp={ <Link to="/music/albums/create"><ButtonWithIcon imageSrc={PlusIcon} title="Upload Album" /></Link> } />
              
               {fetchStatus == RequestStatus.Loading ? <div className="mx-auto"><p className="text-white">Loading...</p></div> :
-                   <AlbumsTable totalCount={count} currentPage={currentPage} loadMore={getMoreAlbumsPaginated} rows={currentAlbums.map( (a) =>
+                   <AlbumsTable refresh={refreshAlbumsPaginated} totalCount={count} currentPage={currentPage} loadMore={getMoreAlbumsPaginated} rows={currentAlbums.map( (a) =>
                     {
                       return {
                         imgSrc : a.imgSrc,

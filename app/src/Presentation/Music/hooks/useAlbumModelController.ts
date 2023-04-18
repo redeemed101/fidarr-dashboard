@@ -37,7 +37,9 @@ export const useAlbumModelController = (repository : AlbumRepository) => {
     const refreshAlbumsPaginated = async () =>  {
       try{
         setFetchStatus(RequestStatus.Loading)
-        const response = await repository.getAlbumsPaging(currentPage, PAGE_SIZE);
+        const newPage = 1;
+        setCurrentPage(newPage)
+        const response = await repository.getAlbumsPaging(newPage, PAGE_SIZE);
         setFetchStatus(RequestStatus.Success)
         setData({count: response.count, data : response.data});
         }catch(e : any){ setFetchStatus(RequestStatus.Error)}     

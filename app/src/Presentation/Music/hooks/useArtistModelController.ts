@@ -29,7 +29,9 @@ export const useArtistModelController = (repository : ArtistRepository) => {
     const refreshArtistsPaginated = async () =>  {
       try{
         setFetchStatus(RequestStatus.Loading)
-        const response = await repository.getArtistsPaging(currentPage, PAGE_SIZE);
+        const newPage = 1;
+        setCurrentPage(newPage)
+        const response = await repository.getArtistsPaging(newPage, PAGE_SIZE);
         setFetchStatus(RequestStatus.Success)
         setData({count: response.count, data : response.data});
         }catch(e : any){ setFetchStatus(RequestStatus.Error)}    
