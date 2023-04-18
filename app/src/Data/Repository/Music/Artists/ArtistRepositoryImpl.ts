@@ -5,6 +5,7 @@ import { ArtistDataSource } from "../../../DataSource/Music/Artists/ArtistDataSo
 import { TYPES } from "../../../../DI/types";
 import { BASE_URL } from "../../../DataSource/API/constant";
 import { ArtistPage } from "../../../../Domain/Model/Music/Artist";
+import moment from "moment";
 
 @injectable()
 export class ArtistRepositoryImpl implements ArtistRepository{
@@ -26,7 +27,7 @@ export class ArtistRepositoryImpl implements ArtistRepository{
                 streams : a.songs?.reduce( (a,b) => a + (b?.streams?.length ?? 0) ,0) ?? 0,
                 tracks : a.songs?.length ?? 0,
                 albums: a.albums?.length ?? 0,
-                lastUpdated: a.lastUpdated
+                lastUpdated: moment(Date.parse(a.lastUpdated)).format('MMMM DD, YYYY')
             }
        });
        return {
