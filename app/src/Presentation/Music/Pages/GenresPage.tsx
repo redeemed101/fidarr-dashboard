@@ -5,8 +5,12 @@ import PlusIcon from "../../../Assets/svgs/PlusIcon.svg"
 import GenresTable from "../Sections/GenresTable";
 import { MusicMenuType, menuItems } from "../../../StateManagement/MusicMenu";
 import { Link } from "react-router-dom";
+import { useGenreModelController } from "../hooks/useGenreModelController";
+import { genreRepository } from "../../../main";
+import { RequestStatus } from "../hooks/common";
 
 const GenresPage = () => {
+  const {currentGenres, fetchStatus,currentPage, count,refreshGenresPaginated, getMoreGenresPaginated} = useGenreModelController(genreRepository)
     return (
        
        
@@ -15,7 +19,10 @@ const GenresPage = () => {
           <div className="flex  gap-4 flex-col w-full">
          
              <MusicHeader selectedType={MusicMenuType.Genres} menus={menuItems}  buttonComp={ <Link to="/music/genres/create"><ButtonWithIcon imageSrc={PlusIcon} title="Create Genre" /></Link> } />
-             <GenresTable />
+             {fetchStatus == RequestStatus.Loading ? <div className="mx-auto"><p className="text-white">Loading...</p></div> : 
+             <GenresTable refresh={refreshGenresPaginated} totalCount={count} currentPage={currentPage} loadMore={getMoreGenresPaginated} rows={currentGenres} />  }
+             {fetchStatus == RequestStatus.Error ? <div className="mx-auto"><p className="text-red-600">Error fetching data</p></div> : ""}
+           
           </div>   
        
       </div>

@@ -1,6 +1,9 @@
 import EditIcon from "../../../Assets/svgs/EditIcon.svg"
 import DeleteIcon from "../../../Assets/svgs/DeleteIcon.svg"
 import SettingsIcon from "../../../Assets/svgs/TrackSettingsIcon.svg";
+import { Genre } from "../../../Domain/Model/Music/Genre";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { PAGE_SIZE } from "../../../Data/Utils/constants";
 
 
 
@@ -23,115 +26,37 @@ export const GenreCard = ({imgSrc,name} : GenreCardProps) => {
     )
 }
 
-type GenreRow = {
-    imgSrc : string,
-    name : string,
-    albums : string,
-    tracks : string,
-    artists: string,
-    lastUpdated: string
-}
-const tracks : GenreRow [] = [
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        albums : "10",
-        tracks : "120",
-        artists: "10",
-        lastUpdated : "March 24, 2023"
 
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        albums : "10",
-        tracks : "120",
-        artists: "10",
-        lastUpdated : "March 24, 2023"
 
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        albums : "10",
-        tracks : "120",
-        artists: "10",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        albums : "10",
-        tracks : "120",
-        artists: "10",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        albums : "10",
-        tracks : "120",
-        artists: "10",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        albums : "10",
-        tracks : "120",
-        artists: "10",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        albums : "10",
-        tracks : "120",
-        artists: "10",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        albums : "10",
-        tracks : "120",
-        artists: "10",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        albums : "10",
-        tracks : "120",
-        artists: "10",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        albums : "10",
-        tracks : "120",
-        artists: "10",
-        lastUpdated : "March 24, 2023"
-
-    }
-]
 type GenresTableProps = {
-    rows? : GenreRow[],
+    rows : Genre[],    
+    currentPage: number,
+    totalCount: number,
+    loadMore : () => void,
+    refresh : () => void
 
 }
 
-const GenresTable = ({rows = tracks}: GenresTableProps) => {
+const GenresTable = ({rows,currentPage, totalCount, loadMore, refresh }: GenresTableProps) => {
     return (
         <div className="flex flex-col w-full">
-            <table className="table-auto text-white w-11/12 self-end"> 
+               <div className="w-11/12  self-end">
+                <InfiniteScroll
+                        dataLength={rows.length}
+                        next={() => loadMore()}
+                        hasMore={totalCount/(currentPage * PAGE_SIZE) > 1}
+                        loader={<h4 className="text-white text-bold mx-auto">Loading more items...</h4>}
+                        refreshFunction={refresh}
+                        pullDownToRefresh
+                        pullDownToRefreshThreshold={50}
+                        pullDownToRefreshContent={
+                            <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
+                        }
+                        releaseToRefreshContent={
+                        <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
+                    } 
+                >
+            <table className="table-auto text-white w-full self-end"> 
             <thead className="text-left">
                 <tr>
                     <th className="pr-12">
@@ -187,6 +112,8 @@ const GenresTable = ({rows = tracks}: GenresTableProps) => {
                
             </tbody>
             </table>
+            </InfiniteScroll>
+            </div>
         </div>
     )
 }
