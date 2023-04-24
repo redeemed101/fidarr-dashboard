@@ -10,6 +10,17 @@ export const tokenManager = {
         const userTokenObj : TokenObject  = JSON.parse(tokenString!)
         return userTokenObj?.token
      },
+     checkTokenExpiry : (token : string) : boolean  => {
+      try {
+        const decodedJwt = JSON.parse(window.atob(token.split(".")[1]));
+        if (decodedJwt.exp * 1000 < Date.now()) {
+           return false
+        }
+        return true
+      } catch (e) {
+        return false;
+      }
+    },
     getRefreshToken : () =>{
         const tokenString : string | null = sessionStorage.getItem('token')
         const userTokenObj : TokenObject = JSON.parse(tokenString!)
