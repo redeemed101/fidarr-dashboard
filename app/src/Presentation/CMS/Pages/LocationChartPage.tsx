@@ -46,7 +46,7 @@ const LocationChartPage = () => {
                <div className="flex flex-row items-center gap-2 w-full">
                   <PrimarySelect options={contentOptions} label="Content Type" width="1/4" padX={3} />
                   <div className="w-3/4 mt-6">
-                    <SearchTextField />
+                    <SearchTextField value="" />
                   </div>
                </div>
                <div className="flex flex-col gap-2">

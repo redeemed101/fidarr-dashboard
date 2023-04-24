@@ -14,7 +14,7 @@ const HeaderSection = ({title}: HeaderSectionProps) => {
                <div className="flex flex-row gap-4 items-center">
                  <p className="text-white font-bold text-2xl">{title}</p>
                  <div className="w-80">
-                   <SearchTextField />
+                   <SearchTextField value="" />
                  </div>
                  <div className="h-12 w-12">
                     <NotificationItem hasNotification={true} />

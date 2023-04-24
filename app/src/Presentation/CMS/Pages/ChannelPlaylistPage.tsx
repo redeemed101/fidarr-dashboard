@@ -52,7 +52,7 @@ const ChannelPlaylistPage = () => {
                </div>
                
                <div className="w-full">
-                  <SearchTextField />
+                  <SearchTextField value="" />
                </div>
 
                <div className="flex grid grid-cols-4 gap-4">

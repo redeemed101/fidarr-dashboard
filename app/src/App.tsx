@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import CreateArtistPage from './Presentation/Music/Pages/CreateArtistPage';
 import CreateGenrePage from './Presentation/Music/Pages/CreateGenrePage';
@@ -38,6 +38,9 @@ import FilesPage from './Presentation/Files/Pages/FilesPage';
 import ProfilePage from './Presentation/Settings/Pages/ProfilePage';
 import TeamPage from './Presentation/Settings/Pages/TeamPage';
 import CreateTeamMemberPage from './Presentation/Settings/Pages/CreateTeamMemberPage';
+import { useSelector } from 'react-redux';
+import { RootState } from './StateManagement/redux/store';
+import { useEffect } from 'react';
 
 
 
@@ -214,6 +217,16 @@ const MenuContextLayout = () => {
 
 
 function App() {
+  const user = useSelector((state: RootState) => state.user.user);
+  const navigate = useNavigate();
+  useEffect(() => {
+    console.log(user)
+    if (user == null) {
+       navigate("/")
+    } else {
+      navigate("/dashboard")
+    }
+  }, [user]);
   
   return (
     

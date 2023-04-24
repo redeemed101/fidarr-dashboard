@@ -24,44 +24,45 @@ const getConfig : Params = {
         },
     method: 'get'
 }
+export type Response = {
+  statusCode : number,
+  data : any
+}
 
-export const getAPI = async (url : string, data : any) : Promise<IEntity> =>{
+export const getAPI = async (url : string, data : any) : Promise<Response> =>{
     return await axios({
         ...getConfig,
         url: `${getConfig.baseUrl}/${url}/${data}`,
     }).then ( (response) => {
         console.log(response)
         return {
-            status: response.status,
+            statusCode : response.status,
             data: response.data
         }
     }).catch((error) =>{
         console.log(error)
         return {
-            status: error.status,
+            statusCode: error.status,
             data: error.response
         }
     })
 }
 
-export  const postAPI = async (url: string, data : any) : Promise<IEntity> =>{
-    return await axios({
+export  async function postAPI<IEntity> (url: string, payload : any) : Promise<IEntity> {
+  try{
+     const {data, status } = await axios<IEntity>({
         ...postConfig,
         url: `${postConfig.baseUrl}/${url}`,
-        data
-    }).then ( (response) => {
-        console.log(response)
-        return {
-            status: response.status,
-            data: response.data
-        }
-    }).catch((error) =>{
-        console.log(error)
-        return {
-            status: error.status,
-            data: error.response
-        }
+        data: payload
     })
+    return data
+  }
+  catch(error){
+  
+      console.log('unexpected error: ', error)
+      throw error
+     
+  }
 }
 
 

@@ -13,6 +13,11 @@ import { GenreDataSource } from "../Data/DataSource/Music/Genres/GenreDataSource
 import { GenreDataSourceImpl } from "../Data/DataSource/Music/Genres/GenreDataSourceImp";
 import { GenreRepository } from "../Domain/Repository/Music/GenreRepository";
 import { GenreRepositoryImpl } from "../Data/Repository/Music/Genres/GenreRepositoryImpl";
+import { AuthenticationDataSource } from "../Data/DataSource/Users/Authentication/AuthenticationDataSource";
+import { AuthenticationDataSourceImpl } from "../Data/DataSource/Users/Authentication/AuthenticationDataSourceImpl";
+import { AuthenticationRepository } from "../Domain/Repository/Users/Authentication/AuthenticationRepository";
+import { AuthenticationRepositoryImpl } from "../Data/Repository/Users/Authentication/AuthenticationRepositoryImpl";
+import { AuthenticationDataSourceMock } from "../Data/DataSource/Users/Authentication/AuthenticationDataSourceMock";
 
 const myContainer = new Container();
 myContainer.bind<AlbumDataSource>(TYPES.AlbumDataSource).to(AlbumDataSourceImpl);
@@ -21,6 +26,9 @@ myContainer.bind<GenreDataSource>(TYPES.GenreDataSource).to(GenreDataSourceImpl)
 myContainer.bind<AlbumRepository>(TYPES.AlbumRepository).to(AlbumRepositoryImpl);
 myContainer.bind<ArtistRepository>(TYPES.ArtistRepository).to(ArtistRepositoryImpl);
 myContainer.bind<GenreRepository>(TYPES.GenreRepository).to(GenreRepositoryImpl);
+
+myContainer.bind<AuthenticationDataSource>(TYPES.AuthenticationDataSource).to(AuthenticationDataSourceMock);
+myContainer.bind<AuthenticationRepository>(TYPES.AuthenticationRepository).to(AuthenticationRepositoryImpl);
 
 export { myContainer };
 

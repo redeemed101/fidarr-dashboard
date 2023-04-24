@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { ErrorBoundary } from './HoCs/Errors/WithErrorBoundary';
 import { ApolloClient, ApolloLink, ApolloProvider, HttpLink, InMemoryCache } from '@apollo/client';
+import { Provider } from 'react-redux';
+import { store } from './StateManagement/redux/store';
 
 const artistsQL = new HttpLink({
   uri: 'https://9ee7-102-70-3-142.ngrok-free.app/api/artistql',
@@ -30,7 +32,9 @@ root.render(
     <BrowserRouter basename={process.env.PUBLIC_URL}>
      <ApolloProvider client={client}>
       <ErrorBoundary>
-         <App />
+       <Provider store={store}>
+           <App />
+        </Provider>
       </ErrorBoundary>        
       </ApolloProvider>
     </BrowserRouter>
