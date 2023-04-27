@@ -222,7 +222,7 @@ function App() {
   useEffect(() => {
     console.log(user)
     if (user == null) {
-       navigate("/")
+       navigate("/login")
     } else {
       navigate("/dashboard")
     }
@@ -238,6 +238,7 @@ function App() {
             }
           </Route>
           <Route path="/" element={<LoginPage /> } />
+          <Route path="/login" element={<LoginPage /> } />
           <Route path="*" element={<Status404Page />} />
 
       </Routes>

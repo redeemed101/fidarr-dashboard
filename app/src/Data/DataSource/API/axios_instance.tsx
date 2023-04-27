@@ -29,23 +29,20 @@ export type Response = {
   data : any
 }
 
-export const getAPI = async (url : string, data : any) : Promise<Response> =>{
-    return await axios({
-        ...getConfig,
-        url: `${getConfig.baseUrl}/${url}/${data}`,
-    }).then ( (response) => {
-        console.log(response)
-        return {
-            statusCode : response.status,
-            data: response.data
-        }
-    }).catch((error) =>{
-        console.log(error)
-        return {
-            statusCode: error.status,
-            data: error.response
-        }
-    })
+export async function getAPI<IEntity>(url : string) : Promise<IEntity> {
+    try { 
+        const {data, status} = await axios<IEntity>({
+          ...getConfig,
+          url: `${getConfig.baseUrl}/${url}/`,
+      });
+      return data
+    }
+    catch(error){
+    
+      console.log('unexpected error: ', error)
+      throw error
+    
+  }
 }
 
 export  async function postAPI<IEntity> (url: string, payload : any) : Promise<IEntity> {
