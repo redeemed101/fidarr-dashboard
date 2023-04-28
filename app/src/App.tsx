@@ -41,6 +41,7 @@ import CreateTeamMemberPage from './Presentation/Settings/Pages/CreateTeamMember
 import { useSelector } from 'react-redux';
 import { RootState } from './StateManagement/redux/store';
 import { useEffect } from 'react';
+import RecoverEmailPage from './Presentation/Authentication/Pages/RecoverEmailPage';
 
 
 
@@ -239,6 +240,7 @@ function App() {
           </Route>
           <Route path="/" element={<LoginPage /> } />
           <Route path="/login" element={<LoginPage /> } />
+          <Route path="/recover" element={<RecoverEmailPage /> } />
           <Route path="*" element={<Status404Page />} />
 
       </Routes>

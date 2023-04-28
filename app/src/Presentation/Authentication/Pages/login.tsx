@@ -10,7 +10,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useAuthenticationModelController } from '../Hooks/useAuthenticationModelController';
 import { authenticationRepository } from '../../../main';
 import { RequestStatus } from '../../Music/hooks/common';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
@@ -61,7 +61,7 @@ const LoginPage = () => {
                                     name="email"
                                     control={control}
                                     rules={{ required: true, pattern: emailPattern }}
-                                    render={({ field }) => <GrayedTextField  name={field.name} type="text" value={field.value} onChanged={field.onChange} padX={6} padY={2} width="full" height="10" label="Name" placeholder="Name" />}
+                                    render={({ field }) => <GrayedTextField  name={field.name} type="text" value={field.value} onChanged={field.onChange} padX={6} padY={2} width="full" height="10" label="Email Address" placeholder="Email Address" />}
                                 />
                                 
                             </div>
@@ -77,7 +77,7 @@ const LoginPage = () => {
                                                        
                             </div>
                             <div className='py-4 container flex items-center flex-col'>
-                                <a href="#" className="text-red-900 underline">Forgot Password?</a>
+                                <Link to="/recover"><a href="#" className="text-red-900 underline">Forgot Password?</a></Link>
                             </div>
                             {fetchStatus == RequestStatus.Loading ? 
                                <div className='w-full bg-red-700 flex flex-col h-10 justify-center items-center rounded-md'><FontAwesomeIcon className='text-white spinner'  icon={faSpinner} /></div> 
