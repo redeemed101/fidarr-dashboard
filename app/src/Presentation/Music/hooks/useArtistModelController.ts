@@ -5,11 +5,24 @@ import { ArtistRepository } from "../../../Domain/Repository/Music/ArtistReposit
 import { RequestStatus, useGetData } from "./common";
 import { PAGE_SIZE } from "../../../Data/Utils/constants";
 
-
+export type ArtistData = {
+  name: string,
+  username:string,
+  address:string,
+  website:string,
+  bio:string,
+}
 export const useArtistModelController = (repository : ArtistRepository) => {
 
     const [currentPage, setCurrentPage] = useState(1); const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getArtistsPaging(currentPage, PAGE_SIZE));
     
+    const createArtist = async (artistPhoto: File, artistData : ArtistData, onUploadProgress: any) =>  {
+      let formData = new FormData();
+  
+      formData.append("artistProfilePic",artistPhoto);
+  
+     
+    }
 
     const getMoreArtistsPaginated = async () =>  {
       try{
@@ -43,7 +56,8 @@ export const useArtistModelController = (repository : ArtistRepository) => {
         currentPage,
         setCurrentPage,
         getMoreArtistsPaginated,
-        refreshArtistsPaginated
+        refreshArtistsPaginated,
+        createArtist
       };
 }
 

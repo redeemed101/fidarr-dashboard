@@ -4,7 +4,7 @@ import { tokenManager } from "../../../Data/DataSource/API/token";
 import { AuthenticationRepository } from "../../../Domain/Repository/Users/Authentication/AuthenticationRepository";
 import { RequestStatus } from "../../Music/hooks/common";
 import { AxiosError } from "axios";
-import { setUser } from "../../../StateManagement/redux/userReducer";
+import { setRecoverEmail, setUser } from "../../../StateManagement/redux/userReducer";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Country } from "../../../Domain/Model/Auth/Country";
@@ -95,6 +95,7 @@ export const usePasswordModelController = (repository : AuthenticationRepository
          setFetchStatus(RequestStatus.Loading)
          const response = await repository.forgotPassword(email)
          setSuccess(response.success)
+         dispatch(setRecoverEmail(email))
          //go to enter code
       }
       catch(err : any){

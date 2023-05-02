@@ -1,5 +1,6 @@
 import axios,{AxiosError,
 AxiosInstance,
+AxiosProgressEvent,
 AxiosRequestConfig,
 AxiosResponse,
 InternalAxiosRequestConfig} from 'axios'
@@ -14,6 +15,7 @@ const postConfig : Params = {
     baseUrl: BASE_URL,
     headers: {
                 "Authorization": `Bearer ${tokenManager.getToken()}`,
+                //"Content-Type": "multipart/form-data",
             },
     method: 'post'
 }
@@ -29,11 +31,13 @@ export type Response = {
   data : any
 }
 
-export async function getAPI<IEntity>(url : string) : Promise<IEntity> {
+export async function getAPI<IEntity>(url : string , onDownloadProgress : undefined | any  = undefined) : Promise<IEntity> {
     try { 
+     
         const {data, status} = await axios<IEntity>({
           ...getConfig,
           url: `${getConfig.baseUrl}/${url}/`,
+          onDownloadProgress: onDownloadProgress
       });
       return data
     }
@@ -45,12 +49,14 @@ export async function getAPI<IEntity>(url : string) : Promise<IEntity> {
   }
 }
 
-export  async function postAPI<IEntity> (url: string, payload : any) : Promise<IEntity> {
+export  async function postAPI<IEntity> (url: string, payload : any, onUploadProgress : undefined | any = undefined) : Promise<IEntity> {
   try{
+   
      const {data, status } = await axios<IEntity>({
         ...postConfig,
         url: `${postConfig.baseUrl}/${url}`,
-        data: payload
+        data: payload,
+        onUploadProgress: onUploadProgress
     })
     return data
   }

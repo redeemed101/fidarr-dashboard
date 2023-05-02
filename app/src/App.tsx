@@ -223,7 +223,7 @@ function App() {
   useEffect(() => {
     console.log(user)
     if (user == null) {
-       navigate("/login")
+       navigate("/music/artists/create")
     } else {
       navigate("/dashboard")
     }

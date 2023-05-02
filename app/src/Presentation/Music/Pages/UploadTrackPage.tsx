@@ -61,7 +61,7 @@ const UploadTrackPage = () => {
                    <PrimaryDatePicker value="" padX={6} padY={2} width="full" height="10" label="Release Date" />
                   </div>
                   <div>
-                    <TextArea label="Bio" value=""  padX={6} padY={2} width="full" height="20" placeholder="Name"/>
+                    <TextArea name="bio" label="Bio" value=""  padX={6} padY={2} width="full" height="20" placeholder="Name"/>
                   </div>
                   <div className="self-end">
                      <PrimaryButton  title='Save' padY={2} padX={4} height="auto" width="3/4"/>

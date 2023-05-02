@@ -40,6 +40,7 @@ const RecoverEmailPage = () => {
                     <h6 className="text-white font-bold">Recover Password</h6>
                     <p className="text-white font-xs w-3/5 text-center pt-2">Will send a password recovery code to your registered email address</p>
                     {fetchStatus == RequestStatus.Error ? <p className='text-red-600'>Error Recovering password</p> : ""}
+                    {successful ? <p className='text-white text-bold'>Check your mailbox for the reset code</p> : ""}
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full">
                 <div className=" w-full items-center flex flex-row">

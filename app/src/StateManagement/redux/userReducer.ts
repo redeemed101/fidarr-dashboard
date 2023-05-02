@@ -2,6 +2,32 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { User } from "../../Domain/Model/Auth/User";
 import { userManager } from "../../Data/DataSource/API/Authentication/user";
 
+
+export interface RecoverPasswordState {
+  email : string | null 
+}
+
+const initialRecoverPasswordState  : RecoverPasswordState = {
+   email : null
+}
+
+export const recoverEmailSlice  = createSlice({
+  name: 'recoverPassword',
+  initialState: initialRecoverPasswordState,
+  reducers: {
+    setRecoverEmail: (state, action: PayloadAction<string>) => {
+      state.email = action.payload
+    },
+    removeRecoverEmail: (state) => {
+      state.email = null
+    }
+  
+  },
+})
+
+export const { setRecoverEmail, removeRecoverEmail } = recoverEmailSlice.actions
+export const { reducer  } = recoverEmailSlice
+
 export interface UserState {
    user : User | null
   }
