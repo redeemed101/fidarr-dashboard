@@ -1,12 +1,24 @@
 import { injectable } from "inversify";
-import { GenreDataSource, GenresPaging } from "./GenreDataSource";
+import { GenreDataSource, Genres, GenresPaging } from "./GenreDataSource";
 import { graphQLGenreClient } from "../../GraphQL/Client/client";
-import { GetGenresPagingDocument, GetGenresPagingQueryResult } from "../../GraphQL/Generated/Genres/graphql";
+import { Genre, GetGenresDocument, GetGenresPagingDocument, GetGenresPagingQueryResult, GetGenresQuery, GetGenresQueryResult } from "../../GraphQL/Generated/Genres/graphql";
+
 
 
 
 @injectable()
 export class GenreDataSourceImpl implements GenreDataSource{
+    async getAllGenres() : Promise<Genre[]>{
+        const result = await graphQLGenreClient.query<GetGenresQueryResult>(
+            {
+                query: GetGenresDocument,
+            }
+        );
+        const data = result.data
+        const genres = data as unknown as Genres
+        return genres.genres
+        
+    }
     async getGenresPaging(page: number, size: number): Promise<GenresPaging> {
         const result = await graphQLGenreClient.query<GetGenresPagingQueryResult>({
             query : GetGenresPagingDocument,

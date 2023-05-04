@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { ArtistRepository } from "../../../../Domain/Repository/Music/ArtistRepository";
 import { Artist } from "../../../../Domain/Model/Music";
-import { ArtistDataSource } from "../../../DataSource/Music/Artists/ArtistDataSource";
+import { ArtistDataSource, CreateArtist } from "../../../DataSource/Music/Artists/ArtistDataSource";
 import { TYPES } from "../../../../DI/types";
 import { BASE_URL } from "../../../DataSource/API/constant";
 import { ArtistPage } from "../../../../Domain/Model/Music/Artist";
@@ -15,6 +15,10 @@ export class ArtistRepositoryImpl implements ArtistRepository{
         @inject(TYPES.ArtistDataSource) dataSource : ArtistDataSource
     ){
         this._dataSource = dataSource
+    }
+    async createArtist(request: CreateArtist): Promise<boolean> {
+        var result =  await this._dataSource.createArtist(request);
+        return result.success
     }
     async getArtistsPaging(page: number, size: number): Promise<ArtistPage> {
         const artistResponse = await this._dataSource.getArtistsPaging(page,size)

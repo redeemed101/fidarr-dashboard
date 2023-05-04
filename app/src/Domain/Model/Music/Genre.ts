@@ -1,4 +1,5 @@
 export type Genre = {
+    id: string,
     imgSrc : string,
     name : string,
     albums : number,

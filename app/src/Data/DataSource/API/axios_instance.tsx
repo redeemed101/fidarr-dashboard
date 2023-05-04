@@ -21,9 +21,9 @@ const postConfig : Params = {
 }
 const getConfig : Params = {
     baseUrl: BASE_URL,
-        headers: {
+    headers: {
             "Authorization": `Bearer ${tokenManager.getToken()}`
-        },
+    },
     method: 'get'
 }
 export type Response = {
@@ -31,11 +31,15 @@ export type Response = {
   data : any
 }
 
-export async function getAPI<IEntity>(url : string , onDownloadProgress : undefined | any  = undefined) : Promise<IEntity> {
+export async function getAPI<IEntity>(url : string ,extraHeaders: any | null = null, onDownloadProgress : undefined | any  = undefined) : Promise<IEntity> {
     try { 
-     
+      var headers = extraHeaders != null ? {
+        ...postConfig.headers,
+        ...extraHeaders
+       } : postConfig.headers;
         const {data, status} = await axios<IEntity>({
-          ...getConfig,
+          headers: headers,
+          method: "get",
           url: `${getConfig.baseUrl}/${url}/`,
           onDownloadProgress: onDownloadProgress
       });
@@ -49,13 +53,18 @@ export async function getAPI<IEntity>(url : string , onDownloadProgress : undefi
   }
 }
 
-export  async function postAPI<IEntity> (url: string, payload : any, onUploadProgress : undefined | any = undefined) : Promise<IEntity> {
+export  async function postAPI<IEntity> (url: string, payload : any, extraHeaders: any | null = null, onUploadProgress : undefined | any = undefined) : Promise<IEntity> {
   try{
    
-     const {data, status } = await axios<IEntity>({
-        ...postConfig,
+     var headers = extraHeaders != null ? {
+      ...postConfig.headers,
+      ...extraHeaders
+     } : postConfig.headers;
+     const {data, status } = await axios<IEntity>({        
         url: `${postConfig.baseUrl}/${url}`,
         data: payload,
+        method: "post",
+        headers : headers,
         onUploadProgress: onUploadProgress
     })
     return data

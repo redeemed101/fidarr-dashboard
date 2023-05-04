@@ -11,18 +11,32 @@ export type ArtistData = {
   address:string,
   website:string,
   bio:string,
+  genres: string[]
 }
 export const useArtistModelController = (repository : ArtistRepository) => {
 
     const [currentPage, setCurrentPage] = useState(1); const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getArtistsPaging(currentPage, PAGE_SIZE));
     
     const createArtist = async (artistPhoto: File, artistData : ArtistData, onUploadProgress: any) =>  {
-      let formData = new FormData();
-  
-      formData.append("artistProfilePic",artistPhoto);
-  
      
-    }
+      try{
+         var result = await repository.createArtist({
+           name : artistData.name,
+           bio: artistData.bio,
+           address: artistData.address,
+           artistPhoto: artistPhoto,
+           website: artistData.website,
+           username: artistData.username,
+           genres: artistData.genres
+         });
+         if(result)
+            setFetchStatus(RequestStatus.Success)
+         else
+         setFetchStatus(RequestStatus.Error)
+      }
+      catch(e : any){ setFetchStatus(RequestStatus.Error)}  
+     }   
+    
 
     const getMoreArtistsPaginated = async () =>  {
       try{

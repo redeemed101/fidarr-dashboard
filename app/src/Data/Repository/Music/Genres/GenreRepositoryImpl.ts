@@ -4,7 +4,7 @@ import { GenreDataSource } from "../../../DataSource/Music/Genres/GenreDataSourc
 import { TYPES } from "../../../../DI/types";
 import { BASE_URL } from "../../../DataSource/API/constant";
 import moment from "moment";
-import { GenrePage } from "../../../../Domain/Model/Music/Genre";
+import { Genre, GenrePage } from "../../../../Domain/Model/Music/Genre";
 
 @injectable()
 export class GenreRepositoryImpl implements GenreRepository{
@@ -14,6 +14,21 @@ export class GenreRepositoryImpl implements GenreRepository{
         @inject(TYPES.GenreDataSource) dataSource : GenreDataSource
     ){
         this._dataSource = dataSource
+    }
+    async getAllGenres(): Promise<Genre[]> {
+        const result = await this._dataSource.getAllGenres()
+        const genres = result.map(g => {
+            return  {
+                imgSrc : `${BASE_URL}${g.imageUrl}`,
+                name : g.name,
+                albums : g.albums?.length ?? 0,
+                tracks : g.songs?.length ?? 0,
+                artists: g.artists?.length ?? 0,
+                id: g.id,
+                lastUpdated:moment(Date.parse(g.lastUpdated)).format('MMMM DD, YYYY')
+            }
+        });
+        return genres
     }
     async getGenresPaging(page: number, size: number): Promise<GenrePage> {
         const genreResponse = await this._dataSource.getGenresPaging(page,size)
@@ -25,6 +40,7 @@ export class GenreRepositoryImpl implements GenreRepository{
                 albums : a.albums?.length ?? 0,
                 tracks : a.songs?.length ?? 0,
                 artists: a.artists?.length ?? 0,
+                id: a.id,
                 lastUpdated:moment(Date.parse(a.lastUpdated)).format('MMMM DD, YYYY')
             }
        });

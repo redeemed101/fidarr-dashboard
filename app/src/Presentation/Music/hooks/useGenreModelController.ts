@@ -7,8 +7,15 @@ import { Genre } from "../../../Domain/Model/Music/Genre";
 export const useGenreModelController = (repository : GenreRepository) => {
 
     const [currentPage, setCurrentPage] = useState(1); const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getGenresPaging(currentPage, PAGE_SIZE));
-    
-
+    const [genres, setGenres] = useState<Genre[] | []>([]);
+    const getAllGenres = async () =>{
+        try{
+          const response = await repository.getAllGenres()
+          setFetchStatus(RequestStatus.Success)
+          setGenres(response)
+        }
+       catch(e : any){ setFetchStatus(RequestStatus.Error)} 
+    }
     const getMoreGenresPaginated = async () =>  {
       try{
        
@@ -39,6 +46,8 @@ export const useGenreModelController = (repository : GenreRepository) => {
         count: data.count,
         fetchStatus,
         currentPage,
+        genres,
+        getAllGenres,
         setCurrentPage,
         getMoreGenresPaginated,
         refreshGenresPaginated

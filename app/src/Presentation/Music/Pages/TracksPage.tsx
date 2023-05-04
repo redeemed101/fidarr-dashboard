@@ -6,10 +6,15 @@ import PlusIcon from "../../../Assets/svgs/PlusIcon.svg"
 import TracksTable from "../Sections/TracksTable";
 import { MusicMenuType, menuItems } from "../../../StateManagement/MusicMenu";
 import { Link } from "react-router-dom";
+import { songRepository } from "../../../main";
+import { useSongModelController } from "../hooks/useSongModelController";
+import { RequestStatus } from "../hooks/common";
+
 
 
 
 const TracksPage = () => {
+  const {currentSongs, fetchStatus,currentPage, count,refreshSongsPaginated, getMoreSongsPaginated} = useSongModelController(songRepository)
     return (
        
        
@@ -18,7 +23,9 @@ const TracksPage = () => {
           <div className="flex  gap-4 flex-col w-full">
          
              <MusicHeader selectedType={MusicMenuType.Tracks} menus={menuItems}  buttonComp={ <Link to="/music/tracks/create"><ButtonWithIcon imageSrc={PlusIcon} title="Upload Track" /></Link> } />
-             <TracksTable />
+             {fetchStatus == RequestStatus.Loading ? <div className="mx-auto"><p className="text-white">Loading...</p></div> : 
+             <TracksTable refresh={refreshSongsPaginated} totalCount={count} currentPage={currentPage} loadMore={getMoreSongsPaginated} rows={currentSongs}  /> }
+             {fetchStatus == RequestStatus.Error ? <div className="mx-auto"><p className="text-red-600">Error fetching data</p></div> : ""}
           </div>   
        
       </div>

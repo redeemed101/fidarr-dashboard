@@ -6,9 +6,10 @@ import { PrimaryButton, SecondaryButton } from "../../Common/buttons"
 import TextArea from "../../Common/textarea"
 import { PrimaryTextField } from "../../Common/textfields"
 import MenuColumn from "../../Dashboard/Components/MenuColumn"
-import { useState } from 'react';
-import { artistRepository } from '../../../main';
+import { useEffect, useState } from 'react';
+import { artistRepository, genreRepository } from '../../../main';
 import { ArtistData, useArtistModelController } from '../hooks/useArtistModelController';
+import { useGenreModelController } from '../hooks/useGenreModelController';
 
 type FormData = {
   name: string;
@@ -17,14 +18,24 @@ type FormData = {
   website: string;
   bio : string;
   picture: string
+  genres: string[]
 };
 const schema = yup.object({
-  email: yup.string().email().required(),
+  name: yup.string().required(),
+  username: yup.string().required(),
+  address: yup.string().required(),
+  website: yup.string().required(),
+  bio: yup.string().required(),
+  picture: yup.string().required(),
 }).required();
 const CreateArtistPage = () => {
     const [imagePath, setImagePath] = useState<string | null>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const { createArtist, fetchStatus} = useArtistModelController(artistRepository)
+    const {genres, getAllGenres} = useGenreModelController(genreRepository)
+    useEffect( () => {
+         getAllGenres()
+    }, []);
     const { control, handleSubmit, formState: { errors }  } = useForm<FormData>({
       resolver: yupResolver(schema),
       defaultValues: {
@@ -53,6 +64,7 @@ const CreateArtistPage = () => {
           address: data.address,
           website: data.website,
           bio: data.bio,
+          genres: data.genres
         },() => {})
     }
     return (
@@ -77,7 +89,7 @@ const CreateArtistPage = () => {
                   <Controller
                     control={control}
                     name={"picture"}
-                    rules={{ required: "Recipe picture is required" }}
+                    rules={{ required: "Artist picture is required" }}
                     render={({ field: { value, onChange, ...field } }) => {
                       return (
                         <input
@@ -125,6 +137,27 @@ const CreateArtistPage = () => {
                                     render={({ field }) => <PrimaryTextField name={field.name} type="text" value={field.value} padX={6} padY={2} onChanged={field.onChange} width="full" height="10" label="Website" placeholder="Website"  />}
                    />      
                   
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <div>
+                      <p className='text-sm font-bold text-fidarrgray-900'>Genres</p>
+                    </div>
+                    <div className='flex flex-row items-center'>
+                      {
+                      genres.map( g => <Controller
+                        name="genres"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) =>    <div className='flex flex-row items-center'>
+                                                          <input type="checkbox"                                                         
+                                                          name={field.name} value={g.id}
+                                                          className="text-fidarrgray-900 hover:bg-fidarrgray-600 cursor-pointer w-6 h-6 border-3 border-amber-500 focus:outline-none rounded" />
+                                                          <label htmlFor={field.name} className="text-white mx-4 ">{g.name}</label>
+                                                  </div>
+                        }
+                      />)
+                    }
+                   </div>
                   </div>
                   <div>
                   <Controller

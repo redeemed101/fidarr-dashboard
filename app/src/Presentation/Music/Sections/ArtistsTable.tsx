@@ -8,7 +8,7 @@ import { PAGE_SIZE } from "../../../Data/Utils/constants";
 export type ArtistCardProps = {
     imgSrc : string,
     name : string,
-    genres : string[],
+    genres? : string[],
 }
 export const ArtistCard = ({imgSrc,name, genres} : ArtistCardProps) => {
     return (
@@ -18,7 +18,7 @@ export const ArtistCard = ({imgSrc,name, genres} : ArtistCardProps) => {
             <img className="rounded-md w-16 h-16" src={imgSrc}/>
             <div className="flex flex-col">
                 <p className="text-white font-bold">{name}</p>
-                <p className="text-fidarrgray-500 font-xs">{genres.map(a => a,)}</p>
+                {genres && <p className="text-fidarrgray-500 font-xs">{genres.map(a => a,)}</p> }
             </div>
         </div>
         </div>
