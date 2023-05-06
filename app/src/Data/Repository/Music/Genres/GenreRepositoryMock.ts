@@ -16,7 +16,7 @@ export class GenreRepositoryMock implements GenreRepository{
                 tracks : 0,
                 artists: 0,
                 lastUpdated: "2019-09-09",
-                id: "1234"
+                id: "1"
             },
             {
                 imgSrc : "",
@@ -25,7 +25,7 @@ export class GenreRepositoryMock implements GenreRepository{
                 tracks : 0,
                 artists: 0,
                 lastUpdated: "2019-09-09",
-                id: "1234"
+                id: "2"
             },
             {
                 imgSrc : "",
@@ -34,7 +34,7 @@ export class GenreRepositoryMock implements GenreRepository{
                 tracks : 0,
                 artists: 0,
                 lastUpdated: "2019-09-09",
-                id: "1234"
+                id: "3"
             },
             {
                 imgSrc : "",
@@ -43,7 +43,7 @@ export class GenreRepositoryMock implements GenreRepository{
                 tracks : 0,
                 artists: 0,
                 lastUpdated: "2019-09-09",
-                id: "1234"
+                id: "4"
             }
         ]
         return new Promise(resolve => setTimeout(() => resolve(genres), 5000)) ;

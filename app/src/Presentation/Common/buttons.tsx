@@ -29,11 +29,12 @@ export const SecondaryButton = ({title, height,width, padX, padY,onClick}  : Pri
 
 type ButtonWithIconProps = {
     title : string,
-    imageSrc : string
+    imageSrc : string,
+    onClicked?: () => void
 }
-export const ButtonWithIcon = ({title, imageSrc} : ButtonWithIconProps) => {
+export const ButtonWithIcon = ({title,onClicked, imageSrc} : ButtonWithIconProps) => {
     return (
-        <button className="inline-flex items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white text-sm font-medium rounded-md">
+        <button onClick={onClicked} className="inline-flex items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white text-sm font-medium rounded-md">
           <img src={imageSrc} />
     
         {title}

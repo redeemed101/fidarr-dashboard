@@ -40,6 +40,7 @@ export class SongDataSourceImpl implements SongDataSource{
         formData.append("name",request.name);
         formData.append("description",request.description);
         formData.append("artistId",request.artistId);
+        formData.append("releaseDate",JSON.stringify(request.releaseDate))
         request.featuringArtists  && formData.append("featuringArtists",JSON.stringify(request.featuringArtists));
         formData.append("genres",JSON.stringify(request.genres));
         request.albumId  && formData.append("albumId",request.albumId);

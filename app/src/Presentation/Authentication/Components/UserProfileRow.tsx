@@ -39,7 +39,7 @@ const UserProfileRow = () => {
              <p className="text-white font-bold">{user?.username}</p>
              <UserCircularAvatar imgSrc={user?.profilePicPath} />
              <div className="relative">
-            <select value={selected} onChange={handleChange} className="block appearance-none w-1/2 bg-black -mr-6 py-2 text-gray-700  rounded leading-tight focus:outline-none" id="grid-state">
+            <select value={selected} onChange={handleChange} className="block appearance-none w-1/2 bg-fidarrgray-600 -mr-6 py-2 text-gray-700  rounded leading-tight focus:outline-none" id="grid-state">
              <option className="text-white"></option>
                     { options.map( o => <option className="text-white" value={o.value}>{o.label}</option> ) }
                     

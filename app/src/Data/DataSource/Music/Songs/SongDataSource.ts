@@ -20,7 +20,8 @@ export interface CreateSongRequest{
     albumId?: string,
     previewFile?: File
     artworkFile?: File,
-    songFile : File
+    songFile : File,
+    releaseDate: Date
 }
 export interface CreateSongResponse{
     name : string,

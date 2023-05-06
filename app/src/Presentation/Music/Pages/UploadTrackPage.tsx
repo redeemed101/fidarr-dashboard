@@ -41,12 +41,13 @@ const schema = yup.object({
   previewFile: yup.string().required(),
   artworkFile: yup.string().required(),
   songFile: yup.string().required(),
+  releaseData: yup.string().required()
 }).required();
 
 const UploadTrackPage = () => {
   const {genres, getAllGenres} = useGenreModelController(genreRepository)
   const [imagePath, setImagePath] = useState<string | null>(null);
-  const [artworkFile, setImageFile] = useState<File | null>(null);
+  const [artworkFile, setArtworkFile] = useState<File | null>(null);
   const [songFile, setSongFile] = useState<File | null>(null);
   const [previewFile, setPreviewFile] = useState<File | null>(null);
   const {fetchStatus, createSong} = useSongModelController(songRepository)
@@ -77,6 +78,7 @@ const UploadTrackPage = () => {
     console.log(files?.[0])
     if(files != null){
        setImagePath(URL.createObjectURL(files[0]))
+       setArtworkFile(files[0])
     }
    
   }
@@ -89,11 +91,11 @@ const UploadTrackPage = () => {
         artistId: data.artistId,
         featuringArtists : data.featuringArtists,
         genres : data.genres,
-        albumId : data.albumId
+        albumId : data.albumId,
       },(progressEvent : AxiosProgressEvent) => {
         const progress = progressEvent.total != null ? Math.round((100 * progressEvent.loaded) / progressEvent.total) : 0;
         setProgress(progress);
-      })
+      }, artworkFile)
   }
     return (
        
@@ -104,6 +106,7 @@ const UploadTrackPage = () => {
             <div className="bg-fidarrgray-600 pl-8">
               <HeaderSection title="Music" />
             </div>
+            <form className='mx-auto' onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-row  mx-auto pt-12 ">
                 <div className="flex flex-col h-auto w-40">
                   <p className="text-white font-bold pb-4">Upload Track</p>
@@ -134,15 +137,41 @@ const UploadTrackPage = () => {
                 </div>
                 <div className="flex flex-col pl-4 pt-12">
                   <div className="container grid m-auto grid-cols-2 gap-4">
-                   <PrimaryTextField type="text" value="" padX={6} padY={2} width="full" height="10" label="Track Title" placeholder="Track Title" />
-                   <PrimarySelect options={genres.map(g => {
-                    return {label : g.name, value: g.id} as PrimarySelectOption }) } label="Genre" width="full" padX={3} />
-                     <Controller
+                  <Controller
+                                    name="name"
+                                    control={control}
+                                    render={({ field }) => <PrimaryTextField name={field.name} type="text" value={field.value} padX={6} padY={2} onChanged={field.onChange} width="full" height="10" label="Track Title" placeholder="Track Title" />}
+                   />   
+                  
+                   {/*<PrimarySelect  options={genres.map(g => {
+                    return {label : g.name, value: g.id} as PrimarySelectOption }) } label="Genre" width="full" padX={3} />*/}
+                    
+                    <Controller
                                     name="artistId"
                                     control={control}
                                     render={({ field }) => <PrimaryTextField name={field.name} type="text" value={field.value} padX={6} padY={2} onChanged={field.onChange} width="full" height="10" label="Artist" placeholder="Artist" />}
                    />     
-                   
+                  <div className=' col-span-2 flex flex-col gap-2'>
+                    <div>
+                      <p className='text-sm font-bold text-fidarrgray-900'>Genres</p>
+                    </div>
+                    <div className='flex flex-row gap-auto items-center'>
+                      {
+                      genres.map( g => <Controller
+                        name="genres"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) =>    <div className='flex flex-row items-center'>
+                                                          <input type="checkbox"                                                         
+                                                          name={field.name} value={g.id}
+                                                          className="text-fidarrgray-900 hover:bg-fidarrgray-600 cursor-pointer w-6 h-6 border-3 border-amber-500 focus:outline-none rounded" />
+                                                          <label htmlFor={field.name} className="text-white mx-4 ">{g.name}</label>
+                                                  </div>
+                        }
+                      />)
+                    }
+                   </div>
+                  </div>
                   
                    <PrimaryTextField type="text" value="" padX={6} padY={2} width="full" height="10" label="Featuring" placeholder="Featuring" />
                    <Controller
@@ -165,7 +194,11 @@ const UploadTrackPage = () => {
                                     control={control}
                                     render={({ field }) => <PrimaryTextField name={field.name} type="text" value={field.value} padX={6} padY={2} onChanged={field.onChange} width="full" height="10" label="(P) Line" placeholder="YYYY Copyright Holder" />}
                    />   
-                
+                    <Controller
+                                    name="releaseDate"
+                                    control={control}
+                                    render={({ field }) => <PrimaryDatePicker name={field.name} onChanged={field.onChange}   value={field.value} padX={6} padY={2} width="full" height="10" label="Release Date" />}
+                     />
                   
                    <div className="w-full flex flex-col gap-2">
                    <Controller
@@ -180,18 +213,14 @@ const UploadTrackPage = () => {
                         </div>
                       </div>
                    </div>
-                   <Controller
-                                    name="releaseDate"
-                                    control={control}
-                                    render={({ field }) => <PrimaryDatePicker name={field.name} onChanged={field.onChange}   value={field.value} padX={6} padY={2} width="full" height="10" label="Release Date" />}
-                     />
+                  
                    
                   </div>
                   <div>
                   <Controller
-                                    name="releaseDate"
+                                    name="description"
                                     control={control}
-                                    render={({ field }) => <TextArea name={field.name} onChanged={field.onChange}   value={field.value} padX={6} label="Bio" padY={2} width="full" height="20" placeholder="Name" />}
+                                    render={({ field }) => <TextArea name={field.name} onChanged={field.onChange}   value={field.value} padX={6} label="Bio" padY={2} width="full" height="20" placeholder="" />}
                      />
                     
                   </div>
@@ -201,6 +230,7 @@ const UploadTrackPage = () => {
                 </div>
                
             </div>
+            </form>
           </div>   
        
       </div>

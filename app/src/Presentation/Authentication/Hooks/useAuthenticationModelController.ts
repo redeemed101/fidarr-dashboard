@@ -3,7 +3,6 @@ import { userManager } from "../../../Data/DataSource/API/Authentication/user";
 import { tokenManager } from "../../../Data/DataSource/API/token";
 import { AuthenticationRepository } from "../../../Domain/Repository/Users/Authentication/AuthenticationRepository";
 import { RequestStatus } from "../../Music/hooks/common";
-import { AxiosError } from "axios";
 import { setRecoverEmail, setUser } from "../../../StateManagement/redux/userReducer";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";

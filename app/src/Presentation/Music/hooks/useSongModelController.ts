@@ -17,7 +17,7 @@ export type SongData = {
 export const useSongModelController = (repository : SongRepository) => {
     const [currentPage, setCurrentPage] = useState(1); 
     const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getSongsPaging(currentPage, PAGE_SIZE));
-    const createSong = async (songFile: File, songData : SongData, onUploadProgress: any,artworkFile?: File, previewFile? : File) =>  {
+    const createSong = async (songFile: File, songData : SongData, onUploadProgress: any,artworkFile?: File | null, previewFile? : File) =>  {
      
         try{
            var result = await repository.createSong({

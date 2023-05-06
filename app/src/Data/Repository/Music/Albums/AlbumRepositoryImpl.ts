@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from "@apollo/client";
 import { AlbumRepository } from "../../../../Domain/Repository/Music/AlbumRepository";
-import { type AlbumDataSource } from "../../../DataSource/Music/Albums/AlbumDataSource";
+import { CreateAlbumRequest, CreateAlbumResponse, type AlbumDataSource } from "../../../DataSource/Music/Albums/AlbumDataSource";
 import { TYPES } from "../../../../DI/types";
 import { Album } from "../../../../Domain/Model/Music";
 import { graphQLAlbumClient } from "../../../DataSource/GraphQL/Client/client";
@@ -19,6 +19,9 @@ export class AlbumRepositoryImpl implements AlbumRepository{
         @inject(TYPES.AlbumDataSource) dataSource : AlbumDataSource
     ){
         this._dataSource = dataSource
+    }
+    async createAlbum(request: CreateAlbumRequest, onUploadProgress: any): Promise<CreateAlbumResponse> {
+        return this._dataSource.createAlbum(request,onUploadProgress);
     }
     async getAlbumsPaging(page: number, size: number): Promise<AlbumPage> {
         const albumResponse = await this._dataSource.getAlbumsPaging(page,size)

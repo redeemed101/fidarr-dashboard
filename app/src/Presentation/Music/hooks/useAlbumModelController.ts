@@ -3,21 +3,49 @@ import { AlbumRepository } from "../../../Domain/Repository/Music/AlbumRepositor
 import { Album } from "../../../Domain/Model/Music";
 import { RequestStatus, useGetData } from "./common";
 import { PAGE_SIZE } from "../../../Data/Utils/constants";
+import { CreateAlbumRequest } from "../../../Data/DataSource/Music/Albums/AlbumDataSource";
 
-
+type AlbumData = {
+  name: string,
+  description: string,
+  artistId : string,
+  genres: string[],
+  songNames: string[],
+  songDescriptions: string[],
+  songGenres: string[][],
+  songArtists: string[],
+  songsISRCCodes: string[],
+  songFiles: File[]
+  releaseDate: Date,
+}
 export const useAlbumModelController = (repository : AlbumRepository) => {
 
     const [currentPage, setCurrentPage] = useState(1);
     console.log("Current Page number ", currentPage)
     const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getAlbumsPaging(currentPage, PAGE_SIZE));
-    //const [currentAlbums, setAlbums] = useState<Album[]>([]);
-    /*useEffect(() => {
-        async function init() {
-         const albums = await repository.getAlbumsPaginated(1, 100);
-          setAlbums(albums);
-        }
-        init();
-      }, [repository]);*/
+   
+     
+    const createAlbum = async (artwork: File, songFiles: File[], albumData : AlbumData, onUploadProgress: any) =>  {
+     
+      try{
+         var result = await repository.createAlbum({
+          name: albumData.name,
+          description: albumData.description,
+          artistId : albumData.artistId,
+          genres: albumData.genres,
+          songNames: albumData.songNames,
+          songDescriptions: albumData.songDescriptions,
+          artworkFile: artwork,
+          songFiles : songFiles,
+          releaseDate: albumData.releaseDate
+         } as CreateAlbumRequest, onUploadProgress);
+         if(result)
+            setFetchStatus(RequestStatus.Success)
+         else
+         setFetchStatus(RequestStatus.Error)
+      }
+      catch(e : any){ setFetchStatus(RequestStatus.Error)}  
+     }  
       
     const getMoreAlbumsPaginated = async () =>  {
       try{
@@ -51,6 +79,7 @@ export const useAlbumModelController = (repository : AlbumRepository) => {
         count: data.count,
         fetchStatus,
         currentPage,
+        createAlbum,
         setCurrentPage,
         getMoreAlbumsPaginated,
         refreshAlbumsPaginated
