@@ -343,10 +343,11 @@ type MusicTabProps = {
     handleSongEditing : (data: SongData) => void,
     handleDeleteSongItem : (id: number) => void,
     addSongItem : () => void ,
-    songsData: SongData[]
+    songsData: SongData[],
+    submitAlbum: () => void
 
 }
-const AddMusicTab = ({songsData,genres,switchTab,handleDeleteSongItem,handleSongEditing,addSongItem } : MusicTabProps) => {
+const AddMusicTab = ({songsData,genres,switchTab,handleDeleteSongItem,handleSongEditing,addSongItem, submitAlbum } : MusicTabProps) => {
     const [editMode, setEditMode] = useState(false);
     const [selectedIndex, setSelectedIndex] =  useState(0);
     const handleEditMode = (id : number) => {
@@ -377,7 +378,7 @@ const AddMusicTab = ({songsData,genres,switchTab,handleDeleteSongItem,handleSong
             </div>
             <div className="w-full pt-10 flex flex-row justify-between">
                <SecondaryButton onClick={switchTab}  title='Back' padY={2} padX={4} height="auto" width="1/6"/>
-               <PrimaryButton disabled={songsData.length < 1} onClick={switchTab}  title='Save' padY={2} padX={4} height="auto" width="1/6"/>
+               <PrimaryButton disabled={songsData.length < 1} onClick={submitAlbum}  title='Save' padY={2} padX={4} height="auto" width="1/6"/>
             </div>
         </div>
     )
@@ -475,7 +476,7 @@ const UploadAlbumPage = () => {
                             </div>
                         </div>
                     </div>
-                    {activeTab == TABS.Details ? <DetailsTab handleAlbumDetails={handleAlbumDetails} switchTab={handleAddMusicTab} genres={genres} /> : <AddMusicTab songsData={songsData} addSongItem={addSongItem} handleSongEditing={handleSongEditing} handleDeleteSongItem={handleDeleteSongItem} switchTab={handleDetailsTab} genres={genres} />}
+                    {activeTab == TABS.Details ? <DetailsTab handleAlbumDetails={handleAlbumDetails} switchTab={handleAddMusicTab} genres={genres} /> : <AddMusicTab songsData={songsData} addSongItem={addSongItem} submitAlbum={submitAlbum} handleSongEditing={handleSongEditing} handleDeleteSongItem={handleDeleteSongItem} switchTab={handleDetailsTab} genres={genres} />}
                 </div>
                 <div className="w-1/5" />
             </div>
