@@ -1,7 +1,7 @@
 
 
 export type Track = {
-
+    id: string,
     imgSrc : string,
     name : string,
     artistName: string,

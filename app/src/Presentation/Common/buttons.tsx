@@ -13,7 +13,7 @@ interface PrimaryButtonProps {
 }
 export const PrimaryButton = ({title, disabled=false ,type = "button", height,width, padX, padY, onClick}  : PrimaryButtonProps) => {
    return (
-    <button type={type}  disabled={disabled} className={`bg-red-900 hover:bg-red-700 text-white disabled:bg-fidarrgray-900 font-bold h-${height} w-${width} py-${padY} px-${padX} rounded-md`}>
+    <button type={type} onClick={onClick}  disabled={disabled} className={`bg-red-900 hover:bg-red-700 text-white disabled:bg-fidarrgray-900 font-bold h-${height} w-${width} py-${padY} px-${padX} rounded-md`}>
         {title}
      </button>
    );

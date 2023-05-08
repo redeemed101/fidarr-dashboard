@@ -1,11 +1,27 @@
 import { injectable } from "inversify";
-import { CreateSongRequest, CreateSongResponse, SongDataSource, SongsPaginated, SongsPaging } from "./SongDataSource";
+import { CreateSongRequest, CreateSongResponse, SearchSongsPaging, SongDataSource, SongsPaginated, SongsPaging } from "./SongDataSource";
 import { graphQLSongClient } from "../../GraphQL/Client/client";
-import { GetSongPaginatedDocument, GetSongPaginatedQueryResult, GetSongPagingDocument, GetSongPagingQueryResult } from "../../GraphQL/Generated/Songs/graphql";
+import { GetSearchSongsPagingDocument, GetSearchSongsPagingQueryResult, GetSongPaginatedDocument, GetSongPaginatedQueryResult, GetSongPagingDocument, GetSongPagingQueryResult } from "../../GraphQL/Generated/Songs/graphql";
 import { postAPI } from "../../API/axios_instance";
 
 @injectable()
 export class SongDataSourceImpl implements SongDataSource{
+    async getSearchSongsPaging(searchText: string, page: number, size: number): Promise<SearchSongsPaging> {
+        console.log(searchText)
+        const result = await graphQLSongClient.query<GetSearchSongsPagingQueryResult>({
+            query : GetSearchSongsPagingDocument,
+            variables: {
+                page: page,
+                size: size,
+                searchWord: searchText
+            }
+        })
+        const data = result.data 
+        console.log(data)
+        const songsPaginated = data as unknown as SearchSongsPaging 
+      
+        return  songsPaginated;
+    }
     async getSongsPaginated(page: number, size: number): Promise<SongsPaginated> {
         const result = await graphQLSongClient.query<GetSongPaginatedQueryResult>({
             query : GetSongPaginatedDocument,

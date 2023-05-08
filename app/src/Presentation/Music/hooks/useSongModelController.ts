@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SongRepository } from "../../../Domain/Repository/Music/SongRepository";
-import { RequestStatus, useGetData } from "./common";
+import { PagedData, RequestStatus, useGetData } from "./common";
 import { PAGE_SIZE } from "../../../Data/Utils/constants";
 import { CreateSongRequest } from "../../../Data/DataSource/Music/Songs/SongDataSource";
 import { Track } from "../../../Domain/Model/Music";
@@ -16,7 +16,8 @@ export type SongData = {
 }
 export const useSongModelController = (repository : SongRepository) => {
     const [currentPage, setCurrentPage] = useState(1); 
-    const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getSongsPaging(currentPage, PAGE_SIZE));
+    const [fetchStatus, setFetchStatus] = useState<RequestStatus>(RequestStatus.Success);
+    const [data, setData] = useState<PagedData>({count: 0, data: []});
     const createSong = async (songFile: File, songData : SongData, onUploadProgress: any,artworkFile?: File | null, previewFile? : File) =>  {
      
         try{
@@ -38,9 +39,41 @@ export const useSongModelController = (repository : SongRepository) => {
            setFetchStatus(RequestStatus.Error)
         }
         catch(e : any){ setFetchStatus(RequestStatus.Error)}  
-       }   
+       }  
+       
+       const getSearchSongsPaginated = async (searchText:string, getMore:boolean= false) =>{
+        try{
+          if(getMore){
+              const newPage = currentPage + 1;
+              setCurrentPage(newPage)
+              const response = await repository.getSearchSongsPaging(searchText,newPage, PAGE_SIZE);
+              setFetchStatus(RequestStatus.Success)
+              const oldData = data.data
+              const responseData = response.data
+              const newData = oldData.concat(responseData)
+              console.log("New data ", newData)
+              setData({count: response.count, data :newData});
+          }
+          else{
+            setFetchStatus(RequestStatus.Loading)
+            const response =  await repository.getSearchSongsPaging(searchText,currentPage, PAGE_SIZE)          
+            setFetchStatus(RequestStatus.Success)         
+            setData({count: response.count, data : response.data});
+          }
+        }
+        catch(e : any){ setFetchStatus(RequestStatus.Error)}  
+      }
       
-  
+      const getSongsPaginated = async () =>{
+        try{
+         
+          setFetchStatus(RequestStatus.Loading)
+          const response =  await repository.getSongsPaging(currentPage, PAGE_SIZE)          
+          setFetchStatus(RequestStatus.Success)         
+          setData({count: response.count, data : response.data});;
+        }
+        catch(e : any){ setFetchStatus(RequestStatus.Error)}  
+      }
       const getMoreSongsPaginated = async () =>  {
         try{
          
@@ -70,6 +103,8 @@ export const useSongModelController = (repository : SongRepository) => {
           count: data.count,
           fetchStatus,
           currentPage,
+          getSearchSongsPaginated,
+          getSongsPaginated,
           setCurrentPage,
           getMoreSongsPaginated,
           refreshSongsPaginated,

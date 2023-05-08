@@ -8,8 +8,8 @@ import FolderPlusIcon from "../../../Assets/svgs/FolderPlusIcon.svg"
 import ListIcon from "../../../Assets/svgs/ListIcon.svg"
 import DeleteIcon from "../../../Assets/svgs/DeleteIcon.svg"
 import FidarrModal from "../../Common/modal"
-import { useState } from "react"
-import { MinimalTracksTable } from "../Sections/TracksTable"
+import { useEffect, useState } from "react"
+import { SearchTracksTable } from "../Sections/TracksTable"
 import { Track } from "../../../Domain/Model/Music"
 import SearchSongs from "../Components/SearchSongs"
 
@@ -17,12 +17,35 @@ import SearchSongs from "../Components/SearchSongs"
 
 const CreatePaylistPage = () => {
     const [modalOpen, setModalOpen] = useState(false)
+    const [selectedSongs, setSelectedSongs] = useState<Track[]>([])
+    useEffect(() => {
+      console.log(selectedSongs)
+    }, [selectedSongs]);
+    const selectSong = (track: Track) => {
+      console.log("bubbled " + track.id)
+      
+      setSelectedSongs(prev => ([...prev, track]))
+
+    }
+    const unSelectSong = (track: Track) => {
+      console.log("bubbled unselect "+ track.id)
+      setSelectedSongs(prev => ([...prev.filter(t => t.id != track.id)]))
+      
+    }
+    const doneSelecting = () => {
+          console.log(selectedSongs)
+          setModalOpen(prev =>false)
+         
+    }
     return (
        
        <div className="h-auto bg-black w-full">
         <FidarrModal height={500} width={800} title="Sure" close={() => setModalOpen(false)} afterOpen={() =>{}} isOpen={modalOpen}>
           <div className="w-full flex flex-col gap-4">
-             <SearchSongs />
+             <SearchSongs unSelectSong={unSelectSong} selectedSongs={selectedSongs} selectSong={selectSong} />
+             <div>
+              <PrimaryButton disabled={false} type="button" onClick={() => doneSelecting()} title='Done' padY={2} padX={3} height="10" width="full" />
+             </div>
            </div>
         </FidarrModal>
         <div style={{height:"inherit"}}  className="pb-4 flex flex-row ">
@@ -37,8 +60,10 @@ const CreatePaylistPage = () => {
                  
                 </div>
                 <div className="flex flex-col pl-4 pt-12">
-                  <div className="flex flex-row gap-4">
-                   <PrimaryTextField type="text" value="" padX={6} padY={2} width="full" height="10" label="Name" placeholder="Name" />
+                  <div className="flex flex-row gap-4 items-center ">
+                  <div className="flex flex-col">
+                     <PrimaryTextField type="text" value="" padX={6} padY={4} width="full" height="10" label="Name" placeholder="Name" />
+                   </div>
                    <div className="flex flex-col">
                       <PrimaryFileInput padX={6} padY={4} width="full" height="10" label="Upload Art" />
                       <div className="relative -mt-2">
@@ -57,22 +82,25 @@ const CreatePaylistPage = () => {
                         
                        {
 
-                         [...Array(5)].map((x,i) => 
+                          selectedSongs.map((song,i) => 
                              <div key={i} className="flex flex-row items-center gap-1 w-full">
                                 <div className=" w-1/12">
                                 <img  src={ListIcon} />
                                 </div>
                                 <div className=" pr-8  flex flex-col w-10/12">
-                                    <PrimaryTextField type="text" value="Imela - Nathaniel Bassey" padX={2} padY={1} width="full" height="10" label="" placeholder="Imela.mp3" />
+                                    <div className="px-2 bg-white rounded h-10 w-full">
+                                       <p className=" text-black">{song.name} - {song.artistName}</p>
+                                    </div>
+                                    {/*<PrimaryTextField type="text" value={song.name} padX={2} padY={1} width="full" height="10" label="" placeholder="Imela.mp3" />
                                     <div className="relative -mt-2">
                                         <div className="overflow-hidden h-2 text-xs flex rounded bg-fidarrgray-900">
                                             <div style={{width : "40%"}} className="bg-red-900 shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center "></div>
                                         </div>
-                                    </div>
+                                    </div>*/}
                                 </div> 
                                 <div className="   flex flex-row gap-1 w-1/12">
                                     
-                                    <img className="cursor-pointer" src={DeleteIcon} />
+                                    <img className="cursor-pointer" onClick={() => unSelectSong(song)} src={DeleteIcon} />
                                 </div>
                             </div>
                             
@@ -84,7 +112,7 @@ const CreatePaylistPage = () => {
                   
                   
                   <div className="mt-6 self-end">
-                     <PrimaryButton  title='Save' padY={2} padX={4} height="auto" width="full"/>
+                     <PrimaryButton disabled={selectedSongs.length < 1}  title='Save' padY={2} padX={4} height="auto" width="full"/>
                   </div>
                 </div>
                

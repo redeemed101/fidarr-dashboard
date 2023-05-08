@@ -81,7 +81,7 @@ const UploadTrackPage = () => {
     console.log(files?.[0])
     if(files != null){
        setImagePath(URL.createObjectURL(files[0]))
-       setArtworkFile(files[0])
+       setArtworkFile(_prev => files[0])
     }
    
   }
@@ -97,7 +97,7 @@ const UploadTrackPage = () => {
         albumId : data.albumId,
       },(progressEvent : AxiosProgressEvent) => {
         const progress = progressEvent.total != null ? Math.round((100 * progressEvent.loaded) / progressEvent.total) : 0;
-        setProgress(progress);
+        setProgress(prev => progress);
       }, artworkFile)
   }
     return (

@@ -9,13 +9,18 @@ import { Link } from "react-router-dom";
 import { songRepository } from "../../../main";
 import { useSongModelController } from "../hooks/useSongModelController";
 import { RequestStatus } from "../hooks/common";
+import { useEffect } from "react";
 
 
 
 
 const TracksPage = () => {
-  const {currentSongs, fetchStatus,currentPage, count,refreshSongsPaginated, getMoreSongsPaginated} = useSongModelController(songRepository)
-    return (
+   const {currentSongs,getSongsPaginated, fetchStatus,currentPage, count,refreshSongsPaginated, getMoreSongsPaginated} = useSongModelController(songRepository)
+  
+   useEffect( () => {
+    getSongsPaginated()
+    }, []);  
+   return (
        
        
         <div style={{height:"inherit"}}  className="pb-4 flex flex-row bg-black">

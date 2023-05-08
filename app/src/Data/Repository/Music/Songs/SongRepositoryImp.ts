@@ -15,6 +15,27 @@ export class SongRepositoryImpl implements SongRepository{
     ){
         this._dataSource = dataSource
     }
+    async getSearchSongsPaging(searchText: string, page: number, size: number): Promise<TrackPage> {
+        const songsResponse = await this._dataSource.getSearchSongsPaging(searchText,page,size)
+        console.log("Page  ",page, " ", songsResponse.searchSongsPaging)
+        const songs = songsResponse.searchSongsPaging.songs.map(s => {
+           return  {
+                imgSrc : `${BASE_URL}${s.artworkPath}`,
+                id: s.id,
+                name : s.name,
+                artistName: s.artist?.name,
+                genres : s.genres?.map(g => g?.name),
+                streams : s.streams ?? "",
+                duration : "",
+                releaseDate: "",
+                lastUpdated: ""
+            } as Track
+       });
+       return {
+          count: songsResponse.searchSongsPaging.count,
+          data: songs
+       }
+    }
     async getSongsPaginated(page: number, size: number): Promise<Track[]> {
        const response =  await this._dataSource.getSongsPaginated(page,size);
        const songs =  response.songsPaginated.map(s => {
@@ -36,6 +57,7 @@ export class SongRepositoryImpl implements SongRepository{
         const songs = songsResponse.songsPaging.songs.map(s => {
            return  {
                 imgSrc : `${BASE_URL}${s.artworkPath}`,
+                id: s.id,
                 name : s.name,
                 artistName: s.artist?.name,
                 genres : s.genres?.map(g => g?.name),

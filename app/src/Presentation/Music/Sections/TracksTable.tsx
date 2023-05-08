@@ -5,6 +5,7 @@ import { ArtistCard } from "./ArtistsTable"
 import { Track } from "../../../Domain/Model/Music/Track";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { PAGE_SIZE } from "../../../Data/Utils/constants";
+import { useState } from "react";
 
 
 export type SongCardProps = {
@@ -34,7 +35,7 @@ type TracksTableProps = {
     totalCount: number,
     loadMore : () => void,
     refresh : () => void
-
+    
 }
 
 const TracksTable = ({rows,currentPage, totalCount, loadMore, refresh}: TracksTableProps) => {
@@ -120,8 +121,57 @@ const TracksTable = ({rows,currentPage, totalCount, loadMore, refresh}: TracksTa
 
 export default TracksTable
 
+type SearchTracksTableProps = {
+    rows : Track[],
+    currentPage: number,
+    totalCount: number,
+    loadMore : () => void,
+    refresh : () => void
+    selectedSongs: Track[],
+    selectSong: (track: Track) => void,
+    unSelectSong: (track: Track) => void
+}
 
-export const MinimalTracksTable = ({rows,currentPage, totalCount, loadMore, refresh}: TracksTableProps) => {
+export const SearchTracksTable = ({rows,currentPage, unSelectSong,selectSong, selectedSongs, totalCount, loadMore, refresh}: SearchTracksTableProps) => {
+    const [allSelected, setAllSelected] = useState<boolean>(false)
+    const checkSelectAll = (checked: boolean) => {
+        setAllSelected(checked)
+        if(checked){
+            console.log("within all selected")
+            selectAll()
+        }
+        else{
+            console.log("within all unselected")
+            unSelectAll()
+        }
+    }
+    const checkSongSelected = (checked: boolean, song: Track) => {
+      
+          if(checked){
+             
+             selectSong(song)
+          }
+          else{
+            unSelectSong(song)
+          }
+    }
+    const selectAll = () => {
+        rows.forEach(song => {
+            
+            if(!selectedSongs.includes(song)){
+                console.log(song)
+                 selectSong(song)
+            }
+            
+        })
+    }
+    const unSelectAll = () => {
+        rows.forEach(song => {
+            if(selectedSongs.includes(song))
+                 unSelectSong(song)
+            
+        })
+    }
     return (
         <div className="flex flex-col w-full">
             <div className="w-full">
@@ -145,7 +195,11 @@ export const MinimalTracksTable = ({rows,currentPage, totalCount, loadMore, refr
                             <tr>
                                <th className="pl-8">
                                     <div className="flex">
-                                            <input type="checkbox" className=" rounded-md shrink-0 mt-0.5 border-gray-200 text-red-900 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
+                                            <input 
+                                            type="checkbox" 
+                                            checked={allSelected}
+                                            onChange={(e) => checkSelectAll(e.target.checked)}
+                                            className=" rounded-md shrink-0 mt-0.5 border-gray-200 text-red-900  focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
                                             
                                     </div>
                             
@@ -157,11 +211,14 @@ export const MinimalTracksTable = ({rows,currentPage, totalCount, loadMore, refr
                         </thead>
                         <tbody >
                             {
-                            rows.map( track => 
-                            <tr className="text-left ">
+                            rows.map( (track,i) => 
+                            <tr key={i} className="text-left even:bg-fidarrgray-100 ">
                             <td className="pl-8">
                             <div className="flex">
-                                    <input type="checkbox" className="shrink-0 mt-0.5 border-gray-200 rounded-md text-red-900 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
+                                    <input type="checkbox" 
+                                          checked={selectedSongs.includes(track)}                                 
+                                          onChange={(e) => checkSongSelected(e.target.checked, track)}
+                                          className="shrink-0 mt-0.5 border-gray-200 rounded-md text-red-900  focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"  />
                                     
                                 </div>
                             </td>

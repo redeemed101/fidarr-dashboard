@@ -51,7 +51,7 @@ const CreateArtistPage = () => {
       const {files} = event.target
       console.log(files?.[0])
       if(files != null){
-         setImagePath(URL.createObjectURL(files[0]))
+         setImagePath(_p => URL.createObjectURL(files[0]))
       }
      
     }

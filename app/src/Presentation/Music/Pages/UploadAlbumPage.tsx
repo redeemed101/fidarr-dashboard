@@ -260,10 +260,10 @@ const SongItem = ({genres,handleDoneEditing, id,handleDelete, editMode,selectedI
     const handleOnCheck = (genre : string) => {
         if(songGenres.includes(genre)){
            
-            setSongGenres(songGenres.filter(g => g != genre))
+            setSongGenres(prev => (prev.filter(g => g != genre)))
         }
         else{
-            setSongGenres([...songGenres,genre]);
+            setSongGenres(prev => ([...prev,genre]));
         }
         
     }
@@ -352,7 +352,7 @@ const AddMusicTab = ({songsData,genres,switchTab,handleDeleteSongItem,handleSong
     const [selectedIndex, setSelectedIndex] =  useState(0);
     const handleEditMode = (id : number) => {
           setSelectedIndex(id)
-          setEditMode(!editMode)
+          setEditMode(editMode => !editMode)
       };
     
    

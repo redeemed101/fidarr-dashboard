@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import EyeOff from "../../Assets/svgs/eye-off.svg";
 import Eye from "../../Assets/svgs/Eye.svg";
 import Search from "../../Assets/svgs/SearchIcon.svg"
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type TextfieldProps = {
     label?: string,
@@ -67,8 +69,22 @@ export function GrayedTextField({value,name,onChanged,placeholder, type, padY, p
          </div>
     )
  }
+ type SearchTextfieldProps = {
+    label?: string,
+    loading?:boolean,
+    placeholder?: string,
+    marginBottom?: string,
+    name?: string,
+    type? : string,
+    height? : string,
+    width?: string,
+    padX? : Number,
+    padY?: Number,
+    value: string,
+    onChanged?: (target: any) => void
 
- export const SearchTextField = ({placeholder = "Search", value,name,onChanged} : TextfieldProps) => {
+}
+ export const SearchTextField = ({placeholder = "Search", loading=false, value,name,onChanged} : SearchTextfieldProps) => {
     return (
         <div className='w-full'>
             <label className="relative block">
@@ -76,13 +92,16 @@ export function GrayedTextField({value,name,onChanged,placeholder, type, padY, p
                 <img className="h-5 w-5 fill-black" src={Search} />
                 
             </span>
+            {loading ? <FontAwesomeIcon className='absolute text-red spinner inset-y-3 right-3'  icon={faSpinner} /> : <></>}
             <input
                 value={value}
+                disabled={loading}
                 name={name}
                 onChange={onChanged}
                 className="w-full bg-white placeholder:font-italitc border border-slate-300 rounded-full py-2 pl-10 pr-4 focus:outline-none"
                 placeholder={placeholder} type="text" />
             </label>
+            
         </div>
     )
  }
