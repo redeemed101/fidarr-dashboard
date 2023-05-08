@@ -1,5 +1,4 @@
 import { ReactNode, createContext, useContext, useState } from 'react';
-import { MenuItemProps } from '../Presentation/Dashboard/Components/MenuItem';
 
 import File from "../Assets/svgs/file.svg"
 import Activity from "../Assets/svgs/activity.svg"

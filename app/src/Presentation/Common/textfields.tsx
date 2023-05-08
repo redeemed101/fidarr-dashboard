@@ -59,7 +59,7 @@ export function GrayedTextField({value,name,onChanged,placeholder, type, padY, p
     return (
         <div className="relative w-full opacity-100">
             <div className="absolute inset-y-0 right-0 opacity-100 flex items-center px-2">
-              <input className="hidden js-password-toggle" id="toggle" type="checkbox" />
+              <input className="hidden" type="checkbox" />
               <img src={show ? EyeOff : Eye} onClick={toggleShow} alt="eye" className="bg-fidarrgray-900  opacity-100 hover:bg-gray-900 rounded px-2 py-1 text-sm text-gray-600 cursor-pointer" />
               
             </div>
@@ -68,7 +68,7 @@ export function GrayedTextField({value,name,onChanged,placeholder, type, padY, p
     )
  }
 
- export const SearchTextField = ({value,name,onChanged} : TextfieldProps) => {
+ export const SearchTextField = ({placeholder = "Search", value,name,onChanged} : TextfieldProps) => {
     return (
         <div className='w-full'>
             <label className="relative block">
@@ -81,7 +81,7 @@ export function GrayedTextField({value,name,onChanged,placeholder, type, padY, p
                 name={name}
                 onChange={onChanged}
                 className="w-full bg-white placeholder:font-italitc border border-slate-300 rounded-full py-2 pl-10 pr-4 focus:outline-none"
-                placeholder="Search" type="text" />
+                placeholder={placeholder} type="text" />
             </label>
         </div>
     )

@@ -2,17 +2,29 @@ import HeaderSection from "../../Common/HeaderSection"
 import { ButtonWithIcon, PrimaryButton, SecondaryButton } from "../../Common/buttons"
 import PrimaryFileInput from "../../Common/fileInput"
 import TextArea from "../../Common/textarea"
-import { PrimaryTextField } from "../../Common/textfields"
+import { PrimaryTextField, SearchTextField } from "../../Common/textfields"
 import MenuColumn from "../../Dashboard/Components/MenuColumn"
 import FolderPlusIcon from "../../../Assets/svgs/FolderPlusIcon.svg"
 import ListIcon from "../../../Assets/svgs/ListIcon.svg"
 import DeleteIcon from "../../../Assets/svgs/DeleteIcon.svg"
+import FidarrModal from "../../Common/modal"
+import { useState } from "react"
+import { MinimalTracksTable } from "../Sections/TracksTable"
+import { Track } from "../../../Domain/Model/Music"
+import SearchSongs from "../Components/SearchSongs"
+
 
 
 const CreatePaylistPage = () => {
+    const [modalOpen, setModalOpen] = useState(false)
     return (
        
-       <div className="h-auto bg-black">
+       <div className="h-auto bg-black w-full">
+        <FidarrModal height={500} width={800} title="Sure" close={() => setModalOpen(false)} afterOpen={() =>{}} isOpen={modalOpen}>
+          <div className="w-full flex flex-col gap-4">
+             <SearchSongs />
+           </div>
+        </FidarrModal>
         <div style={{height:"inherit"}}  className="pb-4 flex flex-row ">
           <MenuColumn />
           <div className="flex  gap-4 flex-col w-full">
@@ -39,7 +51,7 @@ const CreatePaylistPage = () => {
 
                   <div className="flex flex-col mt-4">
                     <div className="">
-                       <ButtonWithIcon title="Add Songs" imageSrc={FolderPlusIcon} />
+                       <ButtonWithIcon onClicked={() => setModalOpen(true)} title="Add Songs" imageSrc={FolderPlusIcon} />
                      </div>
                      <div className="flex flex-col w-full gap-2 mt-6">
                         

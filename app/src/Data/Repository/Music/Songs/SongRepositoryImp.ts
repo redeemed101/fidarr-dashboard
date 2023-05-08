@@ -37,6 +37,7 @@ export class SongRepositoryImpl implements SongRepository{
            return  {
                 imgSrc : `${BASE_URL}${s.artworkPath}`,
                 name : s.name,
+                artistName: s.artist?.name,
                 genres : s.genres?.map(g => g?.name),
                 streams : s.streams ?? "",
                 duration : "",

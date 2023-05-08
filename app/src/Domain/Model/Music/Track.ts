@@ -4,6 +4,7 @@ export type Track = {
 
     imgSrc : string,
     name : string,
+    artistName: string,
     genres? : string[],
     streams : string,
     duration : string,

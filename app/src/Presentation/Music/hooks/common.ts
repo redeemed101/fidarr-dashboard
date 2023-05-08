@@ -3,7 +3,8 @@ import { useCallback, useEffect, useState } from "react";
 export enum RequestStatus {
     Loading,
     Error,
-    Success
+    Success,
+    Failure
 }
 
 export const fetchMoreData = (moreDataFn: () => Promise<any>) => {
@@ -14,7 +15,7 @@ export interface PagedData {
     data: any[]
 }
 export const useGetData = (dataFn: () => Promise<any>) => {
-    const [fetchStatus, setFetchStatus] = useState<RequestStatus>();
+    const [fetchStatus, setFetchStatus] = useState<RequestStatus>(RequestStatus.Success);
     const [data, setData] = useState<PagedData>({count: 0, data: []});
     const fn = useCallback(dataFn,[])
     useEffect(() => {

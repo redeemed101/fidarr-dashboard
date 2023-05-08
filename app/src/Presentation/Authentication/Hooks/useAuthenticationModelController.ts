@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { Country } from "../../../Domain/Model/Auth/Country";
 
 export const useCodeModelController = (repository : AuthenticationRepository) => {
-   //const [error, setError] = useState<Error | null>(null)
    const [fetchStatus, setFetchStatus] = useState<RequestStatus>();
    const [successful, setSuccess] = useState<boolean>(true)
    const dispatch = useDispatch();
@@ -50,7 +49,6 @@ export const useCodeModelController = (repository : AuthenticationRepository) =>
 }
 
 export const usePasswordModelController = (repository : AuthenticationRepository) => {
-   //const [error, setError] = useState<Error | null>(null)
    const [fetchStatus, setFetchStatus] = useState<RequestStatus>();
    const [successful, setSuccess] = useState<boolean>(true)
    const dispatch = useDispatch();

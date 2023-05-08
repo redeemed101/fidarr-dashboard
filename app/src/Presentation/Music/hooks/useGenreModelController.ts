@@ -4,9 +4,15 @@ import { RequestStatus, useGetData } from "./common";
 import { PAGE_SIZE } from "../../../Data/Utils/constants";
 import { Genre } from "../../../Domain/Model/Music/Genre";
 
+
+type GenreDetails = {
+  name : string,
+  image: File,
+}
 export const useGenreModelController = (repository : GenreRepository) => {
 
-    const [currentPage, setCurrentPage] = useState(1); const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getGenresPaging(currentPage, PAGE_SIZE));
+    const [currentPage, setCurrentPage] = useState(1); 
+    const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getGenresPaging(currentPage, PAGE_SIZE));
     const [genres, setGenres] = useState<Genre[] | []>([]);
     const getAllGenres = async () =>{
         try{
@@ -14,6 +20,26 @@ export const useGenreModelController = (repository : GenreRepository) => {
           setFetchStatus(RequestStatus.Success)
           setGenres(response)
         }
+       catch(e : any){ setFetchStatus(RequestStatus.Error)} 
+    }
+    const getGenresPaginated = async() => {
+        try{
+          setFetchStatus(RequestStatus.Loading)
+          const response = await repository.getGenresPaging(currentPage, PAGE_SIZE);
+          setFetchStatus(RequestStatus.Success)
+          setData({count: response.count, data : response.data});
+        }
+      catch(e : any){ setFetchStatus(RequestStatus.Error)} 
+    }
+    const createGenre = async (genre: GenreDetails,onUploadProgress: any) => {
+       try{
+        setFetchStatus(RequestStatus.Loading)
+        const response = await repository.createGenre({name: genre.name, artworkFile: genre.image}, onUploadProgress)
+        if(response.success)
+           setFetchStatus(RequestStatus.Success)
+        else
+           setFetchStatus(RequestStatus.Failure)
+       }
        catch(e : any){ setFetchStatus(RequestStatus.Error)} 
     }
     const getMoreGenresPaginated = async () =>  {
@@ -47,6 +73,8 @@ export const useGenreModelController = (repository : GenreRepository) => {
         fetchStatus,
         currentPage,
         genres,
+        getGenresPaginated,
+        createGenre,
         getAllGenres,
         setCurrentPage,
         getMoreGenresPaginated,

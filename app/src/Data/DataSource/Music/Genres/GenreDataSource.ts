@@ -11,9 +11,18 @@ export interface GenrePage{
 export interface Genres{
     genres : Genre[]
 }
-
-export interface GenreDataSource{
-   
+export interface CreateGenreRequest {
+    name: string,
+    artworkFile: File
+ 
+ }
+ export interface CreateGenreResponse {
+    success: boolean,
+    result: any
+ 
+ }
+export interface GenreDataSource{   
     getGenresPaging(page: number, size:number) : Promise<GenresPaging>;
     getAllGenres() : Promise<Genre[]>;
+    createGenre(request: CreateGenreRequest,onUploadProgress: any) : Promise<CreateGenreResponse>
 }

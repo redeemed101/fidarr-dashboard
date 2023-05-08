@@ -8,12 +8,17 @@ import { Link } from "react-router-dom";
 import { useGenreModelController } from "../hooks/useGenreModelController";
 import { genreRepository } from "../../../main";
 import { RequestStatus } from "../hooks/common";
+import { useEffect } from "react";
 
 const GenresPage = () => {
-  const {currentGenres, fetchStatus,currentPage, count,refreshGenresPaginated, getMoreGenresPaginated} = useGenreModelController(genreRepository)
-    return (
+  const {currentGenres, fetchStatus,currentPage, count, getGenresPaginated,refreshGenresPaginated, getMoreGenresPaginated} = useGenreModelController(genreRepository)
+ 
+  useEffect( () => {
+    getGenresPaginated()
+  }, []);  
+  return (
        
-       
+        
         <div style={{height:"inherit"}}  className="pb-4 flex flex-row bg-black">
           <MenuColumn />
           <div className="flex  gap-4 flex-col w-full">

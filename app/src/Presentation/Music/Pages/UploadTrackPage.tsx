@@ -15,6 +15,9 @@ import MenuColumn from "../../Dashboard/Components/MenuColumn"
 import { useGenreModelController } from "../hooks/useGenreModelController"
 import { useSongModelController } from "../hooks/useSongModelController";
 import { AxiosProgressEvent } from "axios";
+import { RequestStatus } from "../hooks/common";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 
 type FormData = {
@@ -225,7 +228,10 @@ const UploadTrackPage = () => {
                     
                   </div>
                   <div className="self-end">
-                     <PrimaryButton  title='Save' padY={2} padX={4} height="auto" width="full"/>
+                     {fetchStatus == RequestStatus.Loading ? 
+                               <div className='w-full bg-red-700 flex flex-col h-10 justify-center items-center rounded-md'><FontAwesomeIcon className='text-white spinner'  icon={faSpinner} /></div> 
+                               : <PrimaryButton disabled={false} type="submit" title='Save' padY={2} padX={3} height="10" width="full" /> 
+                      }                     
                   </div>
                 </div>
                

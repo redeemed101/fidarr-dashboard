@@ -1,9 +1,14 @@
 import { injectable } from "inversify";
 import { GenreRepository } from "../../../../Domain/Repository/Music/GenreRepository";
 import { GenrePage, Genre } from "../../../../Domain/Model/Music/Genre";
+import { CreateGenreRequest, CreateGenreResponse } from "../../../DataSource/Music/Genres/GenreDataSource";
 
 @injectable()
 export class GenreRepositoryMock implements GenreRepository{
+    createGenre(request: CreateGenreRequest, onUploadProgress: any): Promise<CreateGenreResponse> {
+    
+        return new Promise(resolve => setTimeout(() => resolve({success: true, result: "Successfully added"}), 5000)) ;
+    }
     getGenresPaging(page: number, size: number): Promise<GenrePage> {
         throw new Error("Method not implemented.");
     }

@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { GenreRepository } from "../../../../Domain/Repository/Music/GenreRepository";
-import { GenreDataSource } from "../../../DataSource/Music/Genres/GenreDataSource";
+import { CreateGenreRequest, CreateGenreResponse, GenreDataSource } from "../../../DataSource/Music/Genres/GenreDataSource";
 import { TYPES } from "../../../../DI/types";
 import { BASE_URL } from "../../../DataSource/API/constant";
 import moment from "moment";
@@ -14,6 +14,9 @@ export class GenreRepositoryImpl implements GenreRepository{
         @inject(TYPES.GenreDataSource) dataSource : GenreDataSource
     ){
         this._dataSource = dataSource
+    }
+    async createGenre(request: CreateGenreRequest, onUploadProgress: any): Promise<CreateGenreResponse> {
+        return await this._dataSource.createGenre(request, onUploadProgress)
     }
     async getAllGenres(): Promise<Genre[]> {
         const result = await this._dataSource.getAllGenres()
