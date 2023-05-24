@@ -20,6 +20,26 @@ export class AlbumRepositoryImpl implements AlbumRepository{
     ){
         this._dataSource = dataSource
     }
+    async searchAlbumsPaging(searchText: string, page: number, size: number): Promise<AlbumPage> {
+        const albumResponse = await this._dataSource.searchAlbumsPaging(searchText,page,size)
+        console.log("Page  ",page, " ", albumResponse.searchAlbumsPaging)
+        const albums = albumResponse.searchAlbumsPaging.albums.map(a => {
+           return  {
+              imgSrc: `${BASE_URL}${a.artworkPath}`,
+              name: a.name,
+              artist: a.artist?.name ?? "",
+              genre: a.genres?.map(g => g?.name ?? "") ?? [""],
+              streams: a.streams?.length.toString() ?? "0",
+              tracks: a.songs?.length ?? 0,
+              releaseDate:moment(Date.parse(a.releaseDate)).format('MMMM DD, YYYY'),
+              lastUpdated: moment(Date.parse(a.lastUpdated)).format('MMMM DD, YYYY')
+            }
+       });
+       return {
+          count: albumResponse.searchAlbumsPaging.count,
+          data: albums
+       }
+    }
     async createAlbum(request: CreateAlbumRequest, onUploadProgress: any): Promise<CreateAlbumResponse> {
         return this._dataSource.createAlbum(request,onUploadProgress);
     }

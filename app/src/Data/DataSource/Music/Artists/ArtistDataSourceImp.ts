@@ -1,12 +1,26 @@
 import { injectable } from "inversify";
-import { ArtistDataSource, ArtistsPaginated, ArtistsPaging, CreateArtist, GeneralResponse } from "./ArtistDataSource";
+import { ArtistDataSource, ArtistsPaginated, ArtistsPaging, CreateArtist, GeneralResponse, SearchArtistsPaging } from "./ArtistDataSource";
 import { graphQLArtistClient } from "../../GraphQL/Client/client";
-import { GetArtistsPaginatedDocument, GetArtistsPaginatedQueryResult, GetArtistsPagingDocument, GetArtistsPagingQueryResult } from "../../GraphQL/Generated/Artists/graphql";
+import { GetArtistsPaginatedDocument, GetArtistsPaginatedQueryResult, GetArtistsPagingDocument, GetArtistsPagingQueryResult, GetSearchArtistsPagingDocument, GetSearchArtistsPagingQueryResult } from "../../GraphQL/Generated/Artists/graphql";
 import { postAPI } from "../../API/axios_instance";
 
 
 @injectable()
 export class ArtistDataSourceImpl implements ArtistDataSource{
+    async searchGetArtistsPaging(searchText: string, page: number, size: number): Promise<SearchArtistsPaging> {
+        const result = await graphQLArtistClient.query<GetSearchArtistsPagingQueryResult>({
+            query : GetSearchArtistsPagingDocument,
+            variables: {
+                page: page,
+                size: size,
+                searchWord: searchText
+            }
+        })
+        const data = result.data 
+        const artistsPaginated = data as unknown as SearchArtistsPaging 
+      
+        return  artistsPaginated;
+    }
     async createArtist(request: CreateArtist): Promise<GeneralResponse> {
         let formData = new FormData();  
         formData.append("artistProfilePic",request.artistPhoto);

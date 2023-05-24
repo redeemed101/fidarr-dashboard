@@ -39,11 +39,11 @@ const CreatePaylistPage = () => {
     }
     return (
        
-       <div className="h-auto bg-black w-full">
+       <div className="min-h-screen bg-black w-full">
         <FidarrModal height={500} width={800} title="Sure" close={() => setModalOpen(false)} afterOpen={() =>{}} isOpen={modalOpen}>
           <div className="w-full flex flex-col gap-4">
              <SearchSongs unSelectSong={unSelectSong} selectedSongs={selectedSongs} selectSong={selectSong} />
-             <div>
+             <div className="w-1/4 self-end">
               <PrimaryButton disabled={false} type="button" onClick={() => doneSelecting()} title='Done' padY={2} padX={3} height="10" width="full" />
              </div>
            </div>

@@ -21,7 +21,8 @@ const ArtistsPage = () => {
           <div className="flex gap-4 flex-col w-full">
          
              <MusicHeader selectedType={MusicMenuType.Artists} menus={menuItems} buttonComp={ <Link to="/music/artists/create"><ButtonWithIcon imageSrc={PlusIcon} title="Create Artist" /></Link> } />
-             {fetchStatus == RequestStatus.Loading ? <div className="mx-auto"><p className="text-white">Loading...</p></div> : 
+             {fetchStatus == RequestStatus.Loading ? 
+             <div className="mx-auto"><p className="text-white">Loading...</p></div> : 
              <ArtistsTable refresh={refreshArtistsPaginated} totalCount={count} currentPage={currentPage} loadMore={getMoreArtistsPaginated} rows={currentArtists} />  }
              {fetchStatus == RequestStatus.Error ? <div className="mx-auto"><p className="text-red-600">Error fetching data</p></div> : ""}
           </div>   

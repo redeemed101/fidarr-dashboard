@@ -1,8 +1,8 @@
 overwrite: true
-schema: "https://782e-102-70-3-142.ngrok-free.app/api/artistql"
-documents: "src/Data/DataSource/GraphQL/**/*.ts"
+schema: "https://d215-102-70-2-208.ngrok-free.app/api/playlistql"
+documents: "src/Data/DataSource/GraphQL/Playlists/*.ts"
 generates:
-  src/Data/DataSource/GraphQL/Generated/Artists:
+  src/Data/DataSource/GraphQL/Generated/Playlists/:
     preset: "client"
     plugins:
       - 'typescript'

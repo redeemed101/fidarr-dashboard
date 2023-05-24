@@ -15,7 +15,8 @@ export type ArtistData = {
 }
 export const useArtistModelController = (repository : ArtistRepository) => {
 
-    const [currentPage, setCurrentPage] = useState(1); const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getArtistsPaging(currentPage, PAGE_SIZE));
+    const [currentPage, setCurrentPage] = useState(1); 
+    const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getArtistsPaging(currentPage, PAGE_SIZE));
     
     const createArtist = async (artistPhoto: File, artistData : ArtistData, onUploadProgress: any) =>  {
      
@@ -32,7 +33,7 @@ export const useArtistModelController = (repository : ArtistRepository) => {
          if(result)
             setFetchStatus(RequestStatus.Success)
          else
-         setFetchStatus(RequestStatus.Error)
+            setFetchStatus(RequestStatus.Error)
       }
       catch(e : any){ setFetchStatus(RequestStatus.Error)}  
      }   
@@ -43,7 +44,6 @@ export const useArtistModelController = (repository : ArtistRepository) => {
        
         const newPage = currentPage + 1;
         setCurrentPage(newPage)
-        console.log("Page number ", currentPage, " ", newPage)
         const response = await repository.getArtistsPaging(newPage, PAGE_SIZE);
         setFetchStatus(RequestStatus.Success)
         const oldData = data.data

@@ -1,36 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_SONG_PAGINATED = gql`query getSongPaginated($page:Int!,$size:Int!){
-    songsPaginated(page:$page,size:$size){
-       
-        id
-        name
-        path
-        artworkPath
-        artist{
-            name
-            id                
-        }
-        likes{
-            userId
-        }
-        streams{
-            id
-        }
-        featurungArtists{
-            id
-            name
-            imagePath
-        }
-        genres{
-            id
-            name
-        }
-    
- }
-} 
 
-`
 export const QUERY_SEARCH_SONG_PAGING = gql`query getSearchSongsPaging($page:Int!,$size:Int!,$searchWord:String!){
 searchSongsPaging(page:$page,size:$size,searchWord:$searchWord){
     count
@@ -39,6 +9,9 @@ searchSongsPaging(page:$page,size:$size,searchWord:$searchWord){
     name
     path
     artworkPath
+    isTrending
+    forYou
+    topSong
     artist{
         name
         id                
@@ -49,7 +22,7 @@ searchSongsPaging(page:$page,size:$size,searchWord:$searchWord){
     streams{
         id
     }
-    featurungArtists{
+    featuringArtists{
         id
         name
         imagePath
@@ -70,6 +43,9 @@ export const QUERY_SONG_PAGINING = gql`query getSongPaging($page:Int!,$size:Int!
         name
         path
         artworkPath
+        isTrending
+        forYou
+        topSong
         artist{
             name
             id                
@@ -80,7 +56,116 @@ export const QUERY_SONG_PAGINING = gql`query getSongPaging($page:Int!,$size:Int!
         streams{
             id
         }
-        featurungArtists{
+        featuringArtists{
+            id
+            name
+            imagePath
+        }
+        genres{
+            id
+            name
+        }
+  }
+ }
+} 
+
+`
+
+
+export const QUERY_TRENDING_SONG_PAGINING = gql`query getTrendingSongPaging($page:Int!,$size:Int!){
+    trendingSongsPaging(page:$page,size:$size){
+        count
+        songs{
+        id
+        name
+        path
+        artworkPath
+        isTrending
+        forYou
+        topSong
+        artist{
+            name
+            id                
+        }
+        likes{
+            userId
+        }
+        streams{
+            id
+        }
+        featuringArtists{
+            id
+            name
+            imagePath
+        }
+        genres{
+            id
+            name
+        }
+  }
+ }
+} 
+
+`
+
+export const QUERY_FORYOUSONG_PAGINING = gql`query getForYouSongPaging($page:Int!,$size:Int!){
+    forYouSongsPaging(page:$page,size:$size){
+        count
+        songs{
+        id
+        name
+        path
+        artworkPath
+        isTrending
+        forYou
+        topSong
+        artist{
+            name
+            id                
+        }
+        likes{
+            userId
+        }
+        streams{
+            id
+        }
+        featuringArtists{
+            id
+            name
+            imagePath
+        }
+        genres{
+            id
+            name
+        }
+  }
+ }
+} 
+
+`
+
+export const QUERY_TOP_SONG_PAGINING = gql`query getTopSongPaging($page:Int!,$size:Int!){
+    topSongsPaging(page:$page,size:$size){
+        count
+        songs{
+        id
+        name
+        path
+        artworkPath
+        isTrending
+        forYou
+        topSong
+        artist{
+            name
+            id                
+        }
+        likes{
+            userId
+        }
+        streams{
+            id
+        }
+        featuringArtists{
             id
             name
             imagePath

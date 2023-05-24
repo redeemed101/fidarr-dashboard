@@ -1,6 +1,65 @@
 
 import { gql } from '@apollo/client';
 
+
+export const QUERY_SEARCH_ALBUMS_PAGING = gql`
+query getSearchingAlbumsPaging($page:Int,$size:Int,$searchWord:String!){
+searchAlbumsPaging(page:$page,size:$size,searchWord:$searchWord){
+    count,
+    albums{
+       id
+      name
+      artworkPath
+      path
+      lastUpdated
+      dateCreated
+      releaseDate
+      isTrending
+      forYou
+      topAlbum
+      streams{
+          id
+      }
+      likes{
+          userId
+      }
+      artist{
+          id
+          name
+      }
+      genres{
+          name
+      }
+      songs{
+          id
+          name
+          path
+          artworkPath
+          artist{
+              name
+              imagePath
+              id
+          }
+          likes{
+              userId
+          }
+          streams{
+              id
+          }
+          featuringArtists{
+              id
+              name
+              imagePath
+          }
+          genres{
+              id
+              name
+          }
+      }
+    }
+}
+}
+`
 export const QUERY_ALBUM_PAGING = gql`
 query getAlbumPaging($page:Int,$size:Int){
   albumsPaging(page:$page,size:$size){
@@ -9,6 +68,9 @@ query getAlbumPaging($page:Int,$size:Int){
        id
       name
       artworkPath
+      isTrending
+      forYou
+      topAlbum
       path
       lastUpdated
       dateCreated
@@ -42,7 +104,7 @@ query getAlbumPaging($page:Int,$size:Int){
           streams{
               id
           }
-          featurungArtists{
+          featuringArtists{
               id
               name
               imagePath
@@ -57,53 +119,188 @@ query getAlbumPaging($page:Int,$size:Int){
 }
 
 `
-export const QUERY_ALBUMS_PAGINATED = gql`query getAlbumsPaginated($page:Int,$size:Int){
-    albumsPaginated(page:$page,size:$size){
-        id
-        name
-        artworkPath
-        path
-        lastUpdated
-        dateCreated
-        releaseDate
-        streams{
-            id
-        }
-        likes{
-            userId
-        }
-        artist{
-            id
-            name
-        }
-        genres{
-            name
-        }
-        songs{
-            id
-            name
-            path
-            artworkPath
-            artist{
-                name
-                imagePath
-                id
-            }
-            likes{
-                userId
-            }
-            streams{
-                id
-            }
-            featurungArtists{
-                id
-                name
-                imagePath
-            }
-            genres{
-                id
-                name
-            }
-        }
+
+
+
+export const QUERY__TRENDING_ALBUM_PAGING = gql`
+query getTrendingAlbumPaging($page:Int,$size:Int){
+  trendingAlbumsPaging(page:$page,size:$size){
+    count,
+    albums{
+       id
+      name
+      artworkPath
+      isTrending
+      forYou
+      topAlbum
+      path
+      lastUpdated
+      dateCreated
+      releaseDate
+      streams{
+          id
+      }
+      likes{
+          userId
+      }
+      artist{
+          id
+          name
+      }
+      genres{
+          name
+      }
+      songs{
+          id
+          name
+          path
+          artworkPath
+          artist{
+              name
+              imagePath
+              id
+          }
+          likes{
+              userId
+          }
+          streams{
+              id
+          }
+          featuringArtists{
+              id
+              name
+              imagePath
+          }
+          genres{
+              id
+              name
+          }
+      }
     }
-}`
+  }
+}
+
+`
+
+export const QUERY__FORYOU_ALBUM_PAGING = gql`
+query getForYouAlbumPaging($page:Int,$size:Int){
+  forYouAlbumsPaging(page:$page,size:$size){
+    count,
+    albums{
+       id
+      name
+      artworkPath
+      isTrending
+      forYou
+      topAlbum
+      path
+      lastUpdated
+      dateCreated
+      releaseDate
+      streams{
+          id
+      }
+      likes{
+          userId
+      }
+      artist{
+          id
+          name
+      }
+      genres{
+          name
+      }
+      songs{
+          id
+          name
+          path
+          artworkPath
+          artist{
+              name
+              imagePath
+              id
+          }
+          likes{
+              userId
+          }
+          streams{
+              id
+          }
+          featuringArtists{
+              id
+              name
+              imagePath
+          }
+          genres{
+              id
+              name
+          }
+      }
+    }
+  }
+}
+
+`
+
+
+export const QUERY__TROP_ALBUM_PAGING = gql`
+query getTopAlbumPaging($page:Int,$size:Int){
+  topAlbumsPaging(page:$page,size:$size){
+    count,
+    albums{
+       id
+      name
+      artworkPath
+      isTrending
+      forYou
+      topAlbum
+      path
+      lastUpdated
+      dateCreated
+      releaseDate
+      streams{
+          id
+      }
+      likes{
+          userId
+      }
+      artist{
+          id
+          name
+      }
+      genres{
+          name
+      }
+      songs{
+          id
+          name
+          path
+          artworkPath
+          artist{
+              name
+              imagePath
+              id
+          }
+          likes{
+              userId
+          }
+          streams{
+              id
+          }
+          featuringArtists{
+              id
+              name
+              imagePath
+          }
+          genres{
+              id
+              name
+          }
+      }
+    }
+  }
+}
+
+`
+
+

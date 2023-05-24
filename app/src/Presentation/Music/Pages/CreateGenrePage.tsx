@@ -48,7 +48,7 @@ const CreateGenrePage = () => {
   }
     return (
        
-       <div className="h-screen bg-black">
+       <div className="min-h-screen bg-black">
         <div style={{height:"inherit"}}  className="pb-4 flex flex-row ">
           <MenuColumn />
           <div className="flex  gap-4 flex-col w-full">

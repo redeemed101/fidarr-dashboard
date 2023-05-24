@@ -1,12 +1,26 @@
 import { injectable } from "inversify";
-import { AlbumDataSource, AlbumsPaginated, AlbumsPaging, CreateAlbumRequest, CreateAlbumResponse } from "./AlbumDataSource";
+import { AlbumDataSource, AlbumsPaginated, AlbumsPaging, CreateAlbumRequest, CreateAlbumResponse, SearchAlbumsPaging } from "./AlbumDataSource";
 import { graphQLAlbumClient } from "../../GraphQL/Client/client";
-import { Album, GetAlbumPagingDocument, GetAlbumPagingQueryResult, GetAlbumsPaginatedDocument, GetAlbumsPaginatedQueryResult } from "../../GraphQL/Generated/Albums/graphql";
+import { Album, GetAlbumPagingDocument, GetAlbumPagingQueryResult, GetAlbumsPaginatedDocument, GetAlbumsPaginatedQueryResult, GetSearchingAlbumsPagingDocument, GetSearchingAlbumsPagingQueryResult } from "../../GraphQL/Generated/Albums/graphql";
 import { postAPI } from "../../API/axios_instance";
 
 
 @injectable()
 export class AlbumDataSourceImpl implements AlbumDataSource{
+    async searchAlbumsPaging(searchText: string, page: number, size: number): Promise<SearchAlbumsPaging> {
+        const result = await graphQLAlbumClient.query<GetSearchingAlbumsPagingQueryResult>({
+            query : GetSearchingAlbumsPagingDocument,
+            variables: {
+                page: page,
+                size: size,
+                searchWord: searchText
+            }
+        })
+        const data = result.data 
+        const albumsPaginated = data as unknown as SearchAlbumsPaging 
+      
+        return  albumsPaginated;
+    }
     async createAlbum(request: CreateAlbumRequest,onUploadProgress: any): Promise<CreateAlbumResponse> {
         let formData = new FormData();  
         formData.append("name",request.name);

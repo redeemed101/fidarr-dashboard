@@ -8,6 +8,10 @@ export interface AlbumsPaging {
    
     albumsPaging : AlbumPage
 }
+export interface SearchAlbumsPaging {
+   
+    searchAlbumsPaging : AlbumPage
+}
 export interface AlbumPage{
     count: number,
     albums : Album[]
@@ -36,5 +40,6 @@ export interface AlbumDataSource{
    
     getAlbumsPaginated(page : number, size:number): Promise<AlbumsPaginated>;
     getAlbumsPaging(page: number, size:number) : Promise<AlbumsPaging>;
+    searchAlbumsPaging(searchText:string,page: number, size:number) : Promise<SearchAlbumsPaging>;
     createAlbum(request: CreateAlbumRequest,onUploadProgress: any) : Promise<CreateAlbumResponse>
 }
