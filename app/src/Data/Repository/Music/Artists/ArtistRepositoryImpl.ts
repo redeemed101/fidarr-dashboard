@@ -16,9 +16,11 @@ export class ArtistRepositoryImpl implements ArtistRepository{
     ){
         this._dataSource = dataSource
     }
-    getArtistsPaginated(page: number, size: number): Promise<Artist[]> {
-        throw new Error("Method not implemented.");
+    async deleteArtist(artistId: string): Promise<boolean> {
+        const response =  await this._dataSource.DeleteArtist(artistId)
+        return response.success
     }
+    
     
     async searchGetArtistsPaging(searchText: string, page: number, size: number): Promise<ArtistPage> {
         const artistResponse = await this._dataSource.searchGetArtistsPaging(searchText,page,size)

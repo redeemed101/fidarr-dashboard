@@ -40,7 +40,17 @@ export const useSongModelController = (repository : SongRepository) => {
         }
         catch(e : any){ setFetchStatus(RequestStatus.Error)}  
        }  
-       
+       const deleteSong = async (songId: string) => {
+        try{
+          var result = await repository.deleteSong(songId);
+          if(result)
+             setFetchStatus(RequestStatus.Success)
+          else
+          setFetchStatus(RequestStatus.Error)
+       }
+       catch(e : any){ setFetchStatus(RequestStatus.Error)
+       }
+      }
        const editSong = async (songId: string,songFile: File, songData : SongData, onUploadProgress: any,artworkFile?: File | null, previewFile? : File) =>  {
      
         try{
@@ -132,6 +142,7 @@ export const useSongModelController = (repository : SongRepository) => {
           getMoreSongsPaginated,
           refreshSongsPaginated,
           createSong,
-          editSong
+          editSong,
+          deleteSong
         };
 }

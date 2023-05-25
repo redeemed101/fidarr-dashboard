@@ -2,10 +2,12 @@ import { injectable } from "inversify";
 import { CreateSongRequest, CreateSongResponse, EditSongRequest, EditSongResponse, SearchSongsPaging, SongDataSource, SongsPaginated, SongsPaging } from "./SongDataSource";
 import { graphQLSongClient } from "../../GraphQL/Client/client";
 import { GetSearchSongsPagingDocument, GetSearchSongsPagingQueryResult, GetSongPagingDocument, GetSongPagingQueryResult } from "../../GraphQL/Generated/Songs/graphql";
-import { postAPI } from "../../API/axios_instance";
+import { deleteAPI, postAPI } from "../../API/axios_instance";
+import { GeneralResponse } from "../../Users/Authentication/AuthenticationDataSource";
 
 @injectable()
 export class SongDataSourceImpl implements SongDataSource{
+    
    
     async getSearchSongsPaging(searchText: string, page: number, size: number): Promise<SearchSongsPaging> {
         console.log(searchText)
@@ -65,5 +67,8 @@ export class SongDataSourceImpl implements SongDataSource{
         formData.append("genres",JSON.stringify(request.genres));
         request.albumId  && formData.append("albumId",request.albumId);
         return await postAPI<EditSongResponse>("AdminSong/edit", formData, { "Content-Type": "multipart/form-data"}, onUploadProgress) 
+    }
+    async deleteSong(songId: string): Promise<GeneralResponse> {
+       return await deleteAPI<GeneralResponse>(`AdminSong/delete/${songId}`)
     }
 }

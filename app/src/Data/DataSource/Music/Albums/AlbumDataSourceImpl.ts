@@ -2,11 +2,15 @@ import { injectable } from "inversify";
 import { AlbumDataSource, AlbumsPaginated, AlbumsPaging, CreateAlbumRequest, CreateAlbumResponse, EditAlbumRequest, EditAlbumResponse, SearchAlbumsPaging } from "./AlbumDataSource";
 import { graphQLAlbumClient } from "../../GraphQL/Client/client";
 import { Album, GetAlbumPagingDocument, GetAlbumPagingQueryResult, GetSearchingAlbumsPagingDocument, GetSearchingAlbumsPagingQueryResult } from "../../GraphQL/Generated/Albums/graphql";
-import { postAPI } from "../../API/axios_instance";
+import { deleteAPI, postAPI } from "../../API/axios_instance";
+import { GeneralResponse } from "../Artists/ArtistDataSource";
 
 
 @injectable()
 export class AlbumDataSourceImpl implements AlbumDataSource{
+    async deleteAlbum(albumId: string, onUploadProgress: any): Promise<GeneralResponse> {
+        return await deleteAPI<GeneralResponse>(`AdminAlbum/delete/${albumId}`)
+    }
    
     async searchAlbumsPaging(searchText: string, page: number, size: number): Promise<SearchAlbumsPaging> {
         const result = await graphQLAlbumClient.query<GetSearchingAlbumsPagingQueryResult>({

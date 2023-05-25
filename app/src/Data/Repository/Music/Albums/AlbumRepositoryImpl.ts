@@ -6,6 +6,7 @@ import { Album } from "../../../../Domain/Model/Music";
 import { BASE_URL } from "../../../DataSource/API/constant";
 import { AlbumPage } from "../../../../Domain/Model/Music/Album";
 import moment from "moment";
+import { GeneralResponse } from "../../../DataSource/Music/Artists/ArtistDataSource";
 
 
 @injectable()
@@ -17,6 +18,9 @@ export class AlbumRepositoryImpl implements AlbumRepository{
     ){
         this._dataSource = dataSource
     }
+   async deleteAlbum(albumId: string, onUploadProgress: any): Promise<GeneralResponse> {
+     return this._dataSource.deleteAlbum(albumId,onUploadProgress)
+   }
    
     async searchAlbumsPaging(searchText: string, page: number, size: number): Promise<AlbumPage> {
         const albumResponse = await this._dataSource.searchAlbumsPaging(searchText,page,size)

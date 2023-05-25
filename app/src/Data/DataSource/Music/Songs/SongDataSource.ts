@@ -1,4 +1,5 @@
 import { Song } from "../../GraphQL/Generated/Songs/graphql"
+import { GeneralResponse } from "../../Users/Authentication/AuthenticationDataSource"
 
 export interface SongsPaginated {
     songsPaginated : Song[]
@@ -58,4 +59,5 @@ export interface SongDataSource {
     getSearchSongsPaging(searchText:string,page: number, size:number) : Promise<SearchSongsPaging>;
     createSong(request: CreateSongRequest,onUploadProgress: any) : Promise<CreateSongResponse>
     editSong(request: EditSongRequest,onUploadProgress: any) : Promise<EditSongResponse>
+    deleteSong(songId: string): Promise<GeneralResponse>
 }

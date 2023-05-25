@@ -2,11 +2,14 @@ import { injectable } from "inversify";
 import { ArtistDataSource, ArtistsPaginated, ArtistsPaging, CreateArtist, EditArtist, GeneralResponse, SearchArtistsPaging } from "./ArtistDataSource";
 import { graphQLArtistClient } from "../../GraphQL/Client/client";
 import { GetArtistsPagingDocument, GetArtistsPagingQueryResult, GetSearchArtistsPagingDocument, GetSearchArtistsPagingQueryResult } from "../../GraphQL/Generated/Artists/graphql";
-import { postAPI } from "../../API/axios_instance";
+import { deleteAPI, postAPI } from "../../API/axios_instance";
 
 
 @injectable()
 export class ArtistDataSourceImpl implements ArtistDataSource{
+    async DeleteArtist(artistId: string): Promise<GeneralResponse> {
+        return await deleteAPI<GeneralResponse>(`ArtistAdmin/delete/${artistId}`)
+    }
    
     async searchGetArtistsPaging(searchText: string, page: number, size: number): Promise<SearchArtistsPaging> {
         const result = await graphQLArtistClient.query<GetSearchArtistsPagingQueryResult>({

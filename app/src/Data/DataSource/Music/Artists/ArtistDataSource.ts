@@ -52,4 +52,5 @@ export interface ArtistDataSource{
     searchGetArtistsPaging(searchText:string,page: number, size:number) : Promise<SearchArtistsPaging>;
     createArtist(request: CreateArtist) : Promise<GeneralResponse>
     EditArtist(request: EditArtist) : Promise<GeneralResponse>
+    DeleteArtist(artistId: string) : Promise<GeneralResponse>
 }

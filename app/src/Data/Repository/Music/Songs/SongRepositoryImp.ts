@@ -15,6 +15,10 @@ export class SongRepositoryImpl implements SongRepository{
     ){
         this._dataSource = dataSource
     }
+    async deleteSong(songId: string): Promise<boolean> {
+        const result = await this._dataSource.deleteSong(songId)
+        return result.success
+    }
    
     async getSearchSongsPaging(searchText: string, page: number, size: number): Promise<TrackPage> {
         const songsResponse = await this._dataSource.getSearchSongsPaging(searchText,page,size)

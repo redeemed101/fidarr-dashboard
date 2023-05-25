@@ -141,6 +141,22 @@ export const  getAPI = async <IEntity,>(url : string ,extraHeaders: any | null =
 }
 }
 
+export const deleteAPI = async <IEntity,>(url: string, extraHeaders: any | null = null,onUploadProgress : undefined | any = undefined): Promise<IEntity> => {
+  mockApi(axiosInstance)
+  axiosInstance = setupInterceptorsTo(axiosInstance)
+  var headers = extraHeaders != null ? {
+   ...postConfig.headers,
+   ...extraHeaders
+  } : postConfig.headers;
+  const {data, status } = await axiosInstance<IEntity>({        
+    url: `${postConfig.baseUrl}/${url}`,
+    method: "delete",
+    headers : headers,
+    onUploadProgress: onUploadProgress
+    })
+    return data
+}
+
 export  const postAPI = async <IEntity,> (url: string, payload : any, extraHeaders: any | null = null, onUploadProgress : undefined | any = undefined) : Promise<IEntity> => {
 try{
    mockApi(axiosInstance)

@@ -1,5 +1,6 @@
 
 import { Album } from "../../GraphQL/Generated/Albums/graphql";
+import { GeneralResponse } from "../Artists/ArtistDataSource";
 
 export interface AlbumsPaginated {
     albumsPaginated : Album[]
@@ -65,4 +66,5 @@ export interface AlbumDataSource{
     searchAlbumsPaging(searchText:string,page: number, size:number) : Promise<SearchAlbumsPaging>;
     createAlbum(request: CreateAlbumRequest,onUploadProgress: any) : Promise<CreateAlbumResponse>
     editAlbum(request: EditAlbumRequest,onUploadProgress: any) : Promise<EditAlbumResponse>
+    deleteAlbum(albumId: string,onUploadProgress: any) : Promise<GeneralResponse>
 }

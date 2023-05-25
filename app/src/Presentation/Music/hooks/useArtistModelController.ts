@@ -21,7 +21,16 @@ export const useArtistModelController = (repository : ArtistRepository) => {
 
     const [currentPage, setCurrentPage] = useState(1); 
     const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getArtistsPaging(currentPage, PAGE_SIZE));
-    
+    const deleteArtist = async (artistId: string, onUploadProgress: any) => {
+      try{
+        var result = await repository.deleteArtist(artistId);
+        if(result)
+           setFetchStatus(RequestStatus.Success)
+        else
+           setFetchStatus(RequestStatus.Error)
+     }
+     catch(e : any){ setFetchStatus(RequestStatus.Error)} 
+    }
     const editArtist = async (artistPhoto: File, artistData : ArtistData, onUploadProgress: any) =>  {
      
       try{
@@ -102,7 +111,8 @@ export const useArtistModelController = (repository : ArtistRepository) => {
         getMoreArtistsPaginated,
         refreshArtistsPaginated,
         createArtist,
-        editArtist
+        editArtist,
+        deleteArtist
       };
 }
 

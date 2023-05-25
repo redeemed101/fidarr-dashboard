@@ -6,4 +6,5 @@ export interface SongRepository{
     getSearchSongsPaging(searchText:string,page : number, size:number): Promise<TrackPage>;
     createSong(request: CreateSongRequest,onUploadProgress: any) : Promise<CreateSongResponse>
     editSong(request: EditSongRequest,onUploadProgress: any) : Promise<EditSongResponse>
+    deleteSong(songId: string): Promise<boolean>
 }
