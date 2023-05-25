@@ -4,13 +4,17 @@ import { Artist } from "../../../Domain/Model/Music";
 import { ArtistRepository } from "../../../Domain/Repository/Music/ArtistRepository";
 import { RequestStatus, useGetData } from "./common";
 import { PAGE_SIZE } from "../../../Data/Utils/constants";
+import { EditArtist } from "../../../Data/DataSource/Music/Artists/ArtistDataSource";
 
 export type ArtistData = {
   name: string,
   username:string,
+  email: string,
   address:string,
+  phoneNumber:string,
   website:string,
   bio:string,
+  countryId: number,
   genres: string[]
 }
 export const useArtistModelController = (repository : ArtistRepository) => {
@@ -18,6 +22,25 @@ export const useArtistModelController = (repository : ArtistRepository) => {
     const [currentPage, setCurrentPage] = useState(1); 
     const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getArtistsPaging(currentPage, PAGE_SIZE));
     
+    const editArtist = async (artistPhoto: File, artistData : ArtistData, onUploadProgress: any) =>  {
+     
+      try{
+         var result = await repository.editArtist({
+           name : artistData.name,
+           bio: artistData.bio,
+           address: artistData.address,
+           artistPhoto: artistPhoto,
+           website: artistData.website,          
+           genres: artistData.genres
+         } as EditArtist);
+         if(result)
+            setFetchStatus(RequestStatus.Success)
+         else
+            setFetchStatus(RequestStatus.Error)
+      }
+      catch(e : any){ setFetchStatus(RequestStatus.Error)}  
+     }  
+
     const createArtist = async (artistPhoto: File, artistData : ArtistData, onUploadProgress: any) =>  {
      
       try{
@@ -27,7 +50,14 @@ export const useArtistModelController = (repository : ArtistRepository) => {
            address: artistData.address,
            artistPhoto: artistPhoto,
            website: artistData.website,
-           username: artistData.username,
+           user: {
+            username : artistData.username,
+            fullname: artistData.name,
+            profile: artistData.bio,
+            email: artistData.email,
+            phoneNumber: artistData.address,
+            countryId: artistData.countryId
+           },
            genres: artistData.genres
          });
          if(result)
@@ -71,7 +101,8 @@ export const useArtistModelController = (repository : ArtistRepository) => {
         setCurrentPage,
         getMoreArtistsPaginated,
         refreshArtistsPaginated,
-        createArtist
+        createArtist,
+        editArtist
       };
 }
 

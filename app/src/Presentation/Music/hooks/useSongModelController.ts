@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SongRepository } from "../../../Domain/Repository/Music/SongRepository";
 import { PagedData, RequestStatus, useGetData } from "./common";
 import { PAGE_SIZE } from "../../../Data/Utils/constants";
-import { CreateSongRequest } from "../../../Data/DataSource/Music/Songs/SongDataSource";
+import { CreateSongRequest, EditSongRequest } from "../../../Data/DataSource/Music/Songs/SongDataSource";
 import { Track } from "../../../Domain/Model/Music";
 
 export type SongData = {
@@ -41,6 +41,29 @@ export const useSongModelController = (repository : SongRepository) => {
         catch(e : any){ setFetchStatus(RequestStatus.Error)}  
        }  
        
+       const editSong = async (songId: string,songFile: File, songData : SongData, onUploadProgress: any,artworkFile?: File | null, previewFile? : File) =>  {
+     
+        try{
+           var result = await repository.editSong({
+             name : songData.name,
+             songId: songId,
+             description: songData.description,
+             artistId: songData.artistId,
+             albumId: songData.albumId,
+             featuringArtists: songData.featuringArtists,
+             genres: songData.genres,
+             artworkFile: artworkFile,
+             previewFile: previewFile,
+             songFile: songFile
+
+           } as EditSongRequest, onUploadProgress);
+           if(result)
+              setFetchStatus(RequestStatus.Success)
+           else
+           setFetchStatus(RequestStatus.Error)
+        }
+        catch(e : any){ setFetchStatus(RequestStatus.Error)}  
+       }  
        const getSearchSongsPaginated = async (searchText:string, getMore:boolean= false) =>{
         try{
           if(getMore){
@@ -108,6 +131,7 @@ export const useSongModelController = (repository : SongRepository) => {
           setCurrentPage,
           getMoreSongsPaginated,
           refreshSongsPaginated,
-          createSong
+          createSong,
+          editSong
         };
 }

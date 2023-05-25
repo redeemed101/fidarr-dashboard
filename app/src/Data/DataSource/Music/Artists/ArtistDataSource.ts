@@ -16,9 +16,26 @@ export interface ArtistPage{
     count: number,
     artists : Artist[]
 }
+interface User {
+    username : string;
+    fullname: string;
+    profile: string;
+    email: string;
+    phoneNumber: string;
+    countryId: number;
+}
+
 export interface CreateArtist {
     name: string,
-    username:string,
+    address:string,
+    website:string,
+    bio:string,
+    user: User,
+    genres: string[],
+    artistPhoto: File
+}
+export interface EditArtist {
+    name: string,
     address:string,
     website:string,
     bio:string,
@@ -31,8 +48,8 @@ export interface GeneralResponse {
 }
 export interface ArtistDataSource{
    
-    getArtistsPaginated(page : number, size:number): Promise<ArtistsPaginated>;
     getArtistsPaging(page: number, size:number) : Promise<ArtistsPaging>;
     searchGetArtistsPaging(searchText:string,page: number, size:number) : Promise<SearchArtistsPaging>;
     createArtist(request: CreateArtist) : Promise<GeneralResponse>
+    EditArtist(request: EditArtist) : Promise<GeneralResponse>
 }

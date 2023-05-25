@@ -3,7 +3,7 @@ import { AlbumRepository } from "../../../Domain/Repository/Music/AlbumRepositor
 import { Album } from "../../../Domain/Model/Music";
 import { RequestStatus, useGetData } from "./common";
 import { PAGE_SIZE } from "../../../Data/Utils/constants";
-import { CreateAlbumRequest } from "../../../Data/DataSource/Music/Albums/AlbumDataSource";
+import { CreateAlbumRequest, EditAlbumRequest } from "../../../Data/DataSource/Music/Albums/AlbumDataSource";
 
 type AlbumData = {
   name: string,
@@ -24,6 +24,28 @@ export const useAlbumModelController = (repository : AlbumRepository) => {
     console.log("Current Page number ", currentPage)
     const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getAlbumsPaging(currentPage, PAGE_SIZE));
    
+    const editAlbum = async (albumId: String,artwork: File, songFiles: File[], albumData : AlbumData, onUploadProgress: any) =>  {
+     
+      try{
+         var result = await repository.editAlbum({
+          name: albumData.name,
+          albumId: albumId,
+          description: albumData.description,
+          artistId : albumData.artistId,
+          genres: albumData.genres,
+          songNames: albumData.songNames,
+          songDescriptions: albumData.songDescriptions,
+          artworkFile: artwork,
+          songFiles : songFiles,
+          releaseDate: albumData.releaseDate
+         } as EditAlbumRequest, onUploadProgress);
+         if(result)
+            setFetchStatus(RequestStatus.Success)
+         else
+         setFetchStatus(RequestStatus.Error)
+      }
+      catch(e : any){ setFetchStatus(RequestStatus.Error)}  
+     }  
      
     const createAlbum = async (artwork: File, songFiles: File[], albumData : AlbumData, onUploadProgress: any) =>  {
      
@@ -80,6 +102,7 @@ export const useAlbumModelController = (repository : AlbumRepository) => {
         fetchStatus,
         currentPage,
         createAlbum,
+        editAlbum,
         setCurrentPage,
         getMoreAlbumsPaginated,
         refreshAlbumsPaginated

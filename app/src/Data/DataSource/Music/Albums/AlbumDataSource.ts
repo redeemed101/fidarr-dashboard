@@ -36,10 +36,33 @@ export interface CreateAlbumResponse{
     path: string,
     isTrending: boolean
 }
+
+export interface EditAlbumRequest {
+    name: string,
+    albumId: string;
+    description: string,
+    artistId : string,
+    genres: string[],
+    songNames: string[],
+    songDescriptions: string[],
+    artworkFile: File,
+    songFiles : File[],
+    releaseDate: Date,
+ 
+ }
+ export interface EditAlbumResponse{
+     name: string,
+     id: string,
+     description: string,
+     artworkPath: string,
+     path: string,
+     isTrending: boolean
+ }
 export interface AlbumDataSource{
    
-    getAlbumsPaginated(page : number, size:number): Promise<AlbumsPaginated>;
+  
     getAlbumsPaging(page: number, size:number) : Promise<AlbumsPaging>;
     searchAlbumsPaging(searchText:string,page: number, size:number) : Promise<SearchAlbumsPaging>;
     createAlbum(request: CreateAlbumRequest,onUploadProgress: any) : Promise<CreateAlbumResponse>
+    editAlbum(request: EditAlbumRequest,onUploadProgress: any) : Promise<EditAlbumResponse>
 }

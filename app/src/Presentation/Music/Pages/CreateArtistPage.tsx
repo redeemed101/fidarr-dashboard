@@ -17,7 +17,9 @@ type FormData = {
   address: string;
   website: string;
   bio : string;
-  picture: string
+  picture: string;
+  email: string;
+  phoneNumber: string;
   genres: string[]
 };
 const schema = yup.object({
@@ -26,6 +28,8 @@ const schema = yup.object({
   address: yup.string().required(),
   website: yup.string().required(),
   bio: yup.string().required(),
+  email: yup.string().email().required(),
+  phoneNumber: yup.string().required(),
   picture: yup.string().required(),
 }).required();
 const CreateArtistPage = () => {
@@ -42,6 +46,8 @@ const CreateArtistPage = () => {
         name: '',
         username:'',
         address:'',
+        phoneNumber: '',
+        email: '',
         website:'',
         bio:'',
         picture:''
@@ -61,11 +67,14 @@ const CreateArtistPage = () => {
         createArtist(imageFile, {
           name: data.name,
           username: data.username,
+          email: data.email,
           address: data.address,
+          phoneNumber: data.phoneNumber,
           website: data.website,
           bio: data.bio,
+          countryId: 1,
           genres: data.genres
-        },() => {})
+        } as ArtistData,() => {})
     }
     return (
        
@@ -125,6 +134,19 @@ const CreateArtistPage = () => {
                    />            
                    
                   </div> 
+                  <div className="flex flex-row gap-4">
+                  <Controller
+                                    name="email"
+                                    control={control}
+                                    render={({ field }) => <PrimaryTextField name={field.name} type="text" value={field.value} padX={6} padY={2} onChanged={field.onChange} width="full" height="10" label="Address" placeholder="Address"  />}
+                   />      
+                   <Controller
+                                    name="phoneNumber"
+                                    control={control}
+                                    render={({ field }) => <PrimaryTextField name={field.name} type="text" value={field.value} padX={6} padY={2} onChanged={field.onChange} width="full" height="10" label="Website" placeholder="Website"  />}
+                   />      
+                  
+                  </div>
                   <div className="flex flex-row gap-4">
                   <Controller
                                     name="username"
