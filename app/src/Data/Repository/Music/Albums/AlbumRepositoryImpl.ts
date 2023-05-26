@@ -28,6 +28,7 @@ export class AlbumRepositoryImpl implements AlbumRepository{
         const albums = albumResponse.searchAlbumsPaging.albums.map(a => {
            return  {
               imgSrc: `${BASE_URL}${a.artworkPath}`,
+              id: a.id,
               name: a.name,
               artist: a.artist?.name ?? "",
               genre: a.genres?.map(g => g?.name ?? "") ?? [""],
@@ -54,6 +55,7 @@ export class AlbumRepositoryImpl implements AlbumRepository{
         const albums = albumResponse.albumsPaging.albums.map(a => {
            return  {
               imgSrc: `${BASE_URL}${a.artworkPath}`,
+              id: a.id,
               name: a.name,
               artist: a.artist?.name ?? "",
               genre: a.genres?.map(g => g?.name ?? "") ?? [""],

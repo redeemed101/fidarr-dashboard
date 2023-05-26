@@ -54,10 +54,20 @@ const authLink = setContext((_, { headers }) => {
     }
   });
 
+  const playlistsQL = new HttpLink({
+    uri: `${BASE_URL}${ALBUM_GRAPH_URL}`,
+  })
+
+  export const graphQLPlaylistClient = new ApolloClient({
+    link:  ApolloLink.from([ errorLink, authLink, playlistsQL])
+    ,
+    cache: new InMemoryCache(),
+  });
+
   const albumsQL = new HttpLink({
     uri: `${BASE_URL}${ALBUM_GRAPH_URL}`,
   })
-  authLink.concat(albumsQL)
+  //authLink.concat(albumsQL)
 
   export const graphQLAlbumClient = new ApolloClient({
     link:  ApolloLink.from([ errorLink, authLink,albumsQL])

@@ -1,0 +1,89 @@
+import { inject, injectable } from "inversify";
+import { PlaylistRepository } from "../../../Domain/Repository/Music/PlaylistRepository";
+import { PlaylistPage } from "../../../Domain/Model/Music/Playlist";
+import { CreatePlaylistRequest, EditPlaylistRequest, PlaylistDataSource } from "../../DataSource/Music/Playlists/PlaylistDataSource";
+import { TYPES } from "../../../DI/types";
+import { BASE_URL } from "../../DataSource/API/constant";
+import { Playlist } from "../../../Domain/Model/Music/Playlist";
+import moment from "moment";
+
+@injectable()
+export class PlaylistRepositoryImpl implements PlaylistRepository{
+    private _dataSource : PlaylistDataSource;
+  
+    public constructor(
+        @inject(TYPES.PlaylistDataSource) dataSource : PlaylistDataSource
+    ){
+        this._dataSource = dataSource
+    }
+    async getPlaylistsPaging(page: number, size: number): Promise<PlaylistPage> {
+        var response = await this._dataSource.getPlaylistsPaging(page,size)
+        const playlists = response.fidarrPlaylistsPaging.playlists.map(p => {
+            return {
+                id: p.id,
+                imgPath : `${BASE_URL}${p.imagePath}`,
+                name : p.name,
+                streams : p.streams,
+                tracks : p.songs?.length ?? 0,
+                songs: p.songs?.map(s => {
+                    return {
+                        id: s?.id,
+                        imgSrc : `${BASE_URL}${s?.artworkPath}`,
+                        name : s?.name,
+                        artistName: s?.artist?.name,
+                        genres : s?.genres?.map(g => g?.name),
+                        streams : s?.streams ?? "",
+                        duration : "",
+                        releaseDate: moment(Date.parse(s?.releaseDate)).format('MMMM DD, YYYY'),
+                        lastUpdated: moment(Date.parse(s?.lastUpdated)).format('MMMM DD, YYYY')
+                    }
+                })
+            } as Playlist
+        })
+        return {
+            count: response.fidarrPlaylistsPaging.count,
+            data: playlists
+         }
+    }
+    async getPlaylistsbyGenrePaging(genreId: string, page: number, size: number): Promise<PlaylistPage> {
+        var response = await this._dataSource.getPlaylistsbyGenrePaging(genreId,page,size)
+        const playlists = response.fidarrPlaylistsPagingByGenre.playlists.map(p => {
+            return {
+                id: p.id,
+                imgPath : `${BASE_URL}${p.imagePath}`,
+                name : p.name,
+                streams : p.streams,
+                tracks : p.songs?.length ?? 0,
+                songs: p.songs?.map(s => {
+                    return {
+                        id: s?.id,
+                        imgSrc : `${BASE_URL}${s?.artworkPath}`,
+                        name : s?.name,
+                        artistName: s?.artist?.name,
+                        genres : s?.genres?.map(g => g?.name),
+                        streams : s?.streams ?? "",
+                        duration : "",
+                        releaseDate: moment(Date.parse(s?.releaseDate)).format('MMMM DD, YYYY'),
+                        lastUpdated: moment(Date.parse(s?.lastUpdated)).format('MMMM DD, YYYY')
+                    }
+                })
+            } as Playlist
+        })
+        return {
+            count: response.fidarrPlaylistsPagingByGenre.count,
+            data: playlists
+         }
+    }
+    async createPlaylist(request: CreatePlaylistRequest): Promise<boolean> {
+       const response = await this._dataSource.createPlaylist(request)
+       return response.success
+    }
+    async editPlaylist(playlistId: string, request: EditPlaylistRequest): Promise<boolean> {
+        const response = await this._dataSource.editPlaylist(playlistId,request)
+        return response.success
+    }
+    async deletePlaylist(playlistId: string): Promise<boolean> {
+        const response = await this._dataSource.deletePlaylist(playlistId)
+        return response.success
+    }
+}

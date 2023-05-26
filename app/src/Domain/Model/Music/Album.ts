@@ -1,6 +1,7 @@
 
 
 export type Album = {
+    id: string,
     imgSrc : string,
     name : string,
     artist: string,

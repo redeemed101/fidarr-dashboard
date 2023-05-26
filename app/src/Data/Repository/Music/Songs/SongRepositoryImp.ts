@@ -5,6 +5,7 @@ import { TrackPage } from "../../../../Domain/Model/Music/Track";
 import { CreateSongRequest, CreateSongResponse, EditSongRequest, EditSongResponse, SongDataSource } from "../../../DataSource/Music/Songs/SongDataSource";
 import { TYPES } from "../../../../DI/types";
 import { BASE_URL } from "../../../DataSource/API/constant";
+import moment from "moment";
 
 
 @injectable()
@@ -32,8 +33,8 @@ export class SongRepositoryImpl implements SongRepository{
                 genres : s.genres?.map(g => g?.name),
                 streams : s.streams ?? "",
                 duration : "",
-                releaseDate: "",
-                lastUpdated: ""
+                releaseDate: moment(Date.parse(s?.releaseDate)).format('MMMM DD, YYYY'),
+                lastUpdated: moment(Date.parse(s?.lastUpdated)).format('MMMM DD, YYYY')
             } as Track
        });
        return {

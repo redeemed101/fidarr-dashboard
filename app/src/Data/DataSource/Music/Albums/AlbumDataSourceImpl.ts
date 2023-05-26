@@ -32,13 +32,19 @@ export class AlbumDataSourceImpl implements AlbumDataSource{
         formData.append("description",request.description);
         formData.append("artistId",request.artistId);
         formData.append("artworkFile",request.artworkFile);
-        formData.append("songDescriptions",JSON.stringify(request.songDescriptions));
-        formData.append("songNames",JSON.stringify(request.songNames));
-        formData.append("genres",JSON.stringify(request.genres));
+        request.songDescriptions.forEach(element => {
+            formData.append("songDescriptions[]",element);
+        });
+        request.genres.forEach(element => {
+            formData.append("genres[]",element);
+        });
+        request.songNames.forEach(element => {
+            formData.append("songNames[]",element);
+        });
         request.songFiles.forEach(song => {
-            formData.append("songFiles", song)
+            formData.append("songFiles[]", song)
         })
-        formData.append("releaseDate",JSON.stringify(request.releaseDate))
+        formData.append("releaseDate",request.releaseDate.toDateString())
         return await postAPI<CreateAlbumResponse>("AdminAlbum/create", formData, { "Content-Type": "multipart/form-data"}, onUploadProgress) 
     }
     async editAlbum(request: EditAlbumRequest, onUploadProgress: any): Promise<EditAlbumResponse> {
@@ -48,13 +54,19 @@ export class AlbumDataSourceImpl implements AlbumDataSource{
         formData.append("description",request.description);
         formData.append("artistId",request.artistId);
         formData.append("artworkFile",request.artworkFile);
-        formData.append("songDescriptions",JSON.stringify(request.songDescriptions));
-        formData.append("songNames",JSON.stringify(request.songNames));
-        formData.append("genres",JSON.stringify(request.genres));
+        request.songDescriptions.forEach(element => {
+            formData.append("songDescriptions[]",element);
+        });
+        request.genres.forEach(element => {
+            formData.append("genres[]",element);
+        });
+        request.songNames.forEach(element => {
+            formData.append("songNames[]",element);
+        });
         request.songFiles.forEach(song => {
-            formData.append("songFiles", song)
+            formData.append("songFiles[]", song)
         })
-        formData.append("releaseDate",JSON.stringify(request.releaseDate))
+        formData.append("releaseDate",request.releaseDate.toDateString())
         return await postAPI<EditAlbumResponse>("AdminAlbum/edit", formData, { "Content-Type": "multipart/form-data"}, onUploadProgress) 
     }
     async getAlbumsPaging(page: number, size: number): Promise<AlbumsPaging> {
