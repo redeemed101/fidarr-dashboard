@@ -27,23 +27,30 @@ import { PlaylistDataSourceImpl } from "../Data/DataSource/Music/Playlists/Playl
 import { PlaylistDataSource } from "../Data/DataSource/Music/Playlists/PlaylistDataSource";
 import { PlaylistRepository } from "../Domain/Repository/Music/PlaylistRepository";
 import { PlaylistRepositoryImpl } from "../Data/Repository/Playlists/PlaylistRepositoryImpl";
+import { AlbumRepositoryMock } from "../Data/Repository/Music/Albums/AlbumRepositoryMock";
+import { ArtistRepositoryMock } from "../Data/Repository/Music/Artists/ArtistRepositoryMock";
+import { SongRepositoryMock } from "../Data/Repository/Music/Songs/SongRepositoryMock";
 
 const myContainer = new Container();
 myContainer.bind<AlbumDataSource>(TYPES.AlbumDataSource).to(AlbumDataSourceImpl);
 myContainer.bind<ArtistDataSource>(TYPES.ArtistDataSource).to(ArtistDataSourceImpl);
 myContainer.bind<GenreDataSource>(TYPES.GenreDataSource).to(GenreDataSourceImpl);
-myContainer.bind<AlbumRepository>(TYPES.AlbumRepository).to(AlbumRepositoryImpl);
-myContainer.bind<ArtistRepository>(TYPES.ArtistRepository).to(ArtistRepositoryImpl);
+myContainer.bind<SongDataSource>(TYPES.SongDataSource).to(SongDataSourceImpl);
+
+myContainer.bind<AlbumRepository>(TYPES.AlbumRepository).to(AlbumRepositoryMock);
+myContainer.bind<ArtistRepository>(TYPES.ArtistRepository).to(ArtistRepositoryMock);
 myContainer.bind<GenreRepository>(TYPES.GenreRepository).to(GenreRepositoryMock);
+myContainer.bind<SongRepository>(TYPES.SongRepository).to(SongRepositoryMock);
+myContainer.bind<PlaylistRepository>(TYPES.PlaylistRepository).to(PlaylistRepositoryImpl);
 
 myContainer.bind<AuthenticationDataSource>(TYPES.AuthenticationDataSource).to(AuthenticationDataSourceMock);
 myContainer.bind<AuthenticationRepository>(TYPES.AuthenticationRepository).to(AuthenticationRepositoryImpl);
 
 myContainer.bind<PlaylistDataSource>(TYPES.PlaylistDataSource).to(PlaylistDataSourceImpl);
-myContainer.bind<PlaylistRepository>(TYPES.PlaylistRepository).to(PlaylistRepositoryImpl);
 
-myContainer.bind<SongDataSource>(TYPES.SongDataSource).to(SongDataSourceImpl);
-myContainer.bind<SongRepository>(TYPES.SongRepository).to(SongRepositoryImpl);
+
+
+
 
 export { myContainer };
 

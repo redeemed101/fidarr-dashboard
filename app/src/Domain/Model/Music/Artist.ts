@@ -1,5 +1,6 @@
 
 export type Artist = {
+    id: string,
     imgSrc : string,
     name : string,
     genres : string[],

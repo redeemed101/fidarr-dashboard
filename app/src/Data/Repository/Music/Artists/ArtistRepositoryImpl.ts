@@ -27,6 +27,7 @@ export class ArtistRepositoryImpl implements ArtistRepository{
         console.log("Page  ",page, " ", artistResponse.searchArtistsPaging)
         const artists = artistResponse.searchArtistsPaging.artists.map(a => {
            return  {
+                id: a.id,
                 imgSrc : `${BASE_URL}${a.imagePath}`,
                 name : a.name,
                 genres : a.genres?.map(g => g?.name ?? "") ?? [""],
@@ -54,6 +55,7 @@ export class ArtistRepositoryImpl implements ArtistRepository{
         console.log("Page  ",page, " ", artistResponse.artistsPaging)
         const artists = artistResponse.artistsPaging.artists.map(a => {
            return  {
+                id: a.id,
                 imgSrc : `${BASE_URL}${a.imagePath}`,
                 name : a.name,
                 genres : a.genres?.map(g => g?.name ?? "") ?? [""],
