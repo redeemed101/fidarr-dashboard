@@ -11,6 +11,11 @@ export interface FidarrPlaylistsPagingByGenre {
     fidarrPlaylistsPagingByGenre : PlaylistPage
 }
 
+export interface AllPlaylistsPaging {
+   
+    allPlaylistsPaging : PlaylistPage
+}
+
 export interface FidarrPlaylistsPaging {
    
     fidarrPlaylistsPaging : PlaylistPage
@@ -28,7 +33,8 @@ export interface EditPlaylistRequest
 }
 
 export interface PlaylistDataSource{
-    getPlaylistsPaging(page: number, size:number) : Promise<FidarrPlaylistsPaging>;
+    getAllPlaylistsPaging(page: number, size:number) : Promise<AllPlaylistsPaging>;
+    getFidarrPlaylistsPaging(page: number, size:number) : Promise<FidarrPlaylistsPaging>;
     getPlaylistsbyGenrePaging(genreId:string,page: number, size:number) : Promise<FidarrPlaylistsPagingByGenre>;
     createPlaylist(request :CreatePlaylistRequest): Promise<GeneralResponse>
     editPlaylist(playlistId:string, request: EditPlaylistRequest) : Promise<GeneralResponse>

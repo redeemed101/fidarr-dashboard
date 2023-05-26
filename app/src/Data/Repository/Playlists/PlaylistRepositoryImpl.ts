@@ -16,12 +16,14 @@ export class PlaylistRepositoryImpl implements PlaylistRepository{
     ){
         this._dataSource = dataSource
     }
-    async getPlaylistsPaging(page: number, size: number): Promise<PlaylistPage> {
-        var response = await this._dataSource.getPlaylistsPaging(page,size)
+    async getFidarrPlaylistsPaging(page: number, size: number): Promise<PlaylistPage> {
+        var response = await this._dataSource.getFidarrPlaylistsPaging(page,size)
         const playlists = response.fidarrPlaylistsPaging.playlists.map(p => {
             return {
                 id: p.id,
                 imgPath : `${BASE_URL}${p.imagePath}`,
+                isFidarr : p.userId == null ? true : false,
+                likes: p.likes?.length,
                 name : p.name,
                 streams : p.streams,
                 tracks : p.songs?.length ?? 0,
@@ -42,6 +44,37 @@ export class PlaylistRepositoryImpl implements PlaylistRepository{
         })
         return {
             count: response.fidarrPlaylistsPaging.count,
+            data: playlists
+         }
+    }
+    async getAllPlaylistsPaging(page: number, size: number): Promise<PlaylistPage> {
+        var response = await this._dataSource.getAllPlaylistsPaging(page,size)
+        const playlists = response.allPlaylistsPaging.playlists.map(p => {
+            return {
+                id: p.id,
+                imgPath : `${BASE_URL}${p.imagePath}`,
+                isFidarr : p.userId == null ? true : false,
+                likes: p.likes?.length,
+                name : p.name,
+                streams : p.streams,
+                tracks : p.songs?.length ?? 0,
+                songs: p.songs?.map(s => {
+                    return {
+                        id: s?.id,
+                        imgSrc : `${BASE_URL}${s?.artworkPath}`,
+                        name : s?.name,
+                        artistName: s?.artist?.name,
+                        genres : s?.genres?.map(g => g?.name),
+                        streams : s?.streams ?? "",
+                        duration : "",
+                        releaseDate: moment(Date.parse(s?.releaseDate)).format('MMMM DD, YYYY'),
+                        lastUpdated: moment(Date.parse(s?.lastUpdated)).format('MMMM DD, YYYY')
+                    }
+                })
+            } as Playlist
+        })
+        return {
+            count: response.allPlaylistsPaging.count,
             data: playlists
          }
     }

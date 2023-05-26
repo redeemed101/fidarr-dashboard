@@ -1,6 +1,9 @@
 import EditIcon from "../../../Assets/svgs/EditIcon.svg"
 import DeleteIcon from "../../../Assets/svgs/DeleteIcon.svg"
 import SettingsIcon from "../../../Assets/svgs/TrackSettingsIcon.svg";
+import { Playlist } from "../../../Domain/Model/Music/Playlist";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { PAGE_SIZE } from "../../../Data/Utils/constants";
 
 
 
@@ -23,170 +26,91 @@ export const PlaylistCard = ({imgSrc,name} : PlaylistCardProps) => {
     )
 }
 
-type PlaylistRow = {
-    imgSrc : string,
-    name : string,
-    owner : string,
-    public : boolean,
-    likes: string,
-    lastUpdated: string
-}
-const playlists : PlaylistRow [] = [
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        owner : "10",
-        public : true,
-        likes: "10",
-        lastUpdated : "March 24, 2023"
 
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        owner : "10",
-        public : true,
-        likes: "10",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        owner : "10",
-        public : false,
-        likes: "10",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        owner : "10",
-        public : true,
-        likes: "10",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        owner : "10",
-        public : true,
-        likes: "10",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        owner : "10",
-        public : true,
-        likes: "10",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        owner : "10",
-        public : true,
-        likes: "10",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        owner : "10",
-        public : true,
-        likes: "10",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        owner : "10",
-        public : true,
-        likes: "10",
-        lastUpdated : "March 24, 2023"
-
-    },
-    {
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
-        name : "Eben",
-        owner : "10",
-        public : true,
-        likes: "10",
-        lastUpdated : "March 24, 2023"
-
-    }
-]
 type GenresTableProps = {
-    rows? : PlaylistRow[],
+    rows: Playlist[],
+    currentPage: number,
+    totalCount: number,
+    loadMore : () => void,
+    refresh : () => void
 
 }
 
-const PlaylistsTable = ({rows = playlists}: GenresTableProps) => {
+const PlaylistsTable = ({rows, currentPage, totalCount, loadMore, refresh}: GenresTableProps) => {
     return (
         <div className="flex flex-col w-full">
-          <table className="table-auto text-white w-11/12 self-end">
-            <thead className="text-left">
-                <tr>
-                    <th className="pr-12">
+              <InfiniteScroll
+                        dataLength={rows?.length}
+                        next={() => loadMore()}
+                        hasMore={totalCount/(currentPage * PAGE_SIZE) > 1}
+                        loader={<h4 className="text-white text-bold mx-auto">Loading more items...</h4>}
+                        refreshFunction={refresh}
+                        pullDownToRefresh
+                        pullDownToRefreshThreshold={50}
+                        pullDownToRefreshContent={
+                            <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
+                        }
+                        releaseToRefreshContent={
+                        <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
+                    } 
+                >
+                <table className="table-auto text-white w-11/12 self-end">
+                    <thead className="text-left">
+                        <tr>
+                            <th className="pr-12">
+                                <div className="flex">
+                                        <input type="checkbox" className=" rounded-md shrink-0 mt-0.5 border-gray-200 text-red-900 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
+                                        
+                                </div>
+                        
+                            </th>
+                            <th>Playlist</th>
+                            <th>Owner</th>
+                            <th>Public</th>
+                            <th>Likes</th>
+                            <th>Last Updated</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        {
+                        rows.map( playlist => 
+                        <tr className="text-left">
+                        <td className="pr-12">
                         <div className="flex">
-                                <input type="checkbox" className=" rounded-md shrink-0 mt-0.5 border-gray-200 text-red-900 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
+                                <input type="checkbox" className="shrink-0 mt-0.5 border-gray-200 rounded-md text-red-900 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
                                 
-                        </div>
-                
-                    </th>
-                    <th>Playlist</th>
-                    <th>Owner</th>
-                    <th>Public</th>
-                    <th>Likes</th>
-                    <th>Last Updated</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody >
-                {
-                rows.map( playlist => 
-                <tr className="text-left">
-                <td className="pr-12">
-                   <div className="flex">
-                        <input type="checkbox" className="shrink-0 mt-0.5 border-gray-200 rounded-md text-red-900 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
-                         
-                    </div>
-                </td>
-                <td className="border-t-0 border-l-0 border-r-0 text-xs whitespace-nowrap py-4">
-                    <div >
-                       <PlaylistCard name={playlist.name} imgSrc={playlist.imgSrc} />
-                    </div>
-                </td>
-                <td ><p>{playlist.owner}</p></td>
-                <td ><p>{playlist.public ? "Yes" : "No"}</p></td>
-                <td ><p>{playlist.likes}</p></td>
-                <td><p>{playlist.lastUpdated}</p></td>
-                <td>
-                    <div className="flex flex-row gap-2">
-                        <div className="cursor-pointer">
-                          <img src={SettingsIcon} />
-                        </div>
-                        <div className="cursor-pointer">
-                          <img src={EditIcon} />
-                        </div>
-                        <div className="cursor-pointer">
-                           <img src={DeleteIcon} />
-                        </div>
-                    </div>
-                  
-                </td>
-                </tr>)
-               }
-               
-            </tbody>
-            </table>
+                            </div>
+                        </td>
+                        <td className="border-t-0 border-l-0 border-r-0 text-xs whitespace-nowrap py-4">
+                            <div >
+                            <PlaylistCard name={playlist.name} imgSrc={playlist.imgPath} />
+                            </div>
+                        </td>
+                        <td ><p>{playlist.isFidarr ? "Fidarr" : "User"}</p></td>
+                        <td ><p>{playlist.isFidarr ? "Yes" : "No"}</p></td>
+                        <td ><p>{playlist.likes}</p></td>
+                        <td><p>{playlist.lastUpdated}</p></td>
+                        <td>
+                            <div className="flex flex-row gap-2">
+                                <div className="cursor-pointer">
+                                <img src={SettingsIcon} />
+                                </div>
+                                <div className="cursor-pointer">
+                                <img src={EditIcon} />
+                                </div>
+                                <div className="cursor-pointer">
+                                <img src={DeleteIcon} />
+                                </div>
+                            </div>
+                        
+                        </td>
+                        </tr>)
+                    }
+                    
+                    </tbody>
+                </table>
+            </InfiniteScroll>
         </div>
     )
 }

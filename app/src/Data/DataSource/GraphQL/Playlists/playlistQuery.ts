@@ -9,6 +9,11 @@ query getFidarrPlaylistsPagingByGenre($page:Int!,$size:Int!, $genreId:String!){
         id
         imagePath
         streams
+        lastUpdated
+        createdAt
+        likes{
+          userId
+        }
         songs{
           id
           path
@@ -30,6 +35,43 @@ query getFidarrPlaylistsPagingByGenre($page:Int!,$size:Int!, $genreId:String!){
     }
   }
 `
+
+export const QUERY_ALL_PLAYLISTS = gql`
+query getAllPlaylistsPaging($page:Int!,$size:Int!){
+    allPlaylistsPaging(page:$page, size:$size) {
+       count
+       playlists{
+        name
+        id
+        imagePath
+        streams
+        lastUpdated
+        createdAt
+        likes{
+          userId
+        }
+        songs{
+          id
+          path
+          previewPath
+          artworkPath
+          lastUpdated
+          releaseDate
+          artist{
+            id
+            name
+          }
+          genres{
+            name
+            id
+          }
+          description
+        }
+      }
+    }
+  }
+`
+
 export const QUERY_PLAYLISTS = gql`
 query getFidarrPlaylistsPaging($page:Int!,$size:Int!){
     fidarrPlaylistsPaging(page:$page, size:$size) {
@@ -39,6 +81,11 @@ query getFidarrPlaylistsPaging($page:Int!,$size:Int!){
         id
         imagePath
         streams
+        lastUpdated
+        createdAt
+        likes{
+          userId
+        }
         songs{
           id
           path

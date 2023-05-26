@@ -1,13 +1,27 @@
 import { injectable } from "inversify";
-import { CreatePlaylistRequest, EditPlaylistRequest, FidarrPlaylistsPaging, FidarrPlaylistsPagingByGenre, PlaylistDataSource } from "./PlaylistDataSource";
+import { AllPlaylistsPaging, CreatePlaylistRequest, EditPlaylistRequest, FidarrPlaylistsPaging, FidarrPlaylistsPagingByGenre, PlaylistDataSource } from "./PlaylistDataSource";
 import { GeneralResponse } from "../Artists/ArtistDataSource";
-import { GetFidarrPlaylistsPagingByGenreDocument, GetFidarrPlaylistsPagingByGenreQueryResult, GetFidarrPlaylistsPagingDocument, GetFidarrPlaylistsPagingQueryResult } from "../../GraphQL/Generated/Playlists/graphql";
+import { GetAllPlaylistsPagingDocument, GetAllPlaylistsPagingQueryResult, GetFidarrPlaylistsPagingByGenreDocument, GetFidarrPlaylistsPagingByGenreQueryResult, GetFidarrPlaylistsPagingDocument, GetFidarrPlaylistsPagingQueryResult } from "../../GraphQL/Generated/Playlists/graphql";
 import { graphQLPlaylistClient } from "../../GraphQL/Client/client";
 import { deleteAPI, postAPI } from "../../API/axios_instance";
 
 @injectable()
 export class PlaylistDataSourceImpl implements PlaylistDataSource{
-    async getPlaylistsPaging(page: number, size: number): Promise<FidarrPlaylistsPaging> {
+    async getAllPlaylistsPaging(page: number, size: number): Promise<AllPlaylistsPaging> {
+        const result = await graphQLPlaylistClient.query<GetAllPlaylistsPagingQueryResult>({
+            query : GetAllPlaylistsPagingDocument,
+            variables: {
+                page: page,
+                size: size,
+            }
+        })
+        const data = result.data 
+        const playlistsPaginated = data as unknown as AllPlaylistsPaging 
+      
+        return  playlistsPaginated;
+    }
+   
+    async getFidarrPlaylistsPaging(page: number, size: number): Promise<FidarrPlaylistsPaging> {
         const result = await graphQLPlaylistClient.query<GetFidarrPlaylistsPagingQueryResult>({
             query : GetFidarrPlaylistsPagingDocument,
             variables: {

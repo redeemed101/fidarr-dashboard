@@ -166,10 +166,16 @@ export type MoodPaging = {
 
 export type Playlist = {
   __typename?: 'Playlist';
+  /** CreatedAt. */
+  createdAt: Scalars['DateTime'];
   /**  Id. */
   id: Scalars['String'];
   /** Image. */
   imagePath: Scalars['String'];
+  /** IsFidarr. */
+  isFidarr: Scalars['Boolean'];
+  /** LastUpdated. */
+  lastUpdated: Scalars['DateTime'];
   likes?: Maybe<Array<Maybe<PlaylistLike>>>;
   /** Name. */
   name: Scalars['String'];
@@ -196,11 +202,18 @@ export type PlaylistPaging = {
 
 export type PlaylistQuery = {
   __typename?: 'PlaylistQuery';
+  allPlaylistsPaging?: Maybe<Array<Maybe<PlaylistPaging>>>;
   dailyChartPaging?: Maybe<Array<Maybe<ChartPaging>>>;
   fidarrPlaylistsPaging?: Maybe<Array<Maybe<PlaylistPaging>>>;
   fidarrPlaylistsPagingByGenre?: Maybe<Array<Maybe<PlaylistPaging>>>;
   moodsPaging?: Maybe<Array<Maybe<MoodPaging>>>;
   weeklyChartPaging?: Maybe<Array<Maybe<ChartPaging>>>;
+};
+
+
+export type PlaylistQueryAllPlaylistsPagingArgs = {
+  page?: InputMaybe<Scalars['Int']>;
+  size?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -313,7 +326,15 @@ export type GetFidarrPlaylistsPagingByGenreQueryVariables = Exact<{
 }>;
 
 
-export type GetFidarrPlaylistsPagingByGenreQuery = { __typename?: 'PlaylistQuery', fidarrPlaylistsPagingByGenre?: Array<{ __typename?: 'PlaylistPaging', count: number, playlists?: Array<{ __typename?: 'Playlist', name: string, id: string, imagePath: string, streams: number, songs?: Array<{ __typename?: 'Song', id: string, path: string, previewPath: string, artworkPath: string, lastUpdated: any, releaseDate: any, description: string, artist?: { __typename?: 'Artist', id: string, name: string } | null, genres?: Array<{ __typename?: 'Genre', name: string, id: string } | null> | null } | null> | null } | null> | null } | null> | null };
+export type GetFidarrPlaylistsPagingByGenreQuery = { __typename?: 'PlaylistQuery', fidarrPlaylistsPagingByGenre?: Array<{ __typename?: 'PlaylistPaging', count: number, playlists?: Array<{ __typename?: 'Playlist', name: string, id: string, imagePath: string, streams: number, lastUpdated: any, createdAt: any, likes?: Array<{ __typename?: 'PlaylistLike', userId: string } | null> | null, songs?: Array<{ __typename?: 'Song', id: string, path: string, previewPath: string, artworkPath: string, lastUpdated: any, releaseDate: any, description: string, artist?: { __typename?: 'Artist', id: string, name: string } | null, genres?: Array<{ __typename?: 'Genre', name: string, id: string } | null> | null } | null> | null } | null> | null } | null> | null };
+
+export type GetAllPlaylistsPagingQueryVariables = Exact<{
+  page: Scalars['Int'];
+  size: Scalars['Int'];
+}>;
+
+
+export type GetAllPlaylistsPagingQuery = { __typename?: 'PlaylistQuery', allPlaylistsPaging?: Array<{ __typename?: 'PlaylistPaging', count: number, playlists?: Array<{ __typename?: 'Playlist', name: string, id: string, imagePath: string, streams: number, lastUpdated: any, createdAt: any, likes?: Array<{ __typename?: 'PlaylistLike', userId: string } | null> | null, songs?: Array<{ __typename?: 'Song', id: string, path: string, previewPath: string, artworkPath: string, lastUpdated: any, releaseDate: any, description: string, artist?: { __typename?: 'Artist', id: string, name: string } | null, genres?: Array<{ __typename?: 'Genre', name: string, id: string } | null> | null } | null> | null } | null> | null } | null> | null };
 
 export type GetFidarrPlaylistsPagingQueryVariables = Exact<{
   page: Scalars['Int'];
@@ -321,7 +342,7 @@ export type GetFidarrPlaylistsPagingQueryVariables = Exact<{
 }>;
 
 
-export type GetFidarrPlaylistsPagingQuery = { __typename?: 'PlaylistQuery', fidarrPlaylistsPaging?: Array<{ __typename?: 'PlaylistPaging', count: number, playlists?: Array<{ __typename?: 'Playlist', name: string, id: string, imagePath: string, streams: number, songs?: Array<{ __typename?: 'Song', id: string, path: string, previewPath: string, artworkPath: string, lastUpdated: any, releaseDate: any, description: string, artist?: { __typename?: 'Artist', id: string, name: string } | null, genres?: Array<{ __typename?: 'Genre', name: string, id: string } | null> | null } | null> | null } | null> | null } | null> | null };
+export type GetFidarrPlaylistsPagingQuery = { __typename?: 'PlaylistQuery', fidarrPlaylistsPaging?: Array<{ __typename?: 'PlaylistPaging', count: number, playlists?: Array<{ __typename?: 'Playlist', name: string, id: string, imagePath: string, streams: number, lastUpdated: any, createdAt: any, likes?: Array<{ __typename?: 'PlaylistLike', userId: string } | null> | null, songs?: Array<{ __typename?: 'Song', id: string, path: string, previewPath: string, artworkPath: string, lastUpdated: any, releaseDate: any, description: string, artist?: { __typename?: 'Artist', id: string, name: string } | null, genres?: Array<{ __typename?: 'Genre', name: string, id: string } | null> | null } | null> | null } | null> | null } | null> | null };
 
 
 export const GetWeeklyChartPagingDocument = gql`
@@ -496,6 +517,11 @@ export const GetFidarrPlaylistsPagingByGenreDocument = gql`
       id
       imagePath
       streams
+      lastUpdated
+      createdAt
+      likes {
+        userId
+      }
       songs {
         id
         path
@@ -547,6 +573,70 @@ export function useGetFidarrPlaylistsPagingByGenreLazyQuery(baseOptions?: Apollo
 export type GetFidarrPlaylistsPagingByGenreQueryHookResult = ReturnType<typeof useGetFidarrPlaylistsPagingByGenreQuery>;
 export type GetFidarrPlaylistsPagingByGenreLazyQueryHookResult = ReturnType<typeof useGetFidarrPlaylistsPagingByGenreLazyQuery>;
 export type GetFidarrPlaylistsPagingByGenreQueryResult = Apollo.QueryResult<GetFidarrPlaylistsPagingByGenreQuery, GetFidarrPlaylistsPagingByGenreQueryVariables>;
+export const GetAllPlaylistsPagingDocument = gql`
+    query getAllPlaylistsPaging($page: Int!, $size: Int!) {
+  allPlaylistsPaging(page: $page, size: $size) {
+    count
+    playlists {
+      name
+      id
+      imagePath
+      streams
+      lastUpdated
+      createdAt
+      likes {
+        userId
+      }
+      songs {
+        id
+        path
+        previewPath
+        artworkPath
+        lastUpdated
+        releaseDate
+        artist {
+          id
+          name
+        }
+        genres {
+          name
+          id
+        }
+        description
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllPlaylistsPagingQuery__
+ *
+ * To run a query within a React component, call `useGetAllPlaylistsPagingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllPlaylistsPagingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllPlaylistsPagingQuery({
+ *   variables: {
+ *      page: // value for 'page'
+ *      size: // value for 'size'
+ *   },
+ * });
+ */
+export function useGetAllPlaylistsPagingQuery(baseOptions: Apollo.QueryHookOptions<GetAllPlaylistsPagingQuery, GetAllPlaylistsPagingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllPlaylistsPagingQuery, GetAllPlaylistsPagingQueryVariables>(GetAllPlaylistsPagingDocument, options);
+      }
+export function useGetAllPlaylistsPagingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllPlaylistsPagingQuery, GetAllPlaylistsPagingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllPlaylistsPagingQuery, GetAllPlaylistsPagingQueryVariables>(GetAllPlaylistsPagingDocument, options);
+        }
+export type GetAllPlaylistsPagingQueryHookResult = ReturnType<typeof useGetAllPlaylistsPagingQuery>;
+export type GetAllPlaylistsPagingLazyQueryHookResult = ReturnType<typeof useGetAllPlaylistsPagingLazyQuery>;
+export type GetAllPlaylistsPagingQueryResult = Apollo.QueryResult<GetAllPlaylistsPagingQuery, GetAllPlaylistsPagingQueryVariables>;
 export const GetFidarrPlaylistsPagingDocument = gql`
     query getFidarrPlaylistsPaging($page: Int!, $size: Int!) {
   fidarrPlaylistsPaging(page: $page, size: $size) {
@@ -556,6 +646,11 @@ export const GetFidarrPlaylistsPagingDocument = gql`
       id
       imagePath
       streams
+      lastUpdated
+      createdAt
+      likes {
+        userId
+      }
       songs {
         id
         path

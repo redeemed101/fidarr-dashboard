@@ -10,6 +10,10 @@ export type Playlist = {
     name : string,
     streams : number,
     tracks : number,
+    likes: number,
+    isFidarr: boolean,
+    createdAt: string
+    lastUpdated: string
     songs: Track[]
 }
 

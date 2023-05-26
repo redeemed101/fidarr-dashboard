@@ -12,10 +12,14 @@ export class PlaylistRepositoryImpl implements PlaylistRepository{
         this._playlistPage = {
             data : [...Array(10)].map((a,i) =>{
                   return  {
-                    id: `playlist-${i}`,
+                    id: `playlist-${i}`,            
+                    isFidarr : i%2 == 0 ? true: false,
                     imgPath : "https://picsum.photos/200",
+                    likes: 1000,
                     name :  `playlist ${i}`,
                     streams : 12000,
+                    lastUpdated: moment(Date.parse("2023-10-31")).format('MMMM DD, YYYY'), 
+                    createdAt: moment(Date.parse("2023-10-31")).format('MMMM DD, YYYY'), 
                     tracks : 12,
                     songs: [...Array(5)].map((_,s) => {
                         return {
@@ -36,7 +40,10 @@ export class PlaylistRepositoryImpl implements PlaylistRepository{
             count: 20
         }
     }
-    getPlaylistsPaging(page: number, size: number): Promise<PlaylistPage> {
+    getAllPlaylistsPaging(page: number, size: number): Promise<PlaylistPage> {
+        return new Promise(resolve => setTimeout(() => resolve(this._playlistPage), 5000)) ;
+    }
+    getFidarrPlaylistsPaging(page: number, size: number): Promise<PlaylistPage> {
         return new Promise(resolve => setTimeout(() => resolve(this._playlistPage), 5000)) ;
     }
     getPlaylistsbyGenrePaging(genreId: string, page: number, size: number): Promise<PlaylistPage> {

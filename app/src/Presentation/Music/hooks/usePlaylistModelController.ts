@@ -57,7 +57,7 @@ export const usePlaylistModelController = (repository : PlaylistRepository) => {
             if(getMore){
                 const newPage = currentPage + 1;
                 setCurrentPage(newPage)
-                const response = await repository.getPlaylistsPaging(newPage, PAGE_SIZE);
+                const response = await repository.getAllPlaylistsPaging(newPage, PAGE_SIZE);
                 setFetchStatus(RequestStatus.Success)
                 const oldData = data.data
                 const responseData = response.data
@@ -67,7 +67,7 @@ export const usePlaylistModelController = (repository : PlaylistRepository) => {
             }
             else{
               setFetchStatus(RequestStatus.Loading)
-              const response =  await repository.getPlaylistsPaging(currentPage, PAGE_SIZE)          
+              const response =  await repository.getAllPlaylistsPaging(currentPage, PAGE_SIZE)          
               setFetchStatus(RequestStatus.Success)         
               setData({count: response.count, data : response.data});
             }
@@ -80,7 +80,7 @@ export const usePlaylistModelController = (repository : PlaylistRepository) => {
           setFetchStatus(RequestStatus.Loading)
           const newPage = 1;
           setCurrentPage(newPage)
-          const response = await repository.getPlaylistsPaging(newPage, PAGE_SIZE);
+          const response = await repository.getAllPlaylistsPaging(newPage, PAGE_SIZE);
           setFetchStatus(RequestStatus.Success)
           setData({count: response.count, data : response.data});
           }catch(e : any){ setFetchStatus(RequestStatus.Error)}    
