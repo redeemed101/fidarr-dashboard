@@ -181,3 +181,28 @@ catch(error){
    
 }
 }
+export  const putAPI = async <IEntity,> (url: string, payload : any, extraHeaders: any | null = null, onUploadProgress : undefined | any = undefined) : Promise<IEntity> => {
+  try{
+     mockApi(axiosInstance)
+     axiosInstance = setupInterceptorsTo(axiosInstance)
+     var headers = extraHeaders != null ? {
+      ...postConfig.headers,
+      ...extraHeaders
+     } : postConfig.headers;
+     const {data, status } = await axiosInstance<IEntity>({        
+        url: `${postConfig.baseUrl}/${url}`,
+        data: payload,
+        method: "put",
+        headers : headers,
+        onUploadProgress: onUploadProgress
+    })
+    return data
+  }
+  catch(error){
+  
+      console.log('unexpected error: ', error)
+      throw error
+     
+  }
+  }
+  

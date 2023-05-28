@@ -47,9 +47,14 @@ export class SongDataSourceImpl implements SongDataSource{
         formData.append("name",request.name);
         formData.append("description",request.description);
         formData.append("artistId",request.artistId);
-        formData.append("releaseDate",JSON.stringify(request.releaseDate))
-        request.featuringArtists  && formData.append("featuringArtists",JSON.stringify(request.featuringArtists));
-        formData.append("genres",JSON.stringify(request.genres));
+        formData.append("releaseDate",request.releaseDate.toDateString())
+        request.featuringArtists?.forEach(artist => {
+            formData.append("featuringArtists[]",artist);
+        }) 
+        request.genres?.forEach(genre => {
+            formData.append("genres[]",genre);
+        })
+        
         request.albumId  && formData.append("albumId",request.albumId);
         return await postAPI<CreateSongResponse>("AdminSong/create", formData, { "Content-Type": "multipart/form-data"}, onUploadProgress) 
     }
@@ -62,9 +67,13 @@ export class SongDataSourceImpl implements SongDataSource{
         formData.append("songId", request.songId);
         formData.append("description",request.description);
         formData.append("artistId",request.artistId);
-        formData.append("releaseDate",JSON.stringify(request.releaseDate))
-        request.featuringArtists  && formData.append("featuringArtists",JSON.stringify(request.featuringArtists));
-        formData.append("genres",JSON.stringify(request.genres));
+        formData.append("releaseDate",request.releaseDate.toDateString())
+        request.featuringArtists?.forEach(artist => {
+            formData.append("featuringArtists[]",artist);
+        }) 
+        request.genres?.forEach(genre => {
+            formData.append("genres[]",genre);
+        })
         request.albumId  && formData.append("albumId",request.albumId);
         return await postAPI<EditSongResponse>("AdminSong/edit", formData, { "Content-Type": "multipart/form-data"}, onUploadProgress) 
     }
