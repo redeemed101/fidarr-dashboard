@@ -4,6 +4,7 @@ const TYPES = {
     AlbumDataSource : Symbol.for("AlbumDataSource"),
     ArtistDataSource : Symbol.for("ArtistDataSource"),
     PlaylistDataSource : Symbol.for("PlaylistDataSource"),
+    ChartDataSource : Symbol.for("ChartDataSource"),
     
     AlbumRepository: Symbol.for("AlbumRepository"),
     ArtistRepository: Symbol.for("ArtistRepository"),

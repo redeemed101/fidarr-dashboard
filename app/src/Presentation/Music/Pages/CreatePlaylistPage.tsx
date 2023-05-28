@@ -79,8 +79,9 @@ const CreatePaylistPage = () => {
       if(imageFile != null)
        createPlaylist(imageFile, data.name, data.songs)
     }
+  
     return (
-       
+      
        <div className="min-h-screen bg-black w-full">
         <FidarrModal height={500} width={800} title="Sure" close={() => setModalOpen(false)} afterOpen={() =>{}} isOpen={modalOpen}>
           <div className="w-full flex flex-col gap-4">

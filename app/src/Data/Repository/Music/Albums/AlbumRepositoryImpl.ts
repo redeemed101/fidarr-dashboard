@@ -12,7 +12,7 @@ import { GeneralResponse } from "../../../DataSource/Music/Artists/ArtistDataSou
 @injectable()
 export class AlbumRepositoryImpl implements AlbumRepository{
     private _dataSource : AlbumDataSource;
-  
+   
     public constructor(
         @inject(TYPES.AlbumDataSource) dataSource : AlbumDataSource
     ){

@@ -5,6 +5,7 @@ export class AlbumResponse {
     public  toAlbumModels() : Album[] {
         return [
             {
+                id: "123",
                 imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
                 name : "Victory",
                 artist: "Eben",
@@ -16,6 +17,7 @@ export class AlbumResponse {
 
             },
             {
+                id: "122",
                 imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
                 name : "Victory",
                 artist: "Eben",
@@ -27,6 +29,7 @@ export class AlbumResponse {
 
             },
             {
+                id: "112",
                 imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
                 name : "Victory",
                 artist: "Eben",
@@ -38,6 +41,7 @@ export class AlbumResponse {
 
             },
             {
+                id: "1245",
                 imgSrc : "https://randomuser.me/api/portraits/women/81.jpg",
                 name : "Victory",
                 artist: "Eben",
