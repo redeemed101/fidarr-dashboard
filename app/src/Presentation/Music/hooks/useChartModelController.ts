@@ -123,6 +123,8 @@ export const useChartModelController = (repository : ChartRepository) => {
         count: data.count,
         fetchStatus,
         currentPage,
+        editChart,
+        createChart,
         deleteChart,
         getDailyChartsPaginated,
         getWeeklyChartsPaginated,

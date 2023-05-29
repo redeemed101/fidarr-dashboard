@@ -34,6 +34,10 @@ import { ChartDataSource } from "../Data/DataSource/Music/Playlists/ChartDataSou
 import { ChartDataSourceImpl } from "../Data/DataSource/Music/Playlists/ChartDataSourceImpl";
 import { ChartRepositoryImpl } from "../Data/Repository/Playlists/ChartRepositoryImpl";
 import { ChartRepository } from "../Domain/Repository/Music/ChartRepository";
+import { MoodRepository } from "../Domain/Repository/Music/MoodRepository";
+import { MoodRepositoryImpl } from "../Data/Repository/Playlists/MoodRepositoryImpl";
+import { MoodDataSource } from "../Data/DataSource/Music/Playlists/MoodDataSource";
+import { MoodDataSourceImpl } from "../Data/DataSource/Music/Playlists/MoodDataSourceImpl";
 
 const myContainer = new Container();
 myContainer.bind<AlbumDataSource>(TYPES.AlbumDataSource).to(AlbumDataSourceImpl);
@@ -47,12 +51,14 @@ myContainer.bind<GenreRepository>(TYPES.GenreRepository).to(GenreRepositoryMock)
 myContainer.bind<SongRepository>(TYPES.SongRepository).to(SongRepositoryMock);
 myContainer.bind<PlaylistRepository>(TYPES.PlaylistRepository).to(PlaylistRepositoryImpl);
 myContainer.bind<ChartRepository>(TYPES.ChartRepository).to(ChartRepositoryImpl);
+myContainer.bind<MoodRepository>(TYPES.MoodRepository).to(MoodRepositoryImpl);
 
 myContainer.bind<AuthenticationDataSource>(TYPES.AuthenticationDataSource).to(AuthenticationDataSourceMock);
 myContainer.bind<AuthenticationRepository>(TYPES.AuthenticationRepository).to(AuthenticationRepositoryImpl);
 
 myContainer.bind<PlaylistDataSource>(TYPES.PlaylistDataSource).to(PlaylistDataSourceImpl);
 myContainer.bind<ChartDataSource>(TYPES.ChartDataSource).to(ChartDataSourceImpl);
+myContainer.bind<MoodDataSource>(TYPES.MoodDataSource).to(MoodDataSourceImpl);
 
 
 
