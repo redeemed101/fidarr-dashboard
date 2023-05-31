@@ -1,29 +1,27 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
-import HeaderSection from "../../Common/HeaderSection"
-import { ButtonWithIcon, PrimaryButton, SecondaryButton } from "../../Common/buttons"
-import PrimaryFileInput from "../../Common/fileInput"
-import TextArea from "../../Common/textarea"
-import { PrimaryTextField, SearchTextField } from "../../Common/textfields"
-import MenuColumn from "../../Dashboard/Components/MenuColumn"
-import FolderPlusIcon from "../../../Assets/svgs/FolderPlusIcon.svg"
-import ListIcon from "../../../Assets/svgs/ListIcon.svg"
-import DeleteIcon from "../../../Assets/svgs/DeleteIcon.svg"
-import FidarrModal from "../../Common/modal"
+import HeaderSection from "../../../Common/HeaderSection"
+import { ButtonWithIcon, PrimaryButton, SecondaryButton } from "../../../Common/buttons"
+import { PrimaryTextField, SearchTextField } from "../../../Common/textfields"
+import MenuColumn from "../../../Dashboard/Components/MenuColumn"
+import FolderPlusIcon from "../../../../Assets/svgs/FolderPlusIcon.svg"
+import ListIcon from "../../../../Assets/svgs/ListIcon.svg"
+import DeleteIcon from "../../../../Assets/svgs/DeleteIcon.svg"
+import FidarrModal from "../../../Common/modal"
 import { useEffect, useState } from "react"
-import { SearchTracksTable } from "../Sections/TracksTable"
-import { Track } from "../../../Domain/Model/Music"
-import SearchSongs from "../Components/SearchSongs"
-import { usePlaylistModelController } from "../hooks/usePlaylistModelController"
-import { playlistRepository } from "../../../main"
-import { RequestStatus } from '../hooks/common';
+import { Track } from "../../../../Domain/Model/Music"
+import SearchSongs from "../../../Music/Components/SearchSongs"
+import { usePlaylistModelController } from "../../../Music/hooks/usePlaylistModelController"
+import { playlistRepository } from "../../../../main"
+import { RequestStatus } from '../../../Music/hooks/common';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../StateManagement/redux/store';
 
 type FormData = {
   name: string; 
-  songs: string[]
   picture: string
 };
 const schema = yup.object({
@@ -32,9 +30,10 @@ const schema = yup.object({
   picture: yup.string().required(),
 }).required();
 
-const CreatePaylistPage = () => {
+const EditPlaylistPage = () => {
+    const playlist = useSelector((state: RootState) => state.selectedPlaylist.playlist);
     const [modalOpen, setModalOpen] = useState(false)
-    const {createPlaylist, fetchStatus} = usePlaylistModelController(playlistRepository)
+    const {createPlaylist, editPlaylist, fetchStatus} = usePlaylistModelController(playlistRepository)
     const [imagePath, setImagePath] = useState<string | null>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [selectedSongs, setSelectedSongs] = useState<Track[]>([])
@@ -42,13 +41,15 @@ const CreatePaylistPage = () => {
       resolver: yupResolver(schema),
       defaultValues: {
         name: '',
-        songs: [],
         picture:''
       }
     });
     useEffect(() => {
-      console.log(selectedSongs)
-    }, [selectedSongs]);
+      if(playlist != null){
+        setSelectedSongs(playlist.songs)
+        setImagePath(playlist.imgPath)
+      }
+    }, []);
     const selectSong = (track: Track) => {
       console.log("bubbled " + track.id)
       
@@ -75,9 +76,9 @@ const CreatePaylistPage = () => {
      
     }
     const onSubmit = (data : FormData) => {
-      console.log(data);
-      if(imageFile != null)
-       createPlaylist(imageFile, data.name, data.songs)
+     
+      if(imageFile != null && playlist != null)
+       editPlaylist(imageFile,playlist.id, data.name, selectedSongs.map(s => s.id))
     }
   
     return (
@@ -87,7 +88,7 @@ const CreatePaylistPage = () => {
           <div className="w-full flex flex-col gap-4">
              <SearchSongs unSelectSong={unSelectSong} selectedSongs={selectedSongs} selectSong={selectSong} />
              <div className="w-1/4 self-end">
-              <PrimaryButton disabled={false} type="button" onClick={() => doneSelecting()} title='Done' padY={2} padX={3} height="10" width="full" />
+              <PrimaryButton disabled={selectedSongs.length < 1} type="button" onClick={() => doneSelecting()} title='Done' padY={2} padX={3} height="10" width="full" />
              </div>
            </div>
         </FidarrModal>
@@ -100,9 +101,12 @@ const CreatePaylistPage = () => {
             <form className='mx-auto' onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col mx-auto pt-12">
                   <div className="flex flex-col">
-                    <p className="text-white font-bold pb-4">Create Playlist</p>
-                    {fetchStatus == RequestStatus.Error ? <p className='text-red-600'>Error creating playlist</p> : ""}
-                    {fetchStatus == RequestStatus.Success ? <p className='text-blue-600'>Playlist Created</p> : ""}
+                    <p className="text-white font-bold pb-4">Edit Playlist</p>
+                    {imagePath != null ? <img className="rounded-md h-32 w-32" src={imagePath} />
+                   : <p className="rounded-md h-32 w-32 bg-fidarrgray-900 flex flex-row items-center text-white">
+                     <span className='mx-auto'>Artwork</span></p> }
+                    {fetchStatus == RequestStatus.Error ? <p className='text-red-600'>Error editing playlist</p> : ""}
+                    {/*fetchStatus == RequestStatus.Success ? <p className='text-blue-600'>Playlist Editing</p> : ""*/}
                   </div>
                   <div className="flex flex-col pl-4 pt-12">
                     <div className="flex flex-row gap-4 items-center ">
@@ -118,6 +122,7 @@ const CreatePaylistPage = () => {
                       
                     </div>
                     <div className="flex flex-col">
+                     <div><p className='text-fidarrgray-900 text-sm text-sm font-bold mb-2'>Upload Art</p></div>
                     <Controller
                           control={control}
                           name={"picture"}
@@ -132,12 +137,12 @@ const CreatePaylistPage = () => {
                                 type="file"
                                 id="picture"
                                 accept="image/*"
-                                className='h-auto w-full'
+                                className='h-10 w-full text-white'
                               />
                             );
                           }}
                         />
-                        <div className="relative -mt-2">
+                        <div className="relative ">
                               <div className="overflow-hidden h-2 text-xs flex rounded bg-fidarrgray-900">
                                 <div style={{width : "40%"}} className="bg-red-900 shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center "></div>
                               </div>
@@ -198,4 +203,4 @@ const CreatePaylistPage = () => {
     )
 }
 
-export default CreatePaylistPage
+export default EditPlaylistPage

@@ -4,6 +4,13 @@ import SettingsIcon from "../../../Assets/svgs/TrackSettingsIcon.svg";
 import { Playlist } from "../../../Domain/Model/Music/Playlist";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { PAGE_SIZE } from "../../../Data/Utils/constants";
+import { useEffect, useState } from "react";
+import { Track } from "../../../Domain/Model/Music/Track";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setPlaylist } from "../../../StateManagement/redux/musicReduer";
+import { confirmAlert } from "react-confirm-alert";
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 
 
@@ -32,11 +39,83 @@ type GenresTableProps = {
     currentPage: number,
     totalCount: number,
     loadMore : () => void,
-    refresh : () => void
+    refresh : () => void, 
+    deleteItem: (id: string) =>  void,  
+    selectedPlaylists: Playlist[],
+    selectPlaylist: (playlist: Playlist) => void,
+    unSelectPlaylist: (playlist: Playlist) => void
 
 }
 
-const PlaylistsTable = ({rows, currentPage, totalCount, loadMore, refresh}: GenresTableProps) => {
+const PlaylistsTable = ({rows, currentPage, totalCount, selectedPlaylists,deleteItem, selectPlaylist, unSelectPlaylist , loadMore, refresh}: GenresTableProps) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [allSelected, setAllSelected] = useState<boolean>(false)
+    const checkSelectAll = (checked: boolean) => {
+        console.log("within")
+        setAllSelected(checked)
+        if(checked){
+            
+            selectAll()
+        }
+        else{
+            
+            unSelectAll()
+        }
+    }
+    const checkPlaylistSelected = (checked: boolean, playlist: Playlist) => {
+      
+          if(checked){
+             
+             selectPlaylist(playlist)
+          }
+          else{
+            unSelectPlaylist(playlist)
+          }
+    }
+    const selectAll = () => {
+        rows.forEach(playlist => {
+            
+            if(!selectedPlaylists.includes(playlist)){
+                console.log(playlist)
+                 selectPlaylist(playlist)
+            }
+            
+        })
+    }
+    const unSelectAll = () => {
+        rows.forEach(playlist => {
+            if(selectedPlaylists.includes(playlist))
+                 unSelectPlaylist(playlist)
+            
+        })
+    }
+    const deletePlaylist = (id: string) => {
+        console.log(id)
+        confirmAlert({
+            customUI: ({ onClose }) => {
+              return (
+                <div className='bg-black rounded-lg flex flex-col px-8 py-2'>
+                  <h1 className="text-white text-xl font-bold mx-auto">Confirm action</h1>
+                  <p className="text-white">You want to delete this  playlist?</p>
+                  <div className="flex flex-row gap-2 justify-center mt-8">
+                        <button className="bg-red-700 w-24 h-10 text-white font-bold rounded-lg" onClick={onClose}>No</button>
+                        <button className="bg-white w-24 h-10 text-red-700 rounded-lg"
+                            onClick={() => {
+                            deleteItem(id)
+                            onClose();
+                            }}
+                        >
+                            Yes
+                        </button>
+                  </div>
+                
+                </div>
+              );
+            }
+          });
+       
+      }
     return (
         <div className="flex flex-col w-full">
               <InfiniteScroll
@@ -54,15 +133,18 @@ const PlaylistsTable = ({rows, currentPage, totalCount, loadMore, refresh}: Genr
                         <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
                     } 
                 >
-                <table className="table-auto text-white w-11/12 self-end">
+                <table className="table-auto ml-24 text-white w-11/12 self-end">
                     <thead className="text-left">
                         <tr>
                             <th className="pr-12">
-                                <div className="flex">
-                                        <input type="checkbox" className=" rounded-md shrink-0 mt-0.5 border-gray-200 text-red-900 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
-                                        
-                                </div>
-                        
+                                   <div className="flex">
+                                            <input 
+                                            type="checkbox" 
+                                            checked={allSelected}
+                                            onChange={(e) => checkSelectAll(e.target.checked)}
+                                            className=" rounded-md shrink-0 mt-0.5 border-gray-200 text-red-900  focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
+                                            
+                                    </div>
                             </th>
                             <th>Playlist</th>
                             <th>Owner</th>
@@ -78,7 +160,11 @@ const PlaylistsTable = ({rows, currentPage, totalCount, loadMore, refresh}: Genr
                         <tr className="text-left">
                         <td className="pr-12">
                         <div className="flex">
-                                <input type="checkbox" className="shrink-0 mt-0.5 border-gray-200 rounded-md text-red-900 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
+                                <input
+                                 type="checkbox"
+                                 checked={selectedPlaylists.includes(playlist)}                                 
+                                          onChange={(e) => checkPlaylistSelected(e.target.checked, playlist)}
+                                 className="shrink-0 mt-0.5 border-gray-200 rounded-md text-red-900 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
                                 
                             </div>
                         </td>
@@ -97,10 +183,16 @@ const PlaylistsTable = ({rows, currentPage, totalCount, loadMore, refresh}: Genr
                                 <img src={SettingsIcon} />
                                 </div>
                                 <div className="cursor-pointer">
-                                <img src={EditIcon} />
+                               <img onClick={() => {
+                                     dispatch(setPlaylist(playlist))
+                                     navigate(`/music/playlists/edit/${playlist.id}`)
+                                }} src={EditIcon} />
                                 </div>
                                 <div className="cursor-pointer">
-                                <img src={DeleteIcon} />
+                                <img src={DeleteIcon} onClick={() => {
+                                  
+                                    deletePlaylist(playlist.id)
+                                }} />
                                 </div>
                             </div>
                         

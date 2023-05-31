@@ -15,11 +15,14 @@ type SearchSongsProps = {
 const SearchSongs = (props: SearchSongsProps) => {
    const [searchText, setSearchText] = useState<string>("");
    const [debouncedText, setDebouncedText] = useState(searchText);
-   const {currentSongs,getSearchSongsPaginated, fetchStatus,currentPage, count} = useSongModelController(songRepository)
+   const {currentSongs,getSearchSongsPaginated,getSongsPaginated, fetchStatus,currentPage, count} = useSongModelController(songRepository)
    useEffect(() => {
         const timer = setTimeout(() => setSearchText(prev => debouncedText), 1000);
         return () => clearTimeout(timer);
    }, [debouncedText])
+   useEffect( () => {
+      getSongsPaginated()
+   },[])
    useEffect( () => {
       if(searchText != "")
          getSearchSongsPaginated(searchText)

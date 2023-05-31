@@ -1,14 +1,14 @@
 import { Link, useParams } from "react-router-dom"
-import { CMSMenuType, cmsMenuItems } from "../../../StateManagement/CMSMenu"
-import MenuColumn from "../../Dashboard/Components/MenuColumn"
-import CMSHeader from "../Sections/CMSHeader"
-import { ButtonWithIcon, PrimaryButton } from "../../Common/buttons"
-import EditIcon from "../../../Assets/svgs/EditIcon.svg"
-import DeleteIcon from "../../../Assets/svgs/DeleteIcon.svg"
-import PrimarySelect, { PrimarySelectOption } from "../../Common/select"
-import { PrimaryTextField, SearchTextField } from "../../Common/textfields"
-import ListIcon from "../../../Assets/svgs/FilledListIcon.svg"
-import Playlist1 from "../../../Assets/svgs/Playlist1.svg"
+import { CMSMenuType, cmsMenuItems } from "../../../../StateManagement/CMSMenu"
+import MenuColumn from "../../../Dashboard/Components/MenuColumn"
+import CMSHeader from "../../Sections/CMSHeader"
+import { ButtonWithIcon, PrimaryButton } from "../../../Common/buttons"
+import EditIcon from "../../../../Assets/svgs/EditIcon.svg"
+import DeleteIcon from "../../../../Assets/svgs/DeleteIcon.svg"
+import PrimarySelect, { PrimarySelectOption } from "../../../Common/select"
+import { PrimaryTextField, SearchTextField } from "../../../Common/textfields"
+import ListIcon from "../../../../Assets/svgs/FilledListIcon.svg"
+import Playlist1 from "../../../../Assets/svgs/Playlist1.svg"
 
 
 const contentOptions : PrimarySelectOption[] = [
@@ -17,7 +17,7 @@ const contentOptions : PrimarySelectOption[] = [
         value: "Home"
     }
 ]
-const ContentPlaylistsPage = () => {
+const PlaylistsPage = () => {
     const { id } = useParams();
    
    
@@ -31,20 +31,20 @@ const ContentPlaylistsPage = () => {
                
                <div className="flex flex-row items-center justify-between w-full">
                   <p className="font-bold text-white">Playlists</p>
-                  <div className="flex flex-row gap-2 items-center">
+                  {/*<div className="flex flex-row gap-2 items-center">
                     
                     <PrimaryButton title='Save' padY={2} padX={6} height="10" width="100" />
-                  </div>
+                  </div>*/}
                </div>
 
-               <div className="flex flex-row items-start gap-2 w-full">
+               {/*<div className="flex flex-row items-start gap-2 w-full">
                   <PrimarySelect options={contentOptions} label="Content Type" width="1/4" padX={3} />
                   <PrimarySelect options={contentOptions} label="Genres" width="1/4" padX={3} />
                   <PrimarySelect options={contentOptions} label="Auto Update" width="1/4" padX={3} />
                   <div className="w-1/4">
                       <PrimaryTextField type="text" value="" padX={6} padY={2} width="full" height="12" label="Tag" placeholder="Tag" />
                   </div>
-               </div>
+                </div>*/}
                
                <div className="w-full">
                   <SearchTextField value="" />
@@ -86,4 +86,4 @@ const ContentPlaylistsPage = () => {
     )
 }
 
-export default ContentPlaylistsPage
+export default PlaylistsPage

@@ -137,11 +137,11 @@ export const SearchTracksTable = ({rows,currentPage, unSelectSong,selectSong, se
     const checkSelectAll = (checked: boolean) => {
         setAllSelected(checked)
         if(checked){
-            console.log("within all selected")
+            
             selectAll()
         }
         else{
-            console.log("within all unselected")
+            
             unSelectAll()
         }
     }

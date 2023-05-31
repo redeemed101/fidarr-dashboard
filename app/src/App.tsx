@@ -3,7 +3,7 @@ import { BrowserRouter, Outlet, Route, Routes, useNavigate } from 'react-router-
 import './App.css';
 import CreateArtistPage from './Presentation/Music/Pages/CreateArtistPage';
 import CreateGenrePage from './Presentation/Music/Pages/CreateGenrePage';
-import CreatePaylistPage from './Presentation/Music/Pages/CreatePlaylistPage';
+import CreatePaylistPage from './Presentation/Music/Pages/playlists/CreatePlaylistPage';
 import PlaylistsPage from './Presentation/Music/Pages/PlaylistsPage';
 import UploadAlbumPage from './Presentation/Music/Pages/UploadAlbumPage';
 import UploadTrackPage from './Presentation/Music/Pages/UploadTrackPage';
@@ -20,14 +20,13 @@ import ContentPage from './Presentation/CMS/Pages/ContentPage';
 import withErrorBoundary, { ErrorBoundary } from './HoCs/Errors/WithErrorBoundary';
 import LocationMusicHomePage from './Presentation/CMS/Pages/LocationMusicHomePage';
 import LocationGenresPage from './Presentation/CMS/Pages/LocationGenresPage';
-import ChannelPlaylistPage from './Presentation/CMS/Pages/ChannelPlaylistPage';
+import ChannelPlaylistPage from './Presentation/CMS/Pages/playlists/ChannelPlaylistPage';
 import LocationHomePage from './Presentation/CMS/Pages/LocationHomePage';
-import LocationPlaylistPage from './Presentation/CMS/Pages/LocationPlaylistPage';
+import LocationPlaylistPage from './Presentation/CMS/Pages/playlists/LocationPlaylistPage';
 import LocationChartPage from './Presentation/CMS/Pages/LocationChartPage';
 import LocationMoodsPage from './Presentation/CMS/Pages/LocationMoodsPage';
 import LocationSlidersPage from './Presentation/CMS/Pages/LocationSlidersPage';
 import ChannelGenrePage from './Presentation/CMS/Pages/ChannelGenrePage';
-import ContentPlaylistsPage from './Presentation/CMS/Pages/ContentPlaylistsPage';
 import ContentTracksPage from './Presentation/CMS/Pages/ContentTracksPage';
 import ContentArtistsPage from './Presentation/CMS/Pages/ContentArtistsPage';
 import ContentAlbumsPage from './Presentation/CMS/Pages/ContentAlbumsPage';
@@ -42,6 +41,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './StateManagement/redux/store';
 import { useEffect } from 'react';
 import RecoverEmailPage from './Presentation/Authentication/Pages/RecoverEmailPage';
+import EditPlaylistPage from './Presentation/Music/Pages/playlists/EditPlaylistPage';
 
 
 
@@ -101,6 +101,10 @@ const dashboardRoutes : AuthRoutes[] = [
       page : <CreatePaylistPage />,
       route: "/music/playlists/create"
     },
+    {
+      page : <EditPlaylistPage />,
+      route: "/music/playlists/edit/:id"
+    },
 
     {
       page : <LocationsPage />,
@@ -127,8 +131,8 @@ const dashboardRoutes : AuthRoutes[] = [
       route: "/cms/content"
     } ,
     {
-      page : <ContentPlaylistsPage />,
-      route: "/cms/content/playlists/:id"
+      page : <PlaylistsPage />,
+      route: "/cms/content/playlists"
     } ,
     {
       page : <ContentTracksPage />,
@@ -223,7 +227,7 @@ function App() {
   useEffect(() => {
     console.log(user)
     if (user == null) {
-       navigate("/music/playlists/create")
+       navigate("/cms/content/playlists")
     } else {
       navigate("/dashboard")
     }
