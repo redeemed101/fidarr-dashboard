@@ -1,14 +1,14 @@
-import MenuColumn from "../../Dashboard/Components/MenuColumn"
-import ArtistsTable from "../Sections/ArtistsTable"
-import MusicHeader from "../Sections/MusicHeader"
-import { ButtonWithIcon } from "../../Common/buttons";
-import PlusIcon from "../../../Assets/svgs/PlusIcon.svg"
-import TracksTable from "../Sections/TracksTable";
-import { MusicMenuType, menuItems } from "../../../StateManagement/MusicMenu";
+import MenuColumn from "../../../Dashboard/Components/MenuColumn"
+import ArtistsTable from "../../Sections/ArtistsTable"
+import MusicHeader from "../../Sections/MusicHeader"
+import { ButtonWithIcon } from "../../../Common/buttons";
+import PlusIcon from "../../../../Assets/svgs/PlusIcon.svg"
+import TracksTable from "../../Sections/TracksTable";
+import { MusicMenuType, menuItems } from "../../../../StateManagement/MusicMenu";
 import { Link } from "react-router-dom";
-import { songRepository } from "../../../main";
-import { useSongModelController } from "../hooks/useSongModelController";
-import { RequestStatus } from "../hooks/common";
+import { songRepository } from "../../../../main";
+import { useSongModelController } from "../../hooks/useSongModelController";
+import { RequestStatus } from "../../hooks/common";
 import { useEffect } from "react";
 
 

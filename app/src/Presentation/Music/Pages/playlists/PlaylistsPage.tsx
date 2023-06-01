@@ -1,15 +1,15 @@
-import MenuColumn from "../../Dashboard/Components/MenuColumn"
-import MusicHeader from "../Sections/MusicHeader"
-import { ButtonWithIcon } from "../../Common/buttons";
-import PlusIcon from "../../../Assets/svgs/PlusIcon.svg"
-import PlaylistsTable from "../Sections/PlaylistsTable";
-import { MusicMenuType, menuItems } from "../../../StateManagement/MusicMenu";
+import MenuColumn from "../../../Dashboard/Components/MenuColumn"
+import MusicHeader from "../../Sections/MusicHeader"
+import { ButtonWithIcon } from "../../../Common/buttons";
+import PlusIcon from "../../../../Assets/svgs/PlusIcon.svg"
+import PlaylistsTable from "../../Sections/PlaylistsTable";
+import { MusicMenuType, menuItems } from "../../../../StateManagement/MusicMenu";
 import { Link } from "react-router-dom";
-import { usePlaylistModelController } from "../hooks/usePlaylistModelController";
-import { playlistRepository } from "../../../main";
+import { usePlaylistModelController } from "../../hooks/usePlaylistModelController";
+import { playlistRepository } from "../../../../main";
 import { useEffect, useState } from "react";
-import { RequestStatus } from "../hooks/common";
-import { Playlist } from "../../../Domain/Model/Music/Playlist";
+import { RequestStatus } from "../../hooks/common";
+import { Playlist } from "../../../../Domain/Model/Music/Playlist";
 
 
 
@@ -55,8 +55,8 @@ const PlaylistsPage = () => {
                 refresh={refreshPlaylistsPaginated} 
                 totalCount={count} 
                 deleteItem={(id:string) => {
-                  setPlaylists(prev => prev.filter(p => p.id != id))
-                  deletePlaylist(id) 
+                  
+                  deletePlaylist(id, ()=>setPlaylists(prev => prev.filter(p => p.id != id))) 
                 }}
                 currentPage={currentPage} 
                 selectPlaylist={selectPlaylist}

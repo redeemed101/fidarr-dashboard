@@ -7,6 +7,7 @@ import { PAGE_SIZE } from "../../../Data/Utils/constants";
 export const usePlaylistModelController = (repository : PlaylistRepository) => {
     const [currentPage, setCurrentPage] = useState(1); 
     const [fetchStatus, setFetchStatus] = useState<RequestStatus>(RequestStatus.Success);
+    const [playlistModified,setPlaylistModified] = useState(false);
     const [data, setData] = useState<PagedData>({count: 0, data: []});
     const createPlaylist = async (artworkFile: File, name: string, songIds: string[]) => {
         try{
@@ -17,10 +18,13 @@ export const usePlaylistModelController = (repository : PlaylistRepository) => {
                 artworkFile: artworkFile,
             }
           )
-          if(result)
+          if(result){
             setFetchStatus(RequestStatus.Success)
-          else
+            setPlaylistModified(true)
+          }
+          else{
            setFetchStatus(RequestStatus.Error)
+          }
         }
         catch(e : any){ setFetchStatus(RequestStatus.Error)} 
     }
@@ -34,18 +38,23 @@ export const usePlaylistModelController = (repository : PlaylistRepository) => {
                 artworkFile: artworkFile,
             }
           )
-          if(result)
+          if(result){
             setFetchStatus(RequestStatus.Success)
+            setPlaylistModified(true)
+          }
           else
            setFetchStatus(RequestStatus.Error)
         }
         catch(e : any){ setFetchStatus(RequestStatus.Error)} 
     }
-    const deletePlaylist = async (playlistId: string) => {
+    const deletePlaylist = async (playlistId: string,finish: () => void) => {
         try{
           const result = await repository.deletePlaylist(playlistId);
-          if(result)
+          if(result){
              setFetchStatus(RequestStatus.Success)
+             finish()
+             setPlaylistModified(true)
+          }
           else
           setFetchStatus(RequestStatus.Error)
          }
@@ -124,6 +133,7 @@ export const usePlaylistModelController = (repository : PlaylistRepository) => {
         count: data.count,
         fetchStatus,
         currentPage,
+        playlistModified,
         createPlaylist,
         editPlaylist,
         deletePlaylist,

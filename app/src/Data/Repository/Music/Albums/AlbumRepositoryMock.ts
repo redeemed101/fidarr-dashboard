@@ -4,6 +4,7 @@ import { AlbumPage } from "../../../../Domain/Model/Music/Album";
 import { CreateAlbumRequest, CreateAlbumResponse, EditAlbumRequest, EditAlbumResponse } from "../../../DataSource/Music/Albums/AlbumDataSource";
 import { GeneralResponse } from "../../../DataSource/Music/Artists/ArtistDataSource";
 import moment from "moment";
+import { Track } from "../../../../Domain/Model/Music";
 
 @injectable()
 export class AlbumRepositoryMock implements AlbumRepository{
@@ -16,12 +17,38 @@ export class AlbumRepositoryMock implements AlbumRepository{
                     id: `album ${i}`,
                     imgSrc : "https://picsum.photos/200",
                     name : `album ${i}`,
-                    artist: `artist ${i}`,
-                    genre : ["Genre 1", "Genre 2"],
+                    description: `album description ${i}`,
+                    artist: {
+                        id: `artist ${i}`,     
+                        website: "www.google.com",
+                        bio: "Nice Artist",               
+                        imgSrc : "https://picsum.photos/200",
+                        name : `artist ${i}`,
+                        genres : ["Genre 1", "Genre 2"],
+                        streams : 100000,
+                        tracks : 20,
+                        albums: 2,
+                        lastUpdated: "2023-10-31",
+                    },
+                    songs :[...Array(10)].map((a,i) =>{
+                        return  {
+                          id: `track-${i}`,                    
+                          imgSrc : "https://picsum.photos/200",
+                          name : `song ${i}`,
+                          artistName: `artist ${i}`,
+                          genres : ["Genre 1", "Genre 2"],
+                          streams : "10M",
+                          duration : "",
+                          lastUpdated: "2023-10-31", 
+                          releaseDate: "2023-10-31",
+                         
+                      }
+                    }),
+                    genres : ["Genre 1", "Genre 2"],
                     streams : "10M",
                     tracks : 5,
-                    releaseDate: moment(Date.parse("2023-10-31")).format('MMMM DD, YYYY'),
-                    lastUpdated: moment(Date.parse("2023-10-31")).format('MMMM DD, YYYY'),
+                    releaseDate: "2023-10-31",
+                    lastUpdated: "2023-10-31",
                 }
             }),
             count: 20

@@ -1,19 +1,16 @@
 
 import { BrowserRouter, Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
-import CreateArtistPage from './Presentation/Music/Pages/CreateArtistPage';
-import CreateGenrePage from './Presentation/Music/Pages/CreateGenrePage';
+import CreateGenrePage from './Presentation/Music/Pages/genres/CreateGenrePage';
 import CreatePaylistPage from './Presentation/Music/Pages/playlists/CreatePlaylistPage';
-import PlaylistsPage from './Presentation/Music/Pages/PlaylistsPage';
-import UploadAlbumPage from './Presentation/Music/Pages/UploadAlbumPage';
-import UploadTrackPage from './Presentation/Music/Pages/UploadTrackPage';
+import PlaylistsPage from './Presentation/Music/Pages/playlists/PlaylistsPage';
+import UploadTrackPage from './Presentation/Music/Pages/songs/UploadTrackPage';
 import DashboardMainPage from './Presentation/Dashboard/Pages/DashboardMainPage';
 import LoginPage from './Presentation/Authentication/Pages/login';
 import MenuStateProvider from './StateManagement/MenuStateProvider';
-import ArtistsPage from './Presentation/Music/Pages/ArtistsPage';
-import AlbumsPage from './Presentation/Music/Pages/AlbumsPage';
-import GenresPage from './Presentation/Music/Pages/GenresPage';
-import TracksPage from './Presentation/Music/Pages/TracksPage';
+import ArtistsPage from './Presentation/Music/Pages/artists/ArtistsPage';
+import AlbumsPage from './Presentation/Music/Pages/albums/AlbumsPage';
+import GenresPage from './Presentation/Music/Pages/genres/GenresPage';
 import LocationsPage from './Presentation/CMS/Pages/LocationsPage';
 import ChannelsPage from './Presentation/CMS/Pages/ChannelsPage';
 import ContentPage from './Presentation/CMS/Pages/ContentPage';
@@ -42,6 +39,13 @@ import { RootState } from './StateManagement/redux/store';
 import { useEffect } from 'react';
 import RecoverEmailPage from './Presentation/Authentication/Pages/RecoverEmailPage';
 import EditPlaylistPage from './Presentation/Music/Pages/playlists/EditPlaylistPage';
+import CreateArtistPage from './Presentation/Music/Pages/artists/CreateArtistPage';
+import { ArtistPage } from './Presentation/Music/Pages/artists/ArtistPage';
+import EditArtistPage from './Presentation/Music/Pages/artists/EditArtistPage';
+import UploadAlbumPage from './Presentation/Music/Pages/albums/UploadAlbumPage';
+import { AlbumPage } from './Presentation/Music/Pages/albums/AlbumPage';
+import TracksPage from './Presentation/Music/Pages/songs/TracksPage';
+import EditAlbumPage from './Presentation/Music/Pages/albums/EditAlbumPage';
 
 
 
@@ -86,12 +90,28 @@ const dashboardRoutes : AuthRoutes[] = [
       route: "/music/artists/create"
     },
     {
+      page : <EditArtistPage />,
+      route: "/music/artists/edit/:id"
+    },
+    {
+      page : <ArtistPage />,
+      route: "/music/artists/:id"
+    },
+    {
       page : <UploadTrackPage />,
       route: "/music/tracks/create"
     },
     {
       page : <UploadAlbumPage />,
       route: "/music/albums/create"
+    },
+    {
+      page : <AlbumPage />,
+      route: "/music/albums/:id"
+    },
+    {
+      page : <EditAlbumPage />,
+      route: "/music/albums/edit/:id"
     },
     {
       page : <CreateGenrePage />,
@@ -227,7 +247,7 @@ function App() {
   useEffect(() => {
     console.log(user)
     if (user == null) {
-       navigate("/cms/content/playlists")
+       navigate("/music/artists")
     } else {
       navigate("/dashboard")
     }

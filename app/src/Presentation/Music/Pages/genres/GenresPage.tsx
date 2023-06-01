@@ -1,13 +1,13 @@
-import MenuColumn from "../../Dashboard/Components/MenuColumn"
-import MusicHeader from "../Sections/MusicHeader"
-import { ButtonWithIcon } from "../../Common/buttons";
-import PlusIcon from "../../../Assets/svgs/PlusIcon.svg"
-import GenresTable from "../Sections/GenresTable";
-import { MusicMenuType, menuItems } from "../../../StateManagement/MusicMenu";
+import MenuColumn from "../../../Dashboard/Components/MenuColumn"
+import MusicHeader from "../../Sections/MusicHeader"
+import { ButtonWithIcon } from "../../../Common/buttons";
+import PlusIcon from "../../../../Assets/svgs/PlusIcon.svg"
+import GenresTable from "../../Sections/GenresTable";
+import { MusicMenuType, menuItems } from "../../../../StateManagement/MusicMenu";
 import { Link } from "react-router-dom";
-import { useGenreModelController } from "../hooks/useGenreModelController";
-import { genreRepository } from "../../../main";
-import { RequestStatus } from "../hooks/common";
+import { useGenreModelController } from "../../hooks/useGenreModelController";
+import { genreRepository } from "../../../../main";
+import { RequestStatus } from "../../hooks/common";
 import { useEffect } from "react";
 
 const GenresPage = () => {

@@ -20,12 +20,18 @@ export type ArtistData = {
 export const useArtistModelController = (repository : ArtistRepository) => {
 
     const [currentPage, setCurrentPage] = useState(1); 
+    const [artistModified,setArtistModified] = useState(false);
+    const [artistDeleted,setArtistDeleted] = useState(false);
     const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getArtistsPaging(currentPage, PAGE_SIZE));
-    const deleteArtist = async (artistId: string, onUploadProgress: any) => {
+    const deleteArtist = async (artistId: string, onUploadProgress: any,finish : () => void) => {
       try{
         var result = await repository.deleteArtist(artistId);
-        if(result)
+        if(result){
            setFetchStatus(RequestStatus.Success)
+           setArtistDeleted(true)
+           console.log("In delete")
+           finish()
+        }
         else
            setFetchStatus(RequestStatus.Error)
      }
@@ -42,8 +48,11 @@ export const useArtistModelController = (repository : ArtistRepository) => {
            website: artistData.website,          
            genres: artistData.genres
          } as EditArtist);
-         if(result)
+         if(result){
             setFetchStatus(RequestStatus.Success)
+            setArtistModified(true)
+           
+         }
          else
             setFetchStatus(RequestStatus.Error)
       }
@@ -69,8 +78,10 @@ export const useArtistModelController = (repository : ArtistRepository) => {
            },
            genres: artistData.genres
          });
-         if(result)
+         if(result){
             setFetchStatus(RequestStatus.Success)
+            setArtistModified(true)
+         }
          else
             setFetchStatus(RequestStatus.Error)
       }
@@ -107,6 +118,8 @@ export const useArtistModelController = (repository : ArtistRepository) => {
         count: data.count,
         fetchStatus,
         currentPage,
+        artistModified,
+        artistDeleted,
         setCurrentPage,
         getMoreArtistsPaginated,
         refreshArtistsPaginated,

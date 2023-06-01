@@ -2,7 +2,7 @@ import { inject, injectable } from "inversify";
 import { AlbumRepository } from "../../../../Domain/Repository/Music/AlbumRepository";
 import { CreateAlbumRequest, CreateAlbumResponse, type AlbumDataSource, EditAlbumRequest, EditAlbumResponse } from "../../../DataSource/Music/Albums/AlbumDataSource";
 import { TYPES } from "../../../../DI/types";
-import { Album } from "../../../../Domain/Model/Music";
+import { Album, Artist, Track } from "../../../../Domain/Model/Music";
 import { BASE_URL } from "../../../DataSource/API/constant";
 import { AlbumPage } from "../../../../Domain/Model/Music/Album";
 import moment from "moment";
@@ -29,9 +29,35 @@ export class AlbumRepositoryImpl implements AlbumRepository{
            return  {
               imgSrc: `${BASE_URL}${a.artworkPath}`,
               id: a.id,
+              description: a.description,
               name: a.name,
-              artist: a.artist?.name ?? "",
-              genre: a.genres?.map(g => g?.name ?? "") ?? [""],
+              artist: {
+                  id: a.artist?.id,     
+                  website: a.artist?.website,
+                  bio: a.artist?.bio,               
+                  imgSrc : a.artist?.imagePath,
+                  name : a.artist?.name,
+                  genres : a.artist?.genres?.map(g => g?.name),
+                  streams : 0,
+                  tracks : 0,
+                  albums: 0,
+                  lastUpdated: moment(Date.parse(a.artist?.lastUpdated)).format('MMMM DD, YYYY'),
+              } as Artist,
+              songs : a.songs?.map(s => {
+                        return {
+                           id: s?.id,                    
+                           imgSrc : `${BASE_URL}${s?.artworkPath}`,
+                           name : s?.name,
+                           artistName: s?.artist?.name,
+                           genres : s?.genres?.map(g => g?.name),
+                           streams : `${s?.streams?.length ?? 0}`,
+                           duration : "",
+                           lastUpdated: moment(Date.parse(s?.lastUpdated)).format('MMMM DD, YYYY'), 
+                           releaseDate: moment(Date.parse(s?.releaseDate)).format('MMMM DD, YYYY'),
+                        
+                     } 
+               }) as Track[],
+              genres: a.genres?.map(g => g?.name ?? "") ?? [""],
               streams: a.streams?.length.toString() ?? "0",
               tracks: a.songs?.length ?? 0,
               releaseDate:moment(Date.parse(a.releaseDate)).format('MMMM DD, YYYY'),
@@ -57,8 +83,34 @@ export class AlbumRepositoryImpl implements AlbumRepository{
               imgSrc: `${BASE_URL}${a.artworkPath}`,
               id: a.id,
               name: a.name,
-              artist: a.artist?.name ?? "",
-              genre: a.genres?.map(g => g?.name ?? "") ?? [""],
+              description: a.description,
+              artist: {
+                  id: a.artist?.id,     
+                  website: a.artist?.website,
+                  bio: a.artist?.bio,               
+                  imgSrc : a.artist?.imagePath,
+                  name : a.artist?.name,
+                  genres : a.artist?.genres?.map(g => g?.name),
+                  streams : 0,
+                  tracks : 0,
+                  albums: 0,
+                  lastUpdated: moment(Date.parse(a.artist?.lastUpdated)).format('MMMM DD, YYYY'),
+              } as Artist,
+              songs : a.songs?.map(s => {
+                     return {
+                        id: s?.id,                    
+                        imgSrc : `${BASE_URL}${s?.artworkPath}`,
+                        name : s?.name,
+                        artistName: s?.artist?.name,
+                        genres : s?.genres?.map(g => g?.name),
+                        streams : `${s?.streams?.length ?? 0}`,
+                        duration : "",
+                        lastUpdated: moment(Date.parse(s?.lastUpdated)).format('MMMM DD, YYYY'), 
+                        releaseDate: moment(Date.parse(s?.releaseDate)).format('MMMM DD, YYYY'),
+                     
+                  } 
+              }) as Track[],
+              genres: a.genres?.map(g => g?.name ?? "") ?? [""],
               streams: a.streams?.length.toString() ?? "0",
               tracks: a.songs?.length ?? 0,
               releaseDate:moment(Date.parse(a.releaseDate)).format('MMMM DD, YYYY'),

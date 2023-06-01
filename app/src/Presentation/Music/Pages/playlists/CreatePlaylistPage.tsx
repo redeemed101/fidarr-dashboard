@@ -30,17 +30,22 @@ const schema = yup.object({
 
 const CreatePaylistPage = () => {
     const [modalOpen, setModalOpen] = useState(false)
-    const {createPlaylist, fetchStatus} = usePlaylistModelController(playlistRepository)
+    const {createPlaylist, playlistModified, fetchStatus} = usePlaylistModelController(playlistRepository)
     const [imagePath, setImagePath] = useState<string | null>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [selectedSongs, setSelectedSongs] = useState<Track[]>([])
-    const { control, handleSubmit, formState: { errors }  } = useForm<FormData>({
+    const { control, handleSubmit, reset, formState: { errors }  } = useForm<FormData>({
       resolver: yupResolver(schema),
       defaultValues: {
         name: '',
         picture:''
       }
     });
+    useEffect(() => {
+         if(playlistModified){
+             reset()
+         }
+    },[playlistModified])
     useEffect(() => {
       console.log(selectedSongs)
     }, [selectedSongs]);
@@ -71,8 +76,10 @@ const CreatePaylistPage = () => {
     }
     const onSubmit = (data : FormData) => {
       console.log(data);
-      if(imageFile != null)
+      if(imageFile != null){
        createPlaylist(imageFile, data.name, selectedSongs.map(s => s.id))
+
+      }
     }
   
     return (
@@ -97,7 +104,7 @@ const CreatePaylistPage = () => {
                   <div className="flex flex-col">
                     <p className="text-white font-bold pb-4">Create Playlist</p>
                     {fetchStatus == RequestStatus.Error ? <p className='text-red-600'>Error creating playlist</p> : ""}
-                    {fetchStatus == RequestStatus.Success ? <p className='text-blue-600'>Playlist Created</p> : ""}
+                    {playlistModified ?? <p className='text-blue-600'>Playlist successfully added</p> }
                   </div>
                   <div className="flex flex-col pl-4 pt-12">
                     <div className="flex flex-row gap-4 items-center ">

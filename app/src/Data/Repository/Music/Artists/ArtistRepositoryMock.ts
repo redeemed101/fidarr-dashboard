@@ -12,7 +12,9 @@ export class ArtistRepositoryMock implements ArtistRepository{
         this._artistPage = {
             data : [...Array(10)].map((a,i) =>{
                   return  {
-                    id: `artist ${i}`,                    
+                    id: `artist ${i}`,     
+                    website: "www.google.com",
+                    bio: "Nice Artist",               
                     imgSrc : "https://picsum.photos/200",
                     name : `artist ${i}`,
                     genres : ["Genre 1", "Genre 2"],

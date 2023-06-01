@@ -183,16 +183,16 @@ const PlaylistsTable = ({rows, currentPage, totalCount, selectedPlaylists,delete
                                 <img src={SettingsIcon} />
                                 </div>
                                 <div className="cursor-pointer">
-                               <img onClick={() => {
-                                     dispatch(setPlaylist(playlist))
-                                     navigate(`/music/playlists/edit/${playlist.id}`)
-                                }} src={EditIcon} />
+                                    <img onClick={() => {
+                                            dispatch(setPlaylist(playlist))
+                                            navigate(`/music/playlists/edit/${playlist.id}`)
+                                        }} src={EditIcon} />
                                 </div>
                                 <div className="cursor-pointer">
-                                <img src={DeleteIcon} onClick={() => {
-                                  
-                                    deletePlaylist(playlist.id)
-                                }} />
+                                    <img src={DeleteIcon} onClick={() => {
+                                    
+                                        deletePlaylist(playlist.id)
+                                    }} />
                                 </div>
                             </div>
                         

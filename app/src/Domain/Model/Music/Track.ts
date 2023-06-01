@@ -6,6 +6,7 @@ export type Track = {
     name : string,
     artistName: string,
     genres? : string[],
+    isrcCode?:string,
     streams : string,
     duration : string,
     releaseDate: string,

@@ -1,17 +1,17 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
-import HeaderSection from "../../Common/HeaderSection"
-import { PrimaryButton, SecondaryButton } from "../../Common/buttons"
-import PrimaryFileInput from "../../Common/fileInput"
-import TextArea from "../../Common/textarea"
-import { PrimaryTextField } from "../../Common/textfields"
-import MenuColumn from "../../Dashboard/Components/MenuColumn"
-import { genreRepository } from '../../../main';
-import { useGenreModelController } from '../hooks/useGenreModelController';
+import HeaderSection from "../../../Common/HeaderSection"
+import { PrimaryButton, SecondaryButton } from "../../../Common/buttons"
+import PrimaryFileInput from "../../../Common/fileInput"
+import TextArea from "../../../Common/textarea"
+import { PrimaryTextField } from "../../../Common/textfields"
+import MenuColumn from "../../../Dashboard/Components/MenuColumn"
+import { genreRepository } from '../../../../main';
+import { useGenreModelController } from '../../hooks/useGenreModelController';
 import { useState } from 'react';
 import { AxiosProgressEvent } from 'axios';
-import { RequestStatus } from '../hooks/common';
+import { RequestStatus } from '../../hooks/common';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

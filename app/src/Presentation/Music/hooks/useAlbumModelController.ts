@@ -21,13 +21,17 @@ type AlbumData = {
 export const useAlbumModelController = (repository : AlbumRepository) => {
 
     const [currentPage, setCurrentPage] = useState(1);
+    const [albumModified, setAlbumModified] = useState(false);
     console.log("Current Page number ", currentPage)
     const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getAlbumsPaging(currentPage, PAGE_SIZE));
-    const deleteAlbum = async (albumId: string,onUploadProgress: any) => {
+    const deleteAlbum = async (albumId: string,onUploadProgress: any, finish: () => void) => {
       try{
         var result = await repository.deleteAlbum(albumId, onUploadProgress);
-        if(result)
+        if(result){
            setFetchStatus(RequestStatus.Success)
+           finish()
+           setAlbumModified(true)
+        }
         else
         setFetchStatus(RequestStatus.Error)
        }
@@ -110,6 +114,7 @@ export const useAlbumModelController = (repository : AlbumRepository) => {
         count: data.count,
         fetchStatus,
         currentPage,
+        albumModified,
         createAlbum,
         editAlbum,
         deleteAlbum,

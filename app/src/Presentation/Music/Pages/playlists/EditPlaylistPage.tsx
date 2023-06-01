@@ -33,7 +33,7 @@ const schema = yup.object({
 const EditPlaylistPage = () => {
     const playlist = useSelector((state: RootState) => state.selectedPlaylist.playlist);
     const [modalOpen, setModalOpen] = useState(false)
-    const {createPlaylist, editPlaylist, fetchStatus} = usePlaylistModelController(playlistRepository)
+    const {playlistModified, editPlaylist, fetchStatus} = usePlaylistModelController(playlistRepository)
     const [imagePath, setImagePath] = useState<string | null>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [selectedSongs, setSelectedSongs] = useState<Track[]>([])
@@ -106,7 +106,7 @@ const EditPlaylistPage = () => {
                    : <p className="rounded-md h-32 w-32 bg-fidarrgray-900 flex flex-row items-center text-white">
                      <span className='mx-auto'>Artwork</span></p> }
                     {fetchStatus == RequestStatus.Error ? <p className='text-red-600'>Error editing playlist</p> : ""}
-                    {/*fetchStatus == RequestStatus.Success ? <p className='text-blue-600'>Playlist Editing</p> : ""*/}
+                    {playlistModified ?? <p className='text-blue-600'>Playlist successfully edited</p> }
                   </div>
                   <div className="flex flex-col pl-4 pt-12">
                     <div className="flex flex-row gap-4 items-center ">

@@ -1,15 +1,17 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
-import HeaderSection from "../../Common/HeaderSection"
-import { PrimaryButton, SecondaryButton } from "../../Common/buttons"
-import TextArea from "../../Common/textarea"
-import { PrimaryTextField } from "../../Common/textfields"
-import MenuColumn from "../../Dashboard/Components/MenuColumn"
+import HeaderSection from "../../../Common/HeaderSection"
+import { PrimaryButton, SecondaryButton } from "../../../Common/buttons"
+import TextArea from "../../../Common/textarea"
+import { PrimaryTextField } from "../../../Common/textfields"
+import MenuColumn from "../../../Dashboard/Components/MenuColumn"
 import { useEffect, useState } from 'react';
-import { artistRepository, genreRepository } from '../../../main';
-import { ArtistData, useArtistModelController } from '../hooks/useArtistModelController';
-import { useGenreModelController } from '../hooks/useGenreModelController';
+import { artistRepository, genreRepository } from '../../../../main';
+import { ArtistData, useArtistModelController } from '../../hooks/useArtistModelController';
+import { useGenreModelController } from '../../hooks/useGenreModelController';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../StateManagement/redux/store';
 
 type FormData = {
   name: string;
@@ -32,25 +34,27 @@ const schema = yup.object({
   phoneNumber: yup.string().required(),
   picture: yup.string().required(),
 }).required();
-const CreateArtistPage = () => {
+const EditArtistPage = () => {
+    const artist = useSelector((state: RootState) => state.selectedArtist.Artist);
     const [imagePath, setImagePath] = useState<string | null>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
-    const { createArtist, fetchStatus} = useArtistModelController(artistRepository)
+    const { editArtist, artistModified, fetchStatus} = useArtistModelController(artistRepository)
     const {genres, getAllGenres} = useGenreModelController(genreRepository)
     useEffect( () => {
          getAllGenres()
+         setImagePath(artist?.imgSrc!!)
     }, []);
     const { control, handleSubmit, formState: { errors }  } = useForm<FormData>({
       resolver: yupResolver(schema),
       defaultValues: {
-        name: '',
-        username:'',
-        address:'',
-        phoneNumber: '',
-        email: '',
-        website:'',
-        bio:'',
-        picture:''
+        name: artist?.name,
+        username: artist?.name,
+        address: artist?.website,
+        phoneNumber: artist?.website,
+        email: artist?.website,
+        website: artist?.website,
+        bio: artist?.bio,
+        picture: artist?.imgSrc
       }
     });
     const setImagePreview = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +68,7 @@ const CreateArtistPage = () => {
     const onSubmit = (data : FormData) => {
       console.log(data);
       if(imageFile != null)
-        createArtist(imageFile, {
+        editArtist(imageFile, {
           name: data.name,
           username: data.username,
           email: data.email,
@@ -78,7 +82,7 @@ const CreateArtistPage = () => {
     }
     return (
        
-       <div className="h-screen bg-black">
+       <div className="h-auto bg-black">
         <div style={{height:"inherit"}}  className="pb-4 flex flex-row ">
           <MenuColumn />
           <div className="flex  gap-4 flex-col w-full">
@@ -89,7 +93,7 @@ const CreateArtistPage = () => {
             <div className="flex flex-row  mx-auto pt-12">
              
                 <div className="flex flex-col h-auto w-40">
-                  <p className="text-white font-bold pb-4 ">Create Artist</p>
+                  <p className="text-white font-bold pb-4 ">Edit Artist</p>
                   
                   {imagePath != null ? <img className="rounded-md h-32 w-32" src={imagePath!} />
                    : <p className="rounded-md h-32 w-32 bg-fidarrgray-900 flex flex-row items-center text-white">
@@ -138,18 +142,18 @@ const CreateArtistPage = () => {
                   <Controller
                                     name="email"
                                     control={control}
-                                    render={({ field }) => <PrimaryTextField name={field.name} type="text" value={field.value} padX={6} padY={2} onChanged={field.onChange} width="full" height="10" label="Address" placeholder="Address"  />}
+                                    render={({ field }) => <PrimaryTextField name={field.name} type="text" value={field.value} padX={6} padY={2} onChanged={field.onChange} width="full" height="10" label="Email" placeholder="Email"  />}
                    />      
                    <Controller
                                     name="phoneNumber"
                                     control={control}
-                                    render={({ field }) => <PrimaryTextField name={field.name} type="text" value={field.value} padX={6} padY={2} onChanged={field.onChange} width="full" height="10" label="Website" placeholder="Website"  />}
+                                    render={({ field }) => <PrimaryTextField name={field.name} type="text" value={field.value} padX={6} padY={2} onChanged={field.onChange} width="full" height="10" label="Phone Number" placeholder="Phone Number"  />}
                    />      
                   
                   </div>
                   <div className="flex flex-row gap-4">
                   <Controller
-                                    name="username"
+                                    name="address"
                                     control={control}
                                     render={({ field }) => <PrimaryTextField name={field.name} type="text" value={field.value} padX={6} padY={2} onChanged={field.onChange} width="full" height="10" label="Address" placeholder="Address"  />}
                    />      
@@ -190,7 +194,7 @@ const CreateArtistPage = () => {
                    
                   </div>
                   <div className="self-end">
-                     <PrimaryButton  title='Create' padY={2} padX={4} height="auto" width="full"/>
+                     <PrimaryButton  title='Save' padY={2} padX={4} height="auto" width="full"/>
                   </div>
                 </div>
               
@@ -204,4 +208,4 @@ const CreateArtistPage = () => {
     )
 }
 
-export default CreateArtistPage
+export default EditArtistPage

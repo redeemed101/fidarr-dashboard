@@ -2,20 +2,20 @@ import { useEffect, useState } from "react"
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
-import { genreRepository, songRepository } from "../../../main"
-import { Primary } from "../../../stories/Button.stories"
-import HeaderSection from "../../Common/HeaderSection"
-import { PrimaryButton, SecondaryButton } from "../../Common/buttons"
-import PrimaryDatePicker from "../../Common/datepicker"
-import PrimaryFileInput from "../../Common/fileInput"
-import PrimarySelect, { PrimarySelectOption } from "../../Common/select"
-import TextArea from "../../Common/textarea"
-import { PrimaryTextField } from "../../Common/textfields"
-import MenuColumn from "../../Dashboard/Components/MenuColumn"
-import { useGenreModelController } from "../hooks/useGenreModelController"
-import { useSongModelController } from "../hooks/useSongModelController";
+import { genreRepository, songRepository } from "../../../../main"
+import { Primary } from "../../../../stories/Button.stories"
+import HeaderSection from "../../../Common/HeaderSection"
+import { PrimaryButton, SecondaryButton } from "../../../Common/buttons"
+import PrimaryDatePicker from "../../../Common/datepicker"
+import PrimaryFileInput from "../../../Common/fileInput"
+import PrimarySelect, { PrimarySelectOption } from "../../../Common/select"
+import TextArea from "../../../Common/textarea"
+import { PrimaryTextField } from "../../../Common/textfields"
+import MenuColumn from "../../../Dashboard/Components/MenuColumn"
+import { useGenreModelController } from "../../hooks/useGenreModelController"
+import { useSongModelController } from "../../hooks/useSongModelController";
 import { AxiosProgressEvent } from "axios";
-import { RequestStatus } from "../hooks/common";
+import { RequestStatus } from "../../hooks/common";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
