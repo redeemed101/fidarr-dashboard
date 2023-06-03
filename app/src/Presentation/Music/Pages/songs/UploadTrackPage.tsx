@@ -19,12 +19,14 @@ import { RequestStatus } from "../../hooks/common";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { Genre } from "../../../../Domain/Model/Music/Genre";
+import FidarrModal from "../../../Common/modal";
+import SearchArtists from "../../Components/SearchArtists";
+import { Artist } from "../../../../Domain/Model/Music";
 
 
 type FormData = {
   name : string,
   description: string,
-  artistId: string,
   upcCode: string,
   isrcCode: string,
   cLine:string,
@@ -49,6 +51,8 @@ const schema = yup.object({
 }).required();
 
 const UploadTrackPage = () => {
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedArtists, setSelectedArtists] = useState<Artist[]>([])
   const {genres, getAllGenres} = useGenreModelController(genreRepository)
   const [songGenres, setSongGenres] = useState<Genre[]>([])
   const [imagePath, setImagePath] = useState<string | null>(null);
@@ -65,7 +69,6 @@ const UploadTrackPage = () => {
     defaultValues: {
       name : "",
       description: "",
-      artistId: "",
       featuringArtists: [],
       genres: [],
       albumId: "",
@@ -78,6 +81,21 @@ const UploadTrackPage = () => {
       pLine:""
     }
   });
+  const selectArtist = (artist: Artist) => {
+       
+    setSelectedArtists(prev => ([artist]))
+
+  }
+  const unSelectArtist = (artist: Artist) => {
+   
+    setSelectedArtists(prev => ([...prev.filter(t => t.id != artist.id)]))
+    
+  }
+  const doneSelecting = () => {
+        console.log(selectedArtists)
+        setModalOpen(prev =>false)
+       
+  }
   const setImagePreview = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {files} = event.target
     console.log(files?.[0])
@@ -89,22 +107,32 @@ const UploadTrackPage = () => {
   }
   const onSubmit = (data : FormData) => {
     console.log(data);
-    if(songFile != null)
-      createSong(songFile, {
-        name: data.name,
-        description: data.description,
-        artistId: data.artistId,
-        featuringArtists : data.featuringArtists,
-        genres : data.genres,
-        albumId : data.albumId,
-      },(progressEvent : AxiosProgressEvent) => {
-        const progress = progressEvent.total != null ? Math.round((100 * progressEvent.loaded) / progressEvent.total) : 0;
-        setProgress(prev => progress);
-      }, artworkFile)
-  }
+    if(songFile != null && selectedArtists.length > 0){
+        createSong(songFile, {
+          name: data.name,
+          description: data.description,
+          artistId: selectedArtists[0].id,
+          featuringArtists : data.featuringArtists,
+          genres : data.genres,
+          albumId : data.albumId,
+        },(progressEvent : AxiosProgressEvent) => {
+          const progress = progressEvent.total != null ? Math.round((100 * progressEvent.loaded) / progressEvent.total) : 0;
+          setProgress(prev => progress);
+        }, artworkFile)
+     }
+    }
     return (
        
        <div className="h-auto bg-black">
+        <FidarrModal height={500} width={800} title="Sure" close={() => setModalOpen(false)} afterOpen={() =>{}} isOpen={modalOpen}>
+          <div className="w-full flex flex-col gap-4">
+             <SearchArtists selectOne unSelectArtist={unSelectArtist} 
+             selectedArtists={selectedArtists} selectArtist={selectArtist} />
+             <div className="w-1/4 self-end">
+              <PrimaryButton disabled={selectedArtists.length < 1} type="button" onClick={() => doneSelecting()} title='Done' padY={2} padX={3} height="10" width="full" />
+             </div>
+           </div>
+        </FidarrModal>
         <div style={{height:"inherit"}}  className="pb-4 flex flex-row ">
           <MenuColumn />
           <div className="flex  gap-4 flex-col w-full">
@@ -151,11 +179,8 @@ const UploadTrackPage = () => {
                    {/*<PrimarySelect  options={genres.map(g => {
                     return {label : g.name, value: g.id} as PrimarySelectOption }) } label="Genre" width="full" padX={3} />*/}
                     
-                    <Controller
-                                    name="artistId"
-                                    control={control}
-                                    render={({ field }) => <PrimaryTextField name={field.name} type="text" value={field.value} padX={6} padY={2} onChanged={field.onChange} width="full" height="10" label="Artist" placeholder="Artist" />}
-                   />     
+                   <PrimaryTextField  onClicked={() => setModalOpen(true)} name="artist" type="text" value={selectedArtists[0]?.name} padX={6} padY={2}  width="full" height="10" label="Artist" placeholder="Artist" />
+                        
                   <div className=' col-span-2 flex flex-col gap-2'>
                     <div>
                       <p className='text-sm font-bold text-fidarrgray-900'>Genres</p>

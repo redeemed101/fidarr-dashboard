@@ -18,9 +18,10 @@ type TextfieldProps = {
     value: string,
     disabled?:boolean,
     onChanged?: (target: any) => void
+    onClicked?: () => void
 
 }
-export function PrimaryTextField({value,label, disabled,onChanged,placeholder, name,type, padY, padX,height,width, marginBottom = "4"} : TextfieldProps) {
+export function PrimaryTextField({value,label, disabled, onClicked,onChanged,placeholder, name,type, padY, padX,height,width, marginBottom = "4"} : TextfieldProps) {
   
     return (
     <div className={`mb-${marginBottom}`}>
@@ -28,7 +29,7 @@ export function PrimaryTextField({value,label, disabled,onChanged,placeholder, n
             {label}        
            </label> : ""
         }
-      <input disabled={disabled} value={value} name={name} onChange={onChanged} className={` disabled:bg-white shadow appearance-none border rounded h-${height} w-${width} py-${padY} px-${padX} text-black font-bold leading-tight focus:outline-none focus:shadow-outline`}  type={type} placeholder={placeholder} />
+      <input disabled={disabled} onClick={onClicked} value={value} name={name} onChange={onChanged} className={` disabled:bg-white shadow appearance-none border rounded h-${height} w-${width} py-${padY} px-${padX} text-black font-bold leading-tight focus:outline-none focus:shadow-outline`}  type={type} placeholder={placeholder} />
     </div>
    );
 }

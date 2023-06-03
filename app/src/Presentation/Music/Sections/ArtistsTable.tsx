@@ -221,6 +221,7 @@ type SearchArtistTableProps = {
     rows : Artist[],
     currentPage: number,
     totalCount: number,
+    oneSelect:boolean,
     loadMore : () => void,
     refresh : () => void
     selectedArtists: Artist[],
@@ -293,16 +294,15 @@ export const SearchArtistsTable = (props: SearchArtistTableProps) => {
                             <tr>
                                <th className="pl-8">
                                     <div className="flex">
-                                            <input 
+                                         {!props.oneSelect ??   <input 
                                             type="checkbox" 
                                             checked={allSelected}
                                             onChange={(e) => checkSelectAll(e.target.checked)}
                                             className=" rounded-md shrink-0 mt-0.5 border-gray-200 text-red-900  focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
-                                            
+                                         }
                                     </div>
                             
                                 </th>
-                                <th ></th>
                                 <th>Artist</th>
                                                              
                             </tr>
@@ -313,11 +313,20 @@ export const SearchArtistsTable = (props: SearchArtistTableProps) => {
                             <tr key={i} className="text-left even:bg-fidarrgray-100 ">
                             <td className="pl-8">
                             <div className="flex">
-                                    <input type="checkbox" 
+                                   {props.oneSelect ?
+                                    <input
+                                        type="radio"
+                                        name="artist"
+                                        value={artist.id}
+                                        id={artist.id}
+                                        onChange={(e) => checkArtistSelected(e.target.checked, artist)}
+                                        checked={props.selectedArtists.includes(artist)}
+                                  />
+                                   :<input type="checkbox" 
                                           checked={props.selectedArtists.includes(artist)}                                 
                                           onChange={(e) => checkArtistSelected(e.target.checked, artist)}
                                           className="shrink-0 mt-0.5 border-gray-200 rounded-md text-red-900  focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"  />
-                                    
+                                   }
                                 </div>
                             </td>
                             <td className="border-t-0 border-l-0 border-r-0 text-xs whitespace-nowrap py-4">

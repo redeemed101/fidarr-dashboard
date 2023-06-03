@@ -12,6 +12,7 @@ import { SearchArtistsTable } from "../Sections/ArtistsTable"
 
 type SearchArtistsProps = {
    selectedArtists: Artist[],
+   selectOne:boolean,
    selectArtist: (artist: Artist) => void
    unSelectArtist: (artist: Artist) => void
 }
@@ -35,8 +36,8 @@ const SearchArtists = (props: SearchArtistsProps) => {
         <SearchTextField value={debouncedText} 
                          loading={fetchStatus == RequestStatus.Loading}
                          onChanged={(e) => setDebouncedText(prev => e.target.value)} 
-                         placeholder="Search Song to add" />
-        <SearchArtistsTable selectedArtists={props.selectedArtists}
+                         placeholder="Search Artist to add" />
+        <SearchArtistsTable oneSelect={props.selectOne} selectedArtists={props.selectedArtists}
                            selectArtist={props.selectArtist} unSelectArtist={props.unSelectArtist}
                             rows={currentArtists}
                            currentPage={1} totalCount={5} 
