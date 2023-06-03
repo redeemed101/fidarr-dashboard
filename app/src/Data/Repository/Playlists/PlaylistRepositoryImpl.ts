@@ -17,6 +17,47 @@ export class PlaylistRepositoryImpl implements PlaylistRepository{
     ){
         this._dataSource = dataSource
     }
+    async searchPlaylistsPaging(searchText: string, page: number, size: number): Promise<PlaylistPage> {
+        var response = await this._dataSource.searchPlaylistsPaging(searchText,page,size)
+        const playlists = response.searchPlaylistsPaging.playlists.map(p => {
+            return {
+                id: p.id,
+                imgPath : `${BASE_URL}${p.imagePath}`,
+                isFidarr : p.userId == null ? true : false,
+                likes: p.likes?.length,
+                name : p.name,
+                streams : p.streams,
+                tracks : p.songs?.length ?? 0,
+                songs: p.songs?.map(s => {
+                    return {
+                        id: s?.id,
+                        imgSrc : `${BASE_URL}${s?.artworkPath}`,
+                        name : s?.name,
+                        artistName: s?.artist?.name,
+                        genres : s?.genres?.map(g => {
+                            return {
+                                id: g?.id,
+                                imgSrc : `${BASE_URL}${g?.imageUrl}`,
+                                name : g?.name,
+                                albums : g?.albums?.length ?? 0,
+                                tracks : g?.songs?.length ?? 0,
+                                artists: g?.artists?.length ?? 0,
+                                lastUpdated: g?.dateCreated
+                            } 
+                          }) as Genre[],
+                        streams : s?.streams ?? "",
+                        duration : "",
+                        releaseDate: s?.releaseDate,
+                        lastUpdated: s?.lastUpdated
+                    }
+                })
+            } as Playlist
+        })
+        return {
+            count: response.searchPlaylistsPaging.count,
+            data: playlists
+         }
+    }
     async getFidarrPlaylistsPaging(page: number, size: number): Promise<PlaylistPage> {
         var response = await this._dataSource.getFidarrPlaylistsPaging(page,size)
         const playlists = response.fidarrPlaylistsPaging.playlists.map(p => {

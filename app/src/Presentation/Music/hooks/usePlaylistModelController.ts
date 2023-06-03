@@ -94,6 +94,29 @@ export const usePlaylistModelController = (repository : PlaylistRepository) => {
           setData({count: response.count, data : response.data});
           }catch(e : any){ setFetchStatus(RequestStatus.Error)}    
       }
+      const searchPlaylistsPaginated = async (searchText:string,getMore: boolean = false) =>{
+        try{
+         
+            if(getMore){
+                const newPage = currentPage + 1;
+                setCurrentPage(newPage)
+                const response = await repository.searchPlaylistsPaging(searchText,newPage, PAGE_SIZE);
+                setFetchStatus(RequestStatus.Success)
+                const oldData = data.data
+                const responseData = response.data
+                const newData = oldData.concat(responseData)
+                console.log("New data ", newData)
+                setData({count: response.count, data :newData});
+            }
+            else{
+              setFetchStatus(RequestStatus.Loading)
+              const response =  await repository.searchPlaylistsPaging(searchText,currentPage, PAGE_SIZE)          
+              setFetchStatus(RequestStatus.Success)         
+              setData({count: response.count, data : response.data});
+            }
+        }
+        catch(e : any){ setFetchStatus(RequestStatus.Error)}  
+      }
       const getPlaylistsbyGenrePaginated = async (genreId:string,getMore: boolean = false) =>{
         try{
          
@@ -139,6 +162,7 @@ export const usePlaylistModelController = (repository : PlaylistRepository) => {
         deletePlaylist,
         setCurrentPage,
         getPlaylistsPaginated,
+        searchPlaylistsPaginated,
         refreshPlaylistsPaginated,
         getPlaylistsbyGenrePaginated,
         refreshPlaylistsbyGenrePaginated

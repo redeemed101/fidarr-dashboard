@@ -51,6 +51,9 @@ export class PlaylistRepositoryMock implements PlaylistRepository{
          }
         
     }
+    searchPlaylistsPaging(searchText: string, page: number, size: number): Promise<PlaylistPage> {
+        return new Promise(resolve => setTimeout(() => resolve(this._playlistPage), 5000)) ;
+    }
     getAllPlaylistsPaging(page: number, size: number): Promise<PlaylistPage> {
         return new Promise(resolve => setTimeout(() => resolve(this._playlistPage), 5000)) ;
     }

@@ -3,6 +3,7 @@ import { PlaylistPage } from "../../Model/Music/Playlist";
 
 export interface PlaylistRepository{
     getAllPlaylistsPaging(page: number, size:number) : Promise<PlaylistPage>;
+    searchPlaylistsPaging(searchText: string,page: number, size:number) : Promise<PlaylistPage>;
     getFidarrPlaylistsPaging(page: number, size:number) : Promise<PlaylistPage>;
     getPlaylistsbyGenrePaging(genreId:string,page: number, size:number) : Promise<PlaylistPage>;
     createPlaylist(request :CreatePlaylistRequest): Promise<boolean>

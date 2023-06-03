@@ -217,6 +217,7 @@ export type PlaylistQuery = {
   fidarrPlaylistsPaging?: Maybe<Array<Maybe<PlaylistPaging>>>;
   fidarrPlaylistsPagingByGenre?: Maybe<Array<Maybe<PlaylistPaging>>>;
   moodsPaging?: Maybe<Array<Maybe<MoodPaging>>>;
+  searchPlaylistsPaging?: Maybe<Array<Maybe<PlaylistPaging>>>;
   weeklyChartPaging?: Maybe<Array<Maybe<ChartPaging>>>;
 };
 
@@ -248,6 +249,13 @@ export type PlaylistQueryFidarrPlaylistsPagingByGenreArgs = {
 
 export type PlaylistQueryMoodsPagingArgs = {
   page?: InputMaybe<Scalars['Int']>;
+  size?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type PlaylistQuerySearchPlaylistsPagingArgs = {
+  page?: InputMaybe<Scalars['Int']>;
+  searchText?: InputMaybe<Scalars['String']>;
   size?: InputMaybe<Scalars['Int']>;
 };
 
@@ -345,6 +353,15 @@ export type GetAllPlaylistsPagingQueryVariables = Exact<{
 
 
 export type GetAllPlaylistsPagingQuery = { __typename?: 'PlaylistQuery', allPlaylistsPaging?: Array<{ __typename?: 'PlaylistPaging', count: number, playlists?: Array<{ __typename?: 'Playlist', name: string, id: string, imagePath: string, streams: number, lastUpdated: any, createdAt: any, likes?: Array<{ __typename?: 'PlaylistLike', userId: string } | null> | null, songs?: Array<{ __typename?: 'Song', id: string, path: string, previewPath: string, artworkPath: string, lastUpdated: any, releaseDate: any, description: string, artist?: { __typename?: 'Artist', id: string, name: string } | null, genres?: Array<{ __typename?: 'Genre', name: string, id: string } | null> | null } | null> | null } | null> | null } | null> | null };
+
+export type SearchPlaylistsPagingQueryVariables = Exact<{
+  page: Scalars['Int'];
+  size: Scalars['Int'];
+  searchText: Scalars['String'];
+}>;
+
+
+export type SearchPlaylistsPagingQuery = { __typename?: 'PlaylistQuery', searchPlaylistsPaging?: Array<{ __typename?: 'PlaylistPaging', count: number, playlists?: Array<{ __typename?: 'Playlist', name: string, id: string, imagePath: string, streams: number, lastUpdated: any, createdAt: any, likes?: Array<{ __typename?: 'PlaylistLike', userId: string } | null> | null, songs?: Array<{ __typename?: 'Song', id: string, path: string, previewPath: string, artworkPath: string, lastUpdated: any, releaseDate: any, description: string, artist?: { __typename?: 'Artist', id: string, name: string } | null, genres?: Array<{ __typename?: 'Genre', name: string, id: string } | null> | null } | null> | null } | null> | null } | null> | null };
 
 export type GetFidarrPlaylistsPagingQueryVariables = Exact<{
   page: Scalars['Int'];
@@ -649,6 +666,71 @@ export function useGetAllPlaylistsPagingLazyQuery(baseOptions?: Apollo.LazyQuery
 export type GetAllPlaylistsPagingQueryHookResult = ReturnType<typeof useGetAllPlaylistsPagingQuery>;
 export type GetAllPlaylistsPagingLazyQueryHookResult = ReturnType<typeof useGetAllPlaylistsPagingLazyQuery>;
 export type GetAllPlaylistsPagingQueryResult = Apollo.QueryResult<GetAllPlaylistsPagingQuery, GetAllPlaylistsPagingQueryVariables>;
+export const SearchPlaylistsPagingDocument = gql`
+    query searchPlaylistsPaging($page: Int!, $size: Int!, $searchText: String!) {
+  searchPlaylistsPaging(page: $page, size: $size, searchText: $searchText) {
+    count
+    playlists {
+      name
+      id
+      imagePath
+      streams
+      lastUpdated
+      createdAt
+      likes {
+        userId
+      }
+      songs {
+        id
+        path
+        previewPath
+        artworkPath
+        lastUpdated
+        releaseDate
+        artist {
+          id
+          name
+        }
+        genres {
+          name
+          id
+        }
+        description
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useSearchPlaylistsPagingQuery__
+ *
+ * To run a query within a React component, call `useSearchPlaylistsPagingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchPlaylistsPagingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchPlaylistsPagingQuery({
+ *   variables: {
+ *      page: // value for 'page'
+ *      size: // value for 'size'
+ *      searchText: // value for 'searchText'
+ *   },
+ * });
+ */
+export function useSearchPlaylistsPagingQuery(baseOptions: Apollo.QueryHookOptions<SearchPlaylistsPagingQuery, SearchPlaylistsPagingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchPlaylistsPagingQuery, SearchPlaylistsPagingQueryVariables>(SearchPlaylistsPagingDocument, options);
+      }
+export function useSearchPlaylistsPagingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchPlaylistsPagingQuery, SearchPlaylistsPagingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchPlaylistsPagingQuery, SearchPlaylistsPagingQueryVariables>(SearchPlaylistsPagingDocument, options);
+        }
+export type SearchPlaylistsPagingQueryHookResult = ReturnType<typeof useSearchPlaylistsPagingQuery>;
+export type SearchPlaylistsPagingLazyQueryHookResult = ReturnType<typeof useSearchPlaylistsPagingLazyQuery>;
+export type SearchPlaylistsPagingQueryResult = Apollo.QueryResult<SearchPlaylistsPagingQuery, SearchPlaylistsPagingQueryVariables>;
 export const GetFidarrPlaylistsPagingDocument = gql`
     query getFidarrPlaylistsPaging($page: Int!, $size: Int!) {
   fidarrPlaylistsPaging(page: $page, size: $size) {

@@ -1,12 +1,26 @@
 import { injectable } from "inversify";
-import { AllPlaylistsPaging, CreatePlaylistRequest, EditPlaylistRequest, FidarrPlaylistsPaging, FidarrPlaylistsPagingByGenre, PlaylistDataSource } from "./PlaylistDataSource";
+import { AllPlaylistsPaging, CreatePlaylistRequest, EditPlaylistRequest, FidarrPlaylistsPaging, FidarrPlaylistsPagingByGenre, PlaylistDataSource, SearchPlaylistsPaging } from "./PlaylistDataSource";
 import { GeneralResponse } from "../Artists/ArtistDataSource";
-import { GetAllPlaylistsPagingDocument, GetAllPlaylistsPagingQueryResult, GetFidarrPlaylistsPagingByGenreDocument, GetFidarrPlaylistsPagingByGenreQueryResult, GetFidarrPlaylistsPagingDocument, GetFidarrPlaylistsPagingQueryResult } from "../../GraphQL/Generated/Playlists/graphql";
+import { GetAllPlaylistsPagingDocument, GetAllPlaylistsPagingQueryResult, GetFidarrPlaylistsPagingByGenreDocument, GetFidarrPlaylistsPagingByGenreQueryResult, GetFidarrPlaylistsPagingDocument, GetFidarrPlaylistsPagingQueryResult, SearchPlaylistsPagingDocument, SearchPlaylistsPagingQueryResult } from "../../GraphQL/Generated/Playlists/graphql";
 import { graphQLPlaylistClient } from "../../GraphQL/Client/client";
 import { deleteAPI, postAPI, putAPI } from "../../API/axios_instance";
 
 @injectable()
 export class PlaylistDataSourceImpl implements PlaylistDataSource{
+    async searchPlaylistsPaging(searchText: string, page: number, size: number): Promise<SearchPlaylistsPaging> {
+        const result = await graphQLPlaylistClient.query<SearchPlaylistsPagingQueryResult>({
+            query : SearchPlaylistsPagingDocument,
+            variables: {
+                page: page,
+                size: size,
+                searchText: searchText
+            }
+        })
+        const data = result.data 
+        const playlistsPaginated = data as unknown as SearchPlaylistsPaging 
+      
+        return  playlistsPaginated;
+    }
     async getAllPlaylistsPaging(page: number, size: number): Promise<AllPlaylistsPaging> {
         const result = await graphQLPlaylistClient.query<GetAllPlaylistsPagingQueryResult>({
             query : GetAllPlaylistsPagingDocument,
