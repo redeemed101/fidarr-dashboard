@@ -208,3 +208,126 @@ const PlaylistsTable = ({rows, currentPage, totalCount, selectedPlaylists,delete
 }
 
 export default PlaylistsTable
+
+
+
+
+type SearchPlaylistTableProps = {
+    rows : Playlist[],
+    currentPage: number,
+    totalCount: number,
+    loadMore : () => void,
+    refresh : () => void
+    selectedPlaylists: Playlist[],
+    selectPlaylist: (playlist: Playlist) => void,
+    unSelectPlaylist: (playlist: Playlist) => void,
+    deleteItem?: (id: string) =>  void,
+}
+
+export const SearchPlaylistsTable = (props: SearchPlaylistTableProps) => {
+    const [allSelected, setAllSelected] = useState<boolean>(false)
+    const checkSelectAll = (checked: boolean) => {
+        setAllSelected(checked)
+        if(checked){
+            
+            selectAll()
+        }
+        else{
+            
+            unSelectAll()
+        }
+    }
+   
+    const checkPlaylistSelected = (checked: boolean, playlist: Playlist) => {
+      
+          if(checked){
+             
+             props.selectPlaylist(playlist)
+          }
+          else{
+            props.unSelectPlaylist(playlist)
+          }
+    }
+    const selectAll = () => {
+        props.rows.forEach(playlist => {
+            
+            if(!props.selectedPlaylists.includes(playlist)){
+                
+               props.selectPlaylist(playlist)
+            }
+            
+        })
+    }
+    const unSelectAll = () => {
+        props.rows.forEach(playlist => {
+            if(props.selectedPlaylists.includes(playlist))
+                 props.unSelectPlaylist(playlist)
+            
+        })
+    }
+    return (
+        <div className="flex flex-col w-full">
+            <div className="w-full">
+            <InfiniteScroll
+                        dataLength={props.rows.length}
+                        next={() => props.loadMore()}
+                        hasMore={props.totalCount/(props.currentPage * PAGE_SIZE) > 1}
+                        loader={<h4 className="text-white text-bold mx-auto">Loading more items...</h4>}
+                        refreshFunction={props.refresh}
+                        pullDownToRefresh
+                        pullDownToRefreshThreshold={50}
+                        pullDownToRefreshContent={
+                            <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
+                        }
+                        releaseToRefreshContent={
+                        <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
+                    } 
+                >
+                        <table className="table-auto  text-white bg-fidarrgray-900 w-full">
+                        <thead className="text-left bg-fidarrgray-600">
+                            <tr>
+                               <th className="pl-8">
+                                    <div className="flex">
+                                            <input 
+                                            type="checkbox" 
+                                            checked={allSelected}
+                                            onChange={(e) => checkSelectAll(e.target.checked)}
+                                            className=" rounded-md shrink-0 mt-0.5 border-gray-200 text-red-900  focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
+                                            
+                                    </div>
+                            
+                                </th>
+                                <th>Playlist</th>
+                                                             
+                            </tr>
+                        </thead>
+                        <tbody >
+                            {
+                            props.rows.map( (playlist,i) => 
+                            <tr key={i} className="text-left even:bg-fidarrgray-100 ">
+                            <td className="pl-8">
+                            <div className="flex">
+                                    <input type="checkbox" 
+                                          checked={props.selectedPlaylists.includes(playlist)}                                 
+                                          onChange={(e) => checkPlaylistSelected(e.target.checked, playlist)}
+                                          className="shrink-0 mt-0.5 border-gray-200 rounded-md text-red-900  focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"  />
+                                    
+                                </div>
+                            </td>
+                            <td className="border-t-0 border-l-0 border-r-0 text-xs whitespace-nowrap py-4">
+                                <div >
+                                <PlaylistCard name={playlist.name} imgSrc={playlist.imgPath} />
+                                </div>
+                            </td>
+                           
+                           
+                            </tr>)
+                        }
+                        
+                        </tbody>
+                        </table>
+                </InfiniteScroll>
+            </div>
+        </div>
+    )
+}

@@ -7,14 +7,17 @@ import { PAGE_SIZE } from "../../../Data/Utils/constants";
 
 export const useMoodModelController = (repository : MoodRepository) => {
     const [currentPage, setCurrentPage] = useState(1); 
+    const [moodModified, setMoodModified] = useState(false)
     const [fetchStatus, setFetchStatus] = useState<RequestStatus>(RequestStatus.Success);
     const [data, setData] = useState<PagedData>({count: 0, data: []});
 
     const createMood = async (request: CreateMoodRequest) => {
         try{
         const result = await repository.createMood(request)
-        if(result)
+        if(result){
             setFetchStatus(RequestStatus.Success)
+            setMoodModified(true)
+        }
         else
             setFetchStatus(RequestStatus.Error)
         }
@@ -24,8 +27,10 @@ export const useMoodModelController = (repository : MoodRepository) => {
 
         try{
             const result = await repository.editMood(id,request)
-            if(result)
+            if(result){
                 setFetchStatus(RequestStatus.Success)
+                setMoodModified(true)
+            }
             else
                 setFetchStatus(RequestStatus.Error)
         }
@@ -86,6 +91,7 @@ export const useMoodModelController = (repository : MoodRepository) => {
         count: data.count,
         fetchStatus,
         currentPage,
+        moodModified,
         createMood,
         editMood,
         deleteMood,

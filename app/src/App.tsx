@@ -289,7 +289,7 @@ function App() {
   useEffect(() => {
     console.log(user)
     if (user == null) {
-       navigate("/music/moods")
+       navigate("/music/moods/create")
     } else {
       navigate("/dashboard")
     }

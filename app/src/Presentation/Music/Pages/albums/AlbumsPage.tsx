@@ -18,7 +18,10 @@ import { Album } from "../../../../Domain/Model/Music";
 const AlbumsPage = () => {
     const [albums, setAlbums] = useState<Album[]>([])
     const [selectedAlbums, setSelectedAlbums] = useState<Album[]>([])
-    const {currentAlbums,deleteAlbum, fetchStatus,currentPage, count,refreshAlbumsPaginated, getMoreAlbumsPaginated} = useAlbumModelController(albumRepository)
+    const {currentAlbums,deleteAlbum, fetchStatus,currentPage, count,refreshAlbumsPaginated, getAlbumsPaginated} = useAlbumModelController(albumRepository)
+    useEffect(() => {
+        getAlbumsPaginated()
+    },[])
     useEffect( () => {
       setAlbums(currentAlbums)
     }, [currentAlbums]); 
@@ -53,7 +56,7 @@ const AlbumsPage = () => {
                      deleteAlbum(id,{}, () => setAlbums(prev => prev.filter(a => a.id != id)))
                    } }
                    currentPage={currentPage} 
-                   loadMore={getMoreAlbumsPaginated} 
+                   loadMore={() => getAlbumsPaginated(true)} 
                    rows={albums} />
               }
               {fetchStatus == RequestStatus.Error ? <div className="mx-auto"><p className="text-red-600">Error fetching data</p></div> : ""}

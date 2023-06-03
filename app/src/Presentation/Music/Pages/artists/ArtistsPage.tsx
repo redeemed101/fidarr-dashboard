@@ -18,7 +18,10 @@ const ArtistsPage = () => {
   const {currentArtists, 
     artistModified,
      artistDeleted, 
-     deleteArtist, fetchStatus,currentPage, count,refreshArtistsPaginated, getMoreArtistsPaginated} = useArtistModelController(artistRepository)
+     deleteArtist, fetchStatus,currentPage, count,refreshArtistsPaginated, getArtistsPaginated} = useArtistModelController(artistRepository)
+  useEffect(() => {
+    getArtistsPaginated()
+  },[])
   useEffect( () => {
         setArtists(currentArtists)
       }, [currentArtists]); 
@@ -54,7 +57,7 @@ const ArtistsPage = () => {
               )
             }}
              refresh={refreshArtistsPaginated} 
-             totalCount={count} currentPage={currentPage} loadMore={getMoreArtistsPaginated} rows={artists} />  }
+             totalCount={count} currentPage={currentPage} loadMore={() => getArtistsPaginated(true)} rows={artists} />  }
              {fetchStatus == RequestStatus.Error ? <div className="mx-auto"><p className="text-red-600">Error fetching data</p></div> : ""}
           </div>   
        

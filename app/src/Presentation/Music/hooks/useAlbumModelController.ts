@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AlbumRepository } from "../../../Domain/Repository/Music/AlbumRepository";
 import { Album } from "../../../Domain/Model/Music";
-import { RequestStatus, useGetData } from "./common";
+import { PagedData, RequestStatus, useGetData } from "./common";
 import { PAGE_SIZE } from "../../../Data/Utils/constants";
 import { CreateAlbumRequest, EditAlbumRequest } from "../../../Data/DataSource/Music/Albums/AlbumDataSource";
 
@@ -20,10 +20,10 @@ type AlbumData = {
 }
 export const useAlbumModelController = (repository : AlbumRepository) => {
 
-    const [currentPage, setCurrentPage] = useState(1);
     const [albumModified, setAlbumModified] = useState(false);
-    console.log("Current Page number ", currentPage)
-    const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getAlbumsPaging(currentPage, PAGE_SIZE));
+    const [currentPage, setCurrentPage] = useState(1); 
+    const [fetchStatus, setFetchStatus] = useState<RequestStatus>(RequestStatus.Success);
+    const [data, setData] = useState<PagedData>({count: 0, data: []});
     const deleteAlbum = async (albumId: string,onUploadProgress: any, finish: () => void) => {
       try{
         var result = await repository.deleteAlbum(albumId, onUploadProgress);
@@ -82,20 +82,28 @@ export const useAlbumModelController = (repository : AlbumRepository) => {
       catch(e : any){ setFetchStatus(RequestStatus.Error)}  
      }  
       
-    const getMoreAlbumsPaginated = async () =>  {
+    const getAlbumsPaginated = async (more: boolean = true) =>  {
       try{
-       
-        const newPage = currentPage + 1;
-        setCurrentPage(newPage)
-        console.log("Page number ", currentPage, " ", newPage)
-        const response = await repository.getAlbumsPaging(newPage, PAGE_SIZE);
-        setFetchStatus(RequestStatus.Success)
-        const oldData = data.data
-        const responseData = response.data
-        const newData = oldData.concat(responseData)
-        console.log("New data ", newData)
-        setData({count: response.count, data :newData});
-        }catch(e : any){ setFetchStatus(RequestStatus.Error)}        
+            if(more){
+              const newPage = currentPage + 1;
+              setCurrentPage(newPage)
+              console.log("Page number ", currentPage, " ", newPage)
+              const response = await repository.getAlbumsPaging(newPage, PAGE_SIZE);
+              setFetchStatus(RequestStatus.Success)
+              const oldData = data.data
+              const responseData = response.data
+              const newData = oldData.concat(responseData)
+              console.log("New data ", newData)
+              setData({count: response.count, data :newData});
+            }
+            else{
+              setFetchStatus(RequestStatus.Loading)
+              const response = await repository.getAlbumsPaging(currentPage, PAGE_SIZE);         
+              setFetchStatus(RequestStatus.Success)         
+              setData({count: response.count, data : response.data});
+            }
+        }
+        catch(e : any){ setFetchStatus(RequestStatus.Error)}        
     }
     const refreshAlbumsPaginated = async () =>  {
       try{
@@ -119,7 +127,7 @@ export const useAlbumModelController = (repository : AlbumRepository) => {
         editAlbum,
         deleteAlbum,
         setCurrentPage,
-        getMoreAlbumsPaginated,
+        getAlbumsPaginated,
         refreshAlbumsPaginated
       };
 }

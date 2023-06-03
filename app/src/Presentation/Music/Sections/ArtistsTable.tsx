@@ -8,7 +8,6 @@ import { confirmAlert } from "react-confirm-alert";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Playlist } from "../../../Domain/Model/Music/Playlist";
 import { setArtist } from "../../../StateManagement/redux/musicReduer";
 
 export type ArtistCardProps = {
@@ -216,3 +215,125 @@ const ArtistsTable = ({rows, currentPage, totalCount, selectedArtists, unSelectA
 }
 
 export default ArtistsTable
+
+
+type SearchArtistTableProps = {
+    rows : Artist[],
+    currentPage: number,
+    totalCount: number,
+    loadMore : () => void,
+    refresh : () => void
+    selectedArtists: Artist[],
+    selectArtist: (artist: Artist) => void,
+    unSelectArtist: (artist: Artist) => void,
+    deleteItem?: (id: string) =>  void,
+}
+
+export const SearchArtistsTable = (props: SearchArtistTableProps) => {
+    const [allSelected, setAllSelected] = useState<boolean>(false)
+    const checkSelectAll = (checked: boolean) => {
+        setAllSelected(checked)
+        if(checked){
+            
+            selectAll()
+        }
+        else{
+            
+            unSelectAll()
+        }
+    }
+   
+    const checkArtistSelected = (checked: boolean, artist: Artist) => {
+      
+          if(checked){
+             
+             props.selectArtist(artist)
+          }
+          else{
+            props.unSelectArtist(artist)
+          }
+    }
+    const selectAll = () => {
+        props.rows.forEach(artist => {
+            
+            if(!props.selectedArtists.includes(artist)){
+                
+               props.selectArtist(artist)
+            }
+            
+        })
+    }
+    const unSelectAll = () => {
+        props.rows.forEach(artist => {
+            if(props.selectedArtists.includes(artist))
+                 props.unSelectArtist(artist)
+            
+        })
+    }
+    return (
+        <div className="flex flex-col w-full">
+            <div className="w-full">
+            <InfiniteScroll
+                        dataLength={props.rows.length}
+                        next={() => props.loadMore()}
+                        hasMore={props.totalCount/(props.currentPage * PAGE_SIZE) > 1}
+                        loader={<h4 className="text-white text-bold mx-auto">Loading more items...</h4>}
+                        refreshFunction={props.refresh}
+                        pullDownToRefresh
+                        pullDownToRefreshThreshold={50}
+                        pullDownToRefreshContent={
+                            <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
+                        }
+                        releaseToRefreshContent={
+                        <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
+                    } 
+                >
+                        <table className="table-auto  text-white bg-fidarrgray-900 w-full">
+                        <thead className="text-left bg-fidarrgray-600">
+                            <tr>
+                               <th className="pl-8">
+                                    <div className="flex">
+                                            <input 
+                                            type="checkbox" 
+                                            checked={allSelected}
+                                            onChange={(e) => checkSelectAll(e.target.checked)}
+                                            className=" rounded-md shrink-0 mt-0.5 border-gray-200 text-red-900  focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
+                                            
+                                    </div>
+                            
+                                </th>
+                                <th ></th>
+                                <th>Artist</th>
+                                                             
+                            </tr>
+                        </thead>
+                        <tbody >
+                            {
+                            props.rows.map( (artist,i) => 
+                            <tr key={i} className="text-left even:bg-fidarrgray-100 ">
+                            <td className="pl-8">
+                            <div className="flex">
+                                    <input type="checkbox" 
+                                          checked={props.selectedArtists.includes(artist)}                                 
+                                          onChange={(e) => checkArtistSelected(e.target.checked, artist)}
+                                          className="shrink-0 mt-0.5 border-gray-200 rounded-md text-red-900  focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"  />
+                                    
+                                </div>
+                            </td>
+                            <td className="border-t-0 border-l-0 border-r-0 text-xs whitespace-nowrap py-4">
+                                <div >
+                                <ArtistCard name={artist.name} imgSrc={artist.imgSrc} />
+                                </div>
+                            </td>
+                           
+                           
+                            </tr>)
+                        }
+                        
+                        </tbody>
+                        </table>
+                </InfiniteScroll>
+            </div>
+        </div>
+    )
+}
