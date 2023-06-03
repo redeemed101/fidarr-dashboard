@@ -126,11 +126,12 @@ const UploadTrackPage = () => {
        <div className="h-auto bg-black">
         <FidarrModal height={500} width={800} title="Sure" close={() => setModalOpen(false)} afterOpen={() =>{}} isOpen={modalOpen}>
           <div className="w-full flex flex-col gap-4">
+               <div className="w-1/4 self-end">
+                <PrimaryButton disabled={selectedArtists.length < 1} type="button" onClick={() => doneSelecting()} title='Done' padY={2} padX={3} height="10" width="full" />
+               </div>
              <SearchArtists selectOne unSelectArtist={unSelectArtist} 
              selectedArtists={selectedArtists} selectArtist={selectArtist} />
-             <div className="w-1/4 self-end">
-              <PrimaryButton disabled={selectedArtists.length < 1} type="button" onClick={() => doneSelecting()} title='Done' padY={2} padX={3} height="10" width="full" />
-             </div>
+           
            </div>
         </FidarrModal>
         <div style={{height:"inherit"}}  className="pb-4 flex flex-row ">

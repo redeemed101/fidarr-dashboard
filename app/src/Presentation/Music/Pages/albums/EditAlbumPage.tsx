@@ -17,12 +17,14 @@ import { useAlbumModelController } from "../../hooks/useAlbumModelController";
 import { useGenreModelController } from "../../hooks/useGenreModelController";
 import { DetailsTabProps, AlbumDetailsFormData, AlbumDetails, MusicTabProps, SongItem, TABS, SongData, AddMusicTab } from "./common";
 import { Genre } from "../../../../Domain/Model/Music/Genre";
+import { Artist, Track } from "../../../../Domain/Model/Music";
+import FidarrModal from "../../../Common/modal";
+import SearchArtists from "../../Components/SearchArtists";
 
 
 const albumDetailSchema = yup.object({
     name: yup.string().required(),
     description: yup.string().required(),
-    artistId: yup.string().required(),
     artworkFile: yup.string().required(),
     releaseDate: yup.string().required(),
     upcCode: yup.string(),
@@ -36,6 +38,26 @@ const DetailsTab = (props : DetailsTabProps) => {
     const [albumGenres, setAlbumGenres] = useState<Genre[]>([])
     const [imagePath, setImagePath] = useState<string | null>(null);
     const [artworkFile, setArtworkFile] = useState<File | null>(null);
+    const [selectedArtists, setSelectedArtists] = useState<Artist[]>([])
+
+    const [modalOpen, setModalOpen] = useState(false)
+
+    const selectArtist = (artist: Artist) => {
+       
+      setSelectedArtists(prev => ([artist]))
+  
+    }
+    const unSelectArtist = (artist: Artist) => {
+     
+      setSelectedArtists(prev => ([...prev.filter(t => t.id != artist.id)]))
+      
+    }
+
+    const doneSelecting = () => {
+      console.log(selectedArtists)
+      setModalOpen(prev =>false)
+     
+    }
    
    useEffect(() => {
         setImagePath(album?.imgSrc!!)
@@ -47,7 +69,6 @@ const DetailsTab = (props : DetailsTabProps) => {
         name : album?.name,
         description: album?.description,
         releaseDate: album?.releaseDate,
-        artistId: album?.artist.id,
         genres: album?.genres.map(g => g.id),
         artworkFile: album?.imgSrc,
         upcCode: "",
@@ -66,12 +87,12 @@ const DetailsTab = (props : DetailsTabProps) => {
    
   }
   const onSubmit = (data : AlbumDetailsFormData) => {
-    
+    if(selectedArtists.length > 0){
      props.handleAlbumDetails({
         name: data.name,
         description: data.description,
         releaseDate: data.releaseDate,
-        artistId: data.artistId,
+        artistId: selectedArtists[0].id,
         genres: albumGenres.map(g => g.id),
         upcCode: data.upcCode,
         isrcCode: data.isrcCode,
@@ -80,12 +101,24 @@ const DetailsTab = (props : DetailsTabProps) => {
         artworkFile: artworkFile
      } as AlbumDetails)
      props.switchTab()
+    }
   }
     return (
         <form className='mx-auto' onSubmit={handleSubmit(onSubmit)}>
            
             
         <div className="flex flex-row  mx-auto">
+
+              <FidarrModal height={500} width={800} title="Sure" close={() => setModalOpen(false)} afterOpen={() =>{}} isOpen={modalOpen}>
+                <div className="w-full flex flex-col gap-4">
+                    <div className="w-1/4 self-end">
+                      <PrimaryButton disabled={selectedArtists.length < 1} type="button" onClick={() => doneSelecting()} title='Done' padY={2} padX={3} height="10" width="full" />
+                    </div>
+                  <SearchArtists selectOne unSelectArtist={unSelectArtist} 
+                  selectedArtists={selectedArtists} selectArtist={selectArtist} />
+                
+                </div>
+              </FidarrModal>
             
             <div className="flex flex-col">    
             <p className="text-red-600">{errors.artworkFile?.message}</p>               
@@ -119,7 +152,6 @@ const DetailsTab = (props : DetailsTabProps) => {
                     <p className="text-red-600">{errors.name?.message}</p>
                     <p className="text-red-600">{errors.description?.message}</p>
                     <p className="text-red-600">{errors.releaseDate?.message}</p>
-                    <p className="text-red-600">{errors.artistId?.message}</p>
                 </div>
                 <div className="container grid m-auto grid-cols-2 gap-4">
                 <Controller
@@ -129,11 +161,7 @@ const DetailsTab = (props : DetailsTabProps) => {
                    /> 
                 
                
-                <Controller
-                                    name="artistId"
-                                    control={control}
-                                    render={({ field }) => <PrimaryTextField name={field.name} type="text" value={field.value} padX={6} padY={2} onChanged={field.onChange} width="full" height="10" label="Artist" placeholder="Artist" />}
-                   />     
+                <PrimaryTextField  onClicked={() => setModalOpen(true)} name="artist" type="text" value={selectedArtists[0]?.name} padX={6} padY={2}  width="full" height="10" label="Artist" placeholder="Artist" />    
 
                 <div className=' col-span-2 flex flex-col gap-2'>
                     <div>
@@ -231,6 +259,19 @@ const EditAlbumPage = () => {
         setSongsData([...songsData,{id: songCount}])
         setSongCount(songCount+1)
     }
+    const addExistingSongItem = (song: Track) => {
+      setSongsData([...songsData,{
+        id: songCount,
+        name: song.name,
+        artist: song.artistName,
+        featuring: [],
+        genres: song.genres,
+        isrcCode: song.isrcCode,
+        existing: true
+    
+    }])
+    setSongCount(songCount+1)
+  }
 
     const handleAlbumDetails = (data: AlbumDetails) => {
                setAlbumDetails(data)
@@ -310,7 +351,7 @@ const EditAlbumPage = () => {
                         </div>
                     </div>
                     {activeTab == TABS.Details ? <DetailsTab handleAlbumDetails={handleAlbumDetails} switchTab={handleAddMusicTab} genres={genres} /> 
-                    : <AddMusicTab songsData={songsData} addSongItem={addSongItem} submitAlbum={submitAlbum} handleSongEditing={handleSongEditing} handleDeleteSongItem={handleDeleteSongItem} switchTab={handleDetailsTab} genres={genres} />}
+                    : <AddMusicTab addExistingSongItem={addExistingSongItem} songsData={songsData} addSongItem={addSongItem} submitAlbum={submitAlbum} handleSongEditing={handleSongEditing} handleDeleteSongItem={handleDeleteSongItem} switchTab={handleDetailsTab} genres={genres} />}
                 </div>
                 <div className="w-1/5" />
             </div>

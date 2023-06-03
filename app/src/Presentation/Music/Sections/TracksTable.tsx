@@ -320,7 +320,7 @@ export const SearchTracksTable = ({rows,currentPage,unSelectSong,selectSong, sel
                                 </div>
                             </td>
                             <td ><p>{track.duration}</p></td>
-                            <td ><p>{track.genres?.map(g => `${g} `)}</p></td>
+                            <td ><p>{track.genres?.map(g => `${g.name} `)}</p></td>
                            
                             </tr>)
                         }

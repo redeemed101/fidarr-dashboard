@@ -9,6 +9,9 @@ import PlusIcon from "../../../../Assets/svgs/PlusIcon.svg"
 import FolderPlusIcon from "../../../../Assets/svgs/FolderPlusIcon.svg"
 import EditActiveIcon from "../../../../Assets/svgs/EditActiveIcon.svg"
 import { ButtonWithIcon, SecondaryButton, PrimaryButton } from "../../../Common/buttons"
+import { Track } from "../../../../Domain/Model/Music"
+import FidarrModal from "../../../Common/modal"
+import SearchSongs from "../../Components/SearchSongs"
 
 export type MusicTabProps = {
     genres: Genre[]
@@ -16,6 +19,7 @@ export type MusicTabProps = {
     handleSongEditing : (data: SongData) => void,
     handleDeleteSongItem : (id: number) => void,
     addSongItem : () => void ,
+    addExistingSongItem : (song: Track) => void ,
     songsData: SongData[],
     submitAlbum: () => void
 
@@ -28,6 +32,7 @@ export type SongData = {
     featuring?: string[]
     genres?: Genre[]
     isrcCode?: string
+    existing?: boolean
 
 }
 export type SongItemProps = { 
@@ -50,7 +55,6 @@ export type AlbumDetailsFormData = {
     name : string,
     description: string,
     releaseDate: string,
-    artistId: string,
     genres?: string[],
     upcCode: string,
     isrcCode: string,
@@ -121,8 +125,12 @@ export const SongItem = ({songData,genres,handleDoneEditing, id,handleDelete, ed
                     <div className="-mt-5 w-1/12">
                         <img  src={ListIcon} />
                     </div>
+                   
                     <div className=" flex flex-col w-10/12">
-                        <PrimaryFileInput accept="audio/*" name={name}  onChanged={(e) => setSongFile(e.target.files != null ? e.target.files[0] : null)}  padX={4} padY={4} width="full" height="10" label={name} />
+                        {songData?.existing 
+                            ? <PrimaryTextField type="text" disabled value={name}  padX={2} padY={1} width="full" height="10" label="" placeholder="" />
+                            : <PrimaryFileInput accept="audio/*" name={name}  onChanged={(e) => setSongFile(e.target.files != null ? e.target.files[0] : null)}  padX={4} padY={4} width="full" height="10" label="" />
+                        }
                         {/*<PrimaryTextField type="text" value={name} onChanged={setName} padX={2} padY={1} width="full" height="10" label={name} placeholder="" />*/}
                        
                     </div> 
@@ -180,9 +188,28 @@ export const SongItem = ({songData,genres,handleDoneEditing, id,handleDelete, ed
 
 
 
-export const AddMusicTab = ({songsData,genres,switchTab,handleDeleteSongItem,handleSongEditing,addSongItem, submitAlbum } : MusicTabProps) => {
+export const AddMusicTab = ({songsData,genres,switchTab,handleDeleteSongItem,handleSongEditing,addSongItem, addExistingSongItem, submitAlbum } : MusicTabProps) => {
     const [editMode, setEditMode] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false)
+    const [selectedSongs, setSelectedSongs] = useState<Track[]>([])
     const [selectedIndex, setSelectedIndex] =  useState(0);
+    const selectSong = (track: Track) => {
+        console.log("bubbled " + track.id)
+        addExistingSongItem(track)
+        setSelectedSongs(prev => ([...prev, track]))
+  
+      }
+      const unSelectSong = (track: Track) => {
+        console.log("bubbled unselect "+ track.id)
+        setSelectedSongs(prev => ([...prev.filter(t => t.id != track.id)]))
+        
+      }
+      const doneSelecting = () => {
+            console.log(selectedSongs)
+           // addExistingSongItem()
+            setModalOpen(prev =>false)
+           
+      }
     const handleEditMode = (id : number) => {
           const mode = selectedIndex != id ? editMode : !editMode
           setEditMode(editMode => mode)
@@ -193,10 +220,18 @@ export const AddMusicTab = ({songsData,genres,switchTab,handleDeleteSongItem,han
    
     return (
         <div className="flex flex-col w-full items-start  px-6">
+             <FidarrModal height={500} width={800} title="Sure" close={() => setModalOpen(false)} afterOpen={() =>{}} isOpen={modalOpen}>
+                <div className="w-full flex flex-col gap-4">
+                    <SearchSongs unSelectSong={unSelectSong} selectedSongs={selectedSongs} selectSong={selectSong} />
+                    <div className="w-1/4 self-end">
+                    <PrimaryButton disabled={selectedSongs.length < 1} type="button" onClick={() => doneSelecting()} title='Done' padY={2} padX={3} height="10" width="full" />
+                    </div>
+                </div>
+            </FidarrModal>
             <div className="flex flex-row gap-2 ">
                 <div className="flex flex-row gap-4 ">
                     <ButtonWithIcon onClicked={addSongItem} imageSrc={PlusIcon} title="Upload Track" />
-                    <ButtonWithIcon imageSrc={FolderPlusIcon} title="Add Existing" />
+                    <ButtonWithIcon imageSrc={FolderPlusIcon} onClicked={() => setModalOpen(true)} title="Add Existing" />
                     
                 </div>
                 <div></div>                
