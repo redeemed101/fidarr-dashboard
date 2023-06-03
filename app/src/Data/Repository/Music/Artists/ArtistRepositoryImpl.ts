@@ -6,6 +6,7 @@ import { TYPES } from "../../../../DI/types";
 import { BASE_URL } from "../../../DataSource/API/constant";
 import { ArtistPage } from "../../../../Domain/Model/Music/Artist";
 import moment from "moment";
+import { Genre } from "../../../../Domain/Model/Music/Genre";
 
 @injectable()
 export class ArtistRepositoryImpl implements ArtistRepository{
@@ -32,7 +33,17 @@ export class ArtistRepositoryImpl implements ArtistRepository{
                 bio: a.bio,
                 imgSrc : `${BASE_URL}${a.imagePath}`,
                 name : a.name,
-                genres : a.genres?.map(g => g?.name ?? "") ?? [""],
+                genres : a.genres?.map(g => {
+                    return {
+                        id: g?.id,
+                        imgSrc : `${BASE_URL}${g?.imageUrl}`,
+                        name : g?.name,
+                        albums : g?.albums?.length ?? 0,
+                        tracks : g?.songs?.length ?? 0,
+                        artists: g?.artists?.length ?? 0,
+                        lastUpdated: g?.dateCreated
+                    } 
+                  }) as Genre[],
                 streams : a.songs?.reduce( (a,b) => a + (b?.streams?.length ?? 0) ,0) ?? 0,
                 tracks : a.songs?.length ?? 0,
                 albums: a.albums?.length ?? 0,
@@ -62,7 +73,17 @@ export class ArtistRepositoryImpl implements ArtistRepository{
                 website: a.website,
                 bio: a.bio,
                 name : a.name,
-                genres : a.genres?.map(g => g?.name ?? "") ?? [""],
+                genres : a.genres?.map(g => {
+                    return {
+                        id: g?.id,
+                        imgSrc : `${BASE_URL}${g?.imageUrl}`,
+                        name : g?.name,
+                        albums : g?.albums?.length ?? 0,
+                        tracks : g?.songs?.length ?? 0,
+                        artists: g?.artists?.length ?? 0,
+                        lastUpdated: g?.dateCreated
+                    } 
+                  }) as Genre[],
                 streams : a.songs?.reduce( (a,b) => a + (b?.streams?.length ?? 0) ,0) ?? 0,
                 tracks : a.songs?.length ?? 0,
                 albums: a.albums?.length ?? 0,

@@ -21,7 +21,7 @@ import { Genre } from "../../../../Domain/Model/Music/Genre";
 import PrimaryFileInput from "../../../Common/fileInput";
 import { number } from "prop-types";
 import { AxiosProgressEvent } from "axios";
-import { DetailsTabProps, AlbumDetailsFormData, AlbumDetails, MusicTabProps, SongItem, TABS, SongData } from "./common";
+import { DetailsTabProps, AlbumDetailsFormData, AlbumDetails, MusicTabProps, SongItem, TABS, SongData, AddMusicTab } from "./common";
 
 
 
@@ -41,7 +41,7 @@ const DetailsTab = ({switchTab,genres, editAction, handleAlbumDetails} : Details
    
     const [imagePath, setImagePath] = useState<string | null>(null);
     const [artworkFile, setArtworkFile] = useState<File | null>(null);
-   
+    const [albumGenres, setAlbumGenres] = useState<Genre[]>([])
    
    const { control, handleSubmit, formState: { errors }  } = useForm<AlbumDetailsFormData>({
     resolver: yupResolver(albumDetailSchema),
@@ -70,7 +70,7 @@ const DetailsTab = ({switchTab,genres, editAction, handleAlbumDetails} : Details
         description: data.description,
         releaseDate: data.releaseDate,
         artistId: data.artistId,
-        genres: data.genres,
+        genres: albumGenres.map(g => g.id),
         upcCode: data.upcCode,
         isrcCode: data.isrcCode,
         cLine: data.pLine,
@@ -145,7 +145,14 @@ const DetailsTab = ({switchTab,genres, editAction, handleAlbumDetails} : Details
                         rules={{ required: true }}
                         render={({ field }) =>    <div className='flex flex-row items-center'>
                                                           <input type="checkbox"                                                         
-                                                          name={field.name} value={g.id}
+                                                          name={field.name} 
+                                                          onChange={ (e) => {
+                                                            const genre = genres.find(g => g.id ==e.target.value)
+                                                            if(genre != null && !albumGenres.includes(genre))
+                                                               setAlbumGenres(prev => [...prev,genre])
+                                                           }}
+                                                          value={g.id}
+                                                          checked={albumGenres.find( ge => ge.id == g.id) != null}
                                                           className="text-fidarrgray-900 hover:bg-fidarrgray-600 cursor-pointer w-6 h-6 border-3 border-amber-500 focus:outline-none rounded" />
                                                           <label htmlFor={field.name} className="text-white mx-4 ">{g.name}</label>
                                                   </div>
@@ -192,42 +199,6 @@ const DetailsTab = ({switchTab,genres, editAction, handleAlbumDetails} : Details
 
 
 
-const AddMusicTab = ({songsData,genres,switchTab,handleDeleteSongItem,handleSongEditing,addSongItem, submitAlbum } : MusicTabProps) => {
-    const [editMode, setEditMode] = useState(false);
-    const [selectedIndex, setSelectedIndex] =  useState(0);
-    const handleEditMode = (id : number) => {
-          setSelectedIndex(id)
-          setEditMode(editMode => !editMode)
-      };
-    
-   
-    return (
-        <div className="flex flex-col w-full items-start  px-6">
-            <div className="flex flex-row gap-2 ">
-                <div className="flex flex-row gap-4 ">
-                    <ButtonWithIcon onClicked={addSongItem} imageSrc={PlusIcon} title="Upload Track" />
-                    <ButtonWithIcon imageSrc={FolderPlusIcon} title="Add Existing" />
-                    
-                </div>
-                <div></div>                
-            </div>
-
-            <div className="flex flex-col w-full pt-4">
-              {
-                  songsData.map( (x,i) => 
-                    <SongItem handleDoneEditing={handleSongEditing} genres={genres} handleEditMode={handleEditMode} handleDelete={handleDeleteSongItem} id={x.id} selectedIndex={selectedIndex} editMode={editMode} />
-                  )
-              }
-             
-
-            </div>
-            <div className="w-full pt-10 flex flex-row justify-between">
-               <SecondaryButton onClick={switchTab}  title='Back' padY={2} padX={4} height="auto" width="1/6"/>
-               <PrimaryButton disabled={songsData.length < 1} onClick={submitAlbum}  title='Save' padY={2} padX={4} height="auto" width="1/6"/>
-            </div>
-        </div>
-    )
-}
 
 const UploadAlbumPage = () => {
     const {genres, getAllGenres} = useGenreModelController(genreRepository)
@@ -276,7 +247,7 @@ const UploadAlbumPage = () => {
             artistId : albumDetails?.artistId!,
             genres: albumDetails?.genres!,
             songNames: songsData.map(s => s.name!),
-            songGenres: songsData.map(s => s.genres!),
+            songGenres: songsData.map(s => s.genres!.map(g => g.id)),
             songArtists: songsData.map(s => s.artist!),
             songsISRCCodes: songsData.map(s => s.isrcCode!),
             songFiles: songsData.map(s => s.file!),
@@ -321,7 +292,9 @@ const UploadAlbumPage = () => {
                             </div>
                         </div>
                     </div>
-                    {activeTab == TABS.Details ? <DetailsTab handleAlbumDetails={handleAlbumDetails} switchTab={handleAddMusicTab} genres={genres} /> : <AddMusicTab songsData={songsData} addSongItem={addSongItem} submitAlbum={submitAlbum} handleSongEditing={handleSongEditing} handleDeleteSongItem={handleDeleteSongItem} switchTab={handleDetailsTab} genres={genres} />}
+                    {activeTab == TABS.Details ? 
+                    <DetailsTab handleAlbumDetails={handleAlbumDetails} switchTab={handleAddMusicTab} genres={genres} /> : 
+                    <AddMusicTab songsData={songsData} addSongItem={addSongItem} submitAlbum={submitAlbum} handleSongEditing={handleSongEditing} handleDeleteSongItem={handleDeleteSongItem} switchTab={handleDetailsTab} genres={genres} />}
                 </div>
                 <div className="w-1/5" />
             </div>

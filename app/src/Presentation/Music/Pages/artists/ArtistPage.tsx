@@ -59,7 +59,7 @@ export const ArtistPage = () => {
                                                           disabled
                                                           checked
                                                           className="disabled:bg-white text-fidarrgray-900 hover:bg-fidarrgray-600 cursor-pointer w-6 h-6 border-3 border-amber-500 focus:outline-none rounded" />
-                                                          <label htmlFor={g} className="text-white mx-4 ">{g}</label>
+                                                          <label htmlFor={g.name} className="text-white mx-4 ">{g.name}</label>
                                                   </div>
                     
                       )

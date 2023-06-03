@@ -5,6 +5,7 @@ import { ChartRepository } from "../../../Domain/Repository/Music/ChartRepositor
 import { ChartDataSource, CreateChartRequest, EditChartRequest } from "../../DataSource/Music/Playlists/ChartDataSource";
 import { BASE_URL } from "../../DataSource/API/constant";
 import moment from "moment";
+import { Genre } from "../../../Domain/Model/Music/Genre";
 
 @injectable()
 export class ChartRepositoryImpl implements ChartRepository{
@@ -43,7 +44,17 @@ export class ChartRepositoryImpl implements ChartRepository{
                         id: p?.song?.id,
                         name : p?.song?.name,
                         artistName: p?.song?.artist?.name,
-                        genres : p?.song?.genres?.map(g => g?.name),
+                        genres : p?.song?.genres?.map(g => {
+                            return {
+                                id: g?.id,
+                                imgSrc : `${BASE_URL}${g?.imageUrl}`,
+                                name : g?.name,
+                                albums : g?.albums?.length ?? 0,
+                                tracks : g?.songs?.length ?? 0,
+                                artists: g?.artists?.length ?? 0,
+                                lastUpdated: g?.dateCreated
+                            } 
+                          }) as Genre[],
                         streams : p?.song?.streams ?? "",
                         duration : "",
                         releaseDate: moment(Date.parse(p?.song?.releaseDate)).format('MMMM DD, YYYY'),
@@ -77,7 +88,17 @@ export class ChartRepositoryImpl implements ChartRepository{
                         id: p?.song?.id,
                         name : p?.song?.name,
                         artistName: p?.song?.artist?.name,
-                        genres : p?.song?.genres?.map(g => g?.name),
+                        genres : p?.song?.genres?.map(g => {
+                            return {
+                                id: g?.id,
+                                imgSrc : `${BASE_URL}${g?.imageUrl}`,
+                                name : g?.name,
+                                albums : g?.albums?.length ?? 0,
+                                tracks : g?.songs?.length ?? 0,
+                                artists: g?.artists?.length ?? 0,
+                                lastUpdated: g?.dateCreated
+                            } 
+                          }) as Genre[],
                         streams : p?.song?.streams ?? "",
                         duration : "",
                         releaseDate: moment(Date.parse(p?.song?.releaseDate)).format('MMMM DD, YYYY'),

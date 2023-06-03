@@ -1,4 +1,5 @@
 import { Artist } from "./Artist"
+import { Genre } from "./Genre"
 import { Track } from "./Track"
 
 
@@ -7,7 +8,7 @@ export type Album = {
     imgSrc : string,
     name : string,
     artist: Artist,
-    genres : string[],
+    genres : Genre[],
     songs: Track[]
     streams : string,
     tracks : number,

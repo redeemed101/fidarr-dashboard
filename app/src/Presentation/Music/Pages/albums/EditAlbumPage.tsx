@@ -8,19 +8,15 @@ import { useForm, Controller } from "react-hook-form";
 import { genreRepository, albumRepository } from "../../../../main";
 import HeaderSection from "../../../Common/HeaderSection";
 import { PrimaryButton, ButtonWithIcon, SecondaryButton } from "../../../Common/buttons";
-import ListIcon from "../../../../Assets/svgs/ListIcon.svg"
-import DeleteIcon from "../../../../Assets/svgs/DeleteIcon.svg"
-import EditIcon from "../../../../Assets/svgs/EditIcon.svg"
-import PlusIcon from "../../../../Assets/svgs/PlusIcon.svg"
-import EditActiveIcon from "../../../../Assets/svgs/EditActiveIcon.svg"
-import FolderPlusIcon from "../../../../Assets/svgs/FolderPlusIcon.svg"
+
 import PrimaryDatePicker from "../../../Common/datepicker";
 import PrimaryFileInput from "../../../Common/fileInput";
 import { PrimaryTextField } from "../../../Common/textfields";
 import MenuColumn from "../../../Dashboard/Components/MenuColumn";
 import { useAlbumModelController } from "../../hooks/useAlbumModelController";
 import { useGenreModelController } from "../../hooks/useGenreModelController";
-import { DetailsTabProps, AlbumDetailsFormData, AlbumDetails, MusicTabProps, SongItem, TABS, SongData } from "./common";
+import { DetailsTabProps, AlbumDetailsFormData, AlbumDetails, MusicTabProps, SongItem, TABS, SongData, AddMusicTab } from "./common";
+import { Genre } from "../../../../Domain/Model/Music/Genre";
 
 
 const albumDetailSchema = yup.object({
@@ -37,13 +33,14 @@ const albumDetailSchema = yup.object({
 
 const DetailsTab = (props : DetailsTabProps) => {
     const album = useSelector((state: RootState) => state.selectedAlbum.Album);
+    const [albumGenres, setAlbumGenres] = useState<Genre[]>([])
     const [imagePath, setImagePath] = useState<string | null>(null);
     const [artworkFile, setArtworkFile] = useState<File | null>(null);
    
    useEffect(() => {
         setImagePath(album?.imgSrc!!)
-        console.log(album?.genres)
-   },[])
+        setAlbumGenres(album?.genres!!)
+   },[album])
    const { control, handleSubmit, formState: { errors }  } = useForm<AlbumDetailsFormData>({
     resolver: yupResolver(albumDetailSchema),
     defaultValues: {
@@ -51,7 +48,7 @@ const DetailsTab = (props : DetailsTabProps) => {
         description: album?.description,
         releaseDate: album?.releaseDate,
         artistId: album?.artist.id,
-        genres: album?.genres,
+        genres: album?.genres.map(g => g.id),
         artworkFile: album?.imgSrc,
         upcCode: "",
         isrcCode: "",
@@ -69,13 +66,13 @@ const DetailsTab = (props : DetailsTabProps) => {
    
   }
   const onSubmit = (data : AlbumDetailsFormData) => {
-     console.log("submit")
+    
      props.handleAlbumDetails({
         name: data.name,
         description: data.description,
         releaseDate: data.releaseDate,
         artistId: data.artistId,
-        genres: data.genres,
+        genres: albumGenres.map(g => g.id),
         upcCode: data.upcCode,
         isrcCode: data.isrcCode,
         cLine: data.pLine,
@@ -150,8 +147,14 @@ const DetailsTab = (props : DetailsTabProps) => {
                         rules={{ required: true }}
                         render={({ field }) =>    <div className='flex flex-row items-center'>
                                                           <input type="checkbox"                                                         
-                                                          name={field.name} value={g.id}
-                                                          checked={album?.genres.includes(g.id)}
+                                                          name={field.name} 
+                                                          onChange={ (e) => {
+                                                               const genre = props.genres.find(g => g.id ==e.target.value)
+                                                               if(genre != null && !albumGenres.includes(genre))
+                                                                  setAlbumGenres(prev => [...prev,genre])
+                                                          }}
+                                                          value={g.id}
+                                                          checked={albumGenres.find( ge => ge.id == g.id) != null}
                                                           className="text-fidarrgray-900 hover:bg-fidarrgray-600 cursor-pointer w-6 h-6 border-3 border-amber-500 focus:outline-none rounded" />
                                                           <label htmlFor={field.name} className="text-white mx-4 ">{g.name}</label>
                                                   </div>
@@ -198,46 +201,12 @@ const DetailsTab = (props : DetailsTabProps) => {
 
 
 
-const AddMusicTab = ({songsData,genres,switchTab,handleDeleteSongItem,handleSongEditing,addSongItem, submitAlbum } : MusicTabProps) => {
-    const [editMode, setEditMode] = useState(false);
-    const [selectedIndex, setSelectedIndex] =  useState(0);
-    const handleEditMode = (id : number) => {
-          setSelectedIndex(id)
-          setEditMode(editMode => !editMode)
-      };
-    
-   
-    return (
-        <div className="flex flex-col w-full items-start  px-6">
-            <div className="flex flex-row gap-2 ">
-                <div className="flex flex-row gap-4 ">
-                    <ButtonWithIcon onClicked={addSongItem} imageSrc={PlusIcon} title="Upload Track" />
-                    <ButtonWithIcon imageSrc={FolderPlusIcon} title="Add Existing" />
-                    
-                </div>
-                <div></div>                
-            </div>
 
-            <div className="flex flex-col w-full pt-4">
-              {
-                  songsData.map( (x,i) => 
-                    <SongItem handleDoneEditing={handleSongEditing} songData={x} genres={genres} handleEditMode={handleEditMode} handleDelete={handleDeleteSongItem} id={x.id} selectedIndex={selectedIndex} editMode={editMode} />
-                  )
-              }
-             
-
-            </div>
-            <div className="w-full pt-10 flex flex-row justify-between">
-               <SecondaryButton onClick={switchTab}  title='Back' padY={2} padX={4} height="auto" width="1/6"/>
-               <PrimaryButton disabled={songsData.length < 1} onClick={submitAlbum}  title='Save' padY={2} padX={4} height="auto" width="1/6"/>
-            </div>
-        </div>
-    )
-}
 
 const EditAlbumPage = () => {
     const album = useSelector((state: RootState) => state.selectedAlbum.Album);
     const {genres, getAllGenres} = useGenreModelController(genreRepository)
+    
     const {editAlbum, fetchStatus, albumModified} = useAlbumModelController(albumRepository)
     const [activeTab, setActiveTab] = useState(TABS.Details);
     const [songsData, setSongsData] = useState<SongData[]>(album?.songs.map((s,i) => {
@@ -254,6 +223,9 @@ const EditAlbumPage = () => {
     ) as SongData[] )
     const [albumDetails, setAlbumDetails] = useState<AlbumDetails|null>(null);
     const [songCount,setSongCount] = useState(album?.songs.length ?? 0)
+    useEffect( () => {
+      getAllGenres()
+     }, []);
     const addSongItem = () => {
        
         setSongsData([...songsData,{id: songCount}])
@@ -264,20 +236,18 @@ const EditAlbumPage = () => {
                setAlbumDetails(data)
     }
     const handleSongEditing = (data: SongData) => {
-            console.log(data)
+        
             var filtered = songsData.filter(s => s.id != data.id)
-            console.log(filtered)
+            
             setSongsData([...filtered, data])
-            console.log(songsData)
+       
       }
     const handleDeleteSongItem = (id: number) => {
             
             setSongsData(songsData.filter(i => i.id != id))
            
       }
-    useEffect( () => {
-        getAllGenres()
-   }, []);
+   
     
     const handleDetailsTab = () => {
         console.log("going to details")
@@ -294,7 +264,7 @@ const EditAlbumPage = () => {
             artistId : albumDetails?.artistId!,
             genres: albumDetails?.genres!,
             songNames: songsData.map(s => s.name!),
-            songGenres: songsData.map(s => s.genres!),
+            songGenres: songsData.map(s => s.genres!!.map(g => g.id)),
             songArtists: songsData.map(s => s.artist!),
             songsISRCCodes: songsData.map(s => s.isrcCode!),
             songFiles: songsData.map(s => s.file!),

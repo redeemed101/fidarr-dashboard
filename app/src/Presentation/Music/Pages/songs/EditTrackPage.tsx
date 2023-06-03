@@ -18,6 +18,9 @@ import { AxiosProgressEvent } from "axios";
 import { RequestStatus } from "../../hooks/common";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../StateManagement/redux/store";
+import { Genres } from "../../../../Data/DataSource/Music/Genres/GenreDataSource";
 import { Genre } from "../../../../Domain/Model/Music/Genre";
 
 
@@ -48,34 +51,38 @@ const schema = yup.object({
   releaseData: yup.string().required()
 }).required();
 
-const UploadTrackPage = () => {
+const EditTrackPage = () => {
+  const song = useSelector((state: RootState) => state.selectedSong.Song);
   const {genres, getAllGenres} = useGenreModelController(genreRepository)
   const [songGenres, setSongGenres] = useState<Genre[]>([])
   const [imagePath, setImagePath] = useState<string | null>(null);
   const [artworkFile, setArtworkFile] = useState<File | null>(null);
   const [songFile, setSongFile] = useState<File | null>(null);
   const [previewFile, setPreviewFile] = useState<File | null>(null);
-  const {fetchStatus, createSong} = useSongModelController(songRepository)
+  const {fetchStatus, editSong} = useSongModelController(songRepository)
   const [progress, setProgress] = useState(0);
   useEffect( () => {
        getAllGenres()
+       setImagePath(song?.imgSrc!!)
+       setSongGenres(song?.genres!!)
   }, []);
   const { control, handleSubmit, formState: { errors }  } = useForm<FormData>({
     resolver: yupResolver(schema),
     defaultValues: {
-      name : "",
-      description: "",
+      name : song?.name,
+      description: song?.name,
       artistId: "",
       featuringArtists: [],
-      genres: [],
+      genres: song?.genres.map(g => g.id),
       albumId: "",
       previewFile: "",
-      artworkFile: "",
+      artworkFile: song?.imgSrc,
       songFile : "",
-      upcCode: "",
-      isrcCode:"",
+      upcCode:"",
+      isrcCode: song?.isrcCode,
       cLine: "",
-      pLine:""
+      pLine:"",
+      releaseDate: song?.releaseDate
     }
   });
   const setImagePreview = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,7 +97,7 @@ const UploadTrackPage = () => {
   const onSubmit = (data : FormData) => {
     console.log(data);
     if(songFile != null)
-      createSong(songFile, {
+      editSong(song?.id!!,songFile, {
         name: data.name,
         description: data.description,
         artistId: data.artistId,
@@ -168,7 +175,7 @@ const UploadTrackPage = () => {
                         rules={{ required: true }}
                         render={({ field }) =>    <div className='flex flex-row items-center'>
                                                           <input type="checkbox"                                                         
-                                                          name={field.name} 
+                                                          name={field.name}  
                                                           onChange={ (e) => {
                                                             const genre = genres.find(g => g.id ==e.target.value)
                                                             if(genre != null && !songGenres.includes(genre))
@@ -253,4 +260,4 @@ const UploadTrackPage = () => {
     )
 }
 
-export default UploadTrackPage
+export default EditTrackPage

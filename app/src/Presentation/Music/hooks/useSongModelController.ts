@@ -16,6 +16,7 @@ export type SongData = {
 }
 export const useSongModelController = (repository : SongRepository) => {
     const [currentPage, setCurrentPage] = useState(1); 
+    const [songModified, setSongModified] = useState(false)
     const [fetchStatus, setFetchStatus] = useState<RequestStatus>(RequestStatus.Success);
     const [data, setData] = useState<PagedData>({count: 0, data: []});
     const createSong = async (songFile: File, songData : SongData, onUploadProgress: any,artworkFile?: File | null, previewFile? : File) =>  {
@@ -40,11 +41,14 @@ export const useSongModelController = (repository : SongRepository) => {
         }
         catch(e : any){ setFetchStatus(RequestStatus.Error)}  
        }  
-       const deleteSong = async (songId: string) => {
+       const deleteSong = async (songId: string, finish: () => void) => {
         try{
           var result = await repository.deleteSong(songId);
-          if(result)
+          if(result){
              setFetchStatus(RequestStatus.Success)
+             setSongModified(true)
+             finish()
+          }
           else
           setFetchStatus(RequestStatus.Error)
        }
@@ -67,8 +71,10 @@ export const useSongModelController = (repository : SongRepository) => {
              songFile: songFile
 
            } as EditSongRequest, onUploadProgress);
-           if(result)
+           if(result){
               setFetchStatus(RequestStatus.Success)
+              setSongModified(true)
+           }
            else
            setFetchStatus(RequestStatus.Error)
         }
@@ -136,6 +142,7 @@ export const useSongModelController = (repository : SongRepository) => {
           count: data.count,
           fetchStatus,
           currentPage,
+          songModified,
           getSearchSongsPaginated,
           getSongsPaginated,
           setCurrentPage,

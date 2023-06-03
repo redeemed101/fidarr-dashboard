@@ -173,7 +173,7 @@ const ArtistsTable = ({rows, currentPage, totalCount, selectedArtists, unSelectA
                 </td>
                 <td className="border-t-0 border-l-0 border-r-0 text-xs whitespace-nowrap py-4">
                     <div >
-                       <ArtistCard name={artist.name} imgSrc={artist.imgSrc} genres={artist.genres} />
+                       <ArtistCard name={artist.name} imgSrc={artist.imgSrc} genres={artist.genres.map(g => g.name)} />
                     </div>
                 </td>
                 <td ><p>{artist.streams}</p></td>

@@ -3,6 +3,7 @@ import { SongRepository } from "../../../../Domain/Repository/Music/SongReposito
 import { TrackPage } from "../../../../Domain/Model/Music/Track";
 import { CreateSongRequest, CreateSongResponse, EditSongRequest, EditSongResponse } from "../../../DataSource/Music/Songs/SongDataSource";
 import moment from "moment";
+import { Genre } from "../../../../Domain/Model/Music/Genre";
 
 @injectable()
 export class SongRepositoryMock implements SongRepository{
@@ -16,11 +17,21 @@ export class SongRepositoryMock implements SongRepository{
                     imgSrc : "https://picsum.photos/200",
                     name : `song ${i}`,
                     artistName: `artist ${i}`,
-                    genres : ["Genre 1", "Genre 2"],
+                    genres : [...Array(5)].map(g => {
+                        return  {
+                            imgSrc : "",
+                            name : "Pop",
+                            albums : 0,
+                            tracks : 0,
+                            artists: 0,
+                            lastUpdated: "2019-09-09",
+                            id: "1"
+                        }
+                    }) as Genre[],
                     streams : "10M",
                     duration : "",
-                    lastUpdated: moment(Date.parse("2023-10-31")).format('MMMM DD, YYYY'), 
-                    releaseDate: moment(Date.parse("2023-10-31")).format('MMMM DD, YYYY'),
+                    lastUpdated: "2023-10-31", 
+                    releaseDate: "2023-10-31",
                    
                 }
             }),

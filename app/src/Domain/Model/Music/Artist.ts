@@ -1,9 +1,10 @@
+import { Genre } from "./Genre"
 
 export type Artist = {
     id: string,
     imgSrc : string,
     name : string,
-    genres : string[],
+    genres : Genre[],
     streams : number,
     bio: string,
     tracks : number,

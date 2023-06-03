@@ -3,6 +3,7 @@ import { ArtistRepository } from "../../../../Domain/Repository/Music/ArtistRepo
 import { ArtistPage } from "../../../../Domain/Model/Music/Artist";
 import { CreateArtist, EditArtist } from "../../../DataSource/Music/Artists/ArtistDataSource";
 import moment from "moment";
+import { Genre } from "../../../../Domain/Model/Music/Genre";
 
 @injectable()
 export class ArtistRepositoryMock implements ArtistRepository{
@@ -17,7 +18,17 @@ export class ArtistRepositoryMock implements ArtistRepository{
                     bio: "Nice Artist",               
                     imgSrc : "https://picsum.photos/200",
                     name : `artist ${i}`,
-                    genres : ["Genre 1", "Genre 2"],
+                    genres : [...Array(5)].map(g => {
+                        return  {
+                            imgSrc : "",
+                            name : "Pop",
+                            albums : 0,
+                            tracks : 0,
+                            artists: 0,
+                            lastUpdated: "2019-09-09",
+                            id: "1"
+                        }
+                    }) as Genre[],
                     streams : 100000,
                     tracks : 20,
                     albums: 2,

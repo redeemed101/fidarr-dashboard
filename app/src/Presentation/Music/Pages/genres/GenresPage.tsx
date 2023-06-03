@@ -8,14 +8,30 @@ import { Link } from "react-router-dom";
 import { useGenreModelController } from "../../hooks/useGenreModelController";
 import { genreRepository } from "../../../../main";
 import { RequestStatus } from "../../hooks/common";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Genre } from "../../../../Domain/Model/Music/Genre";
+
 
 const GenresPage = () => {
-  const {currentGenres, fetchStatus,currentPage, count, getGenresPaginated,refreshGenresPaginated, getMoreGenresPaginated} = useGenreModelController(genreRepository)
+  const [genres, setGenres] = useState<Genre[]>([])
+  const [selectedGenres, setSelectedGenres] = useState<Genre[]>([])
+  const {currentGenres, fetchStatus,currentPage, count,deleteGenre, getGenresPaginated,refreshGenresPaginated, getMoreGenresPaginated} = useGenreModelController(genreRepository)
  
   useEffect( () => {
     getGenresPaginated()
   }, []);  
+  useEffect( () => {
+    setGenres(currentGenres)
+  }, [currentGenres]); 
+  const selectGenre = (genre: Genre) => {
+    setSelectedGenres(prev => ([...prev, genre]))
+
+  }
+  const unSelectGenre = (genre: Genre) => {
+    console.log("bubbled unselect "+ genre.id)
+    setSelectedGenres(prev => ([...prev.filter(t => t.id != genre.id)]))
+    
+  } 
   return (
        
         
@@ -25,7 +41,20 @@ const GenresPage = () => {
          
              <MusicHeader selectedType={MusicMenuType.Genres} menus={menuItems}  buttonComp={ <Link to="/music/genres/create"><ButtonWithIcon imageSrc={PlusIcon} title="Create Genre" /></Link> } />
              {fetchStatus == RequestStatus.Loading ? <div className="mx-auto"><p className="text-white">Loading...</p></div> : 
-             <GenresTable refresh={refreshGenresPaginated} totalCount={count} currentPage={currentPage} loadMore={getMoreGenresPaginated} rows={currentGenres} />  }
+             <GenresTable 
+             refresh={refreshGenresPaginated} 
+             deleteItem={(id:string) => {   
+              console.log("beginning to delete")           
+              deleteGenre(id,
+                () => setGenres(prev => prev.filter(p => p.id != id))
+              )
+            }}
+             selectGenre={selectGenre}
+             unSelectGenre={unSelectGenre}
+             selectedGenres={selectedGenres}
+             totalCount={count} 
+             currentPage={currentPage} 
+             loadMore={getMoreGenresPaginated} rows={currentGenres} />  }
              {fetchStatus == RequestStatus.Error ? <div className="mx-auto"><p className="text-red-600">Error fetching data</p></div> : ""}
            
           </div>   

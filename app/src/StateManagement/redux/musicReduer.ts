@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { Playlist } from "../../Domain/Model/Music/Playlist"
-import { Album, Artist } from "../../Domain/Model/Music"
+import { Album, Artist, Track } from "../../Domain/Model/Music"
+import { Genre } from "../../Domain/Model/Music/Genre"
 
 export interface SelectedPlaylistState {
     playlist : Playlist | null 
@@ -74,6 +75,50 @@ export const selectedAlbumSlice  = createSlice({
 })
 export const { setAlbum, removeAlbum } = selectedAlbumSlice.actions
 //export const { reducer  } = selectedAlbumSlice
+
+
+export interface SelectedSongState {
+  Song : Track | null 
+}
+const SongState  : SelectedSongState = {
+  Song : null
+}
+export const selectedSongSlice  = createSlice({
+ name: 'selectedSong',
+ initialState: SongState,
+ reducers: {
+   setSong: (state, action: PayloadAction<Track>) => {
+     state.Song = action.payload
+   },
+   removeSong: (state) => {
+     state.Song = null
+   }
+ 
+ },
+})
+export const { setSong, removeSong } = selectedSongSlice.actions
+
+
+export interface SelectedGenreState {
+  Genre : Genre | null 
+}
+const GenreState  : SelectedGenreState = {
+  Genre : null
+}
+export const selectedGenreSlice  = createSlice({
+ name: 'selectedGenre',
+ initialState: GenreState,
+ reducers: {
+   setGenre: (state, action: PayloadAction<Genre>) => {
+     state.Genre = action.payload
+   },
+   removeGenre: (state) => {
+     state.Genre = null
+   }
+ 
+ },
+})
+export const { setGenre, removeGenre } = selectedGenreSlice.actions
 
 
 

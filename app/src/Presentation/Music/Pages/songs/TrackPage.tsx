@@ -5,8 +5,8 @@ import TextArea from "../../../Common/textarea";
 import { PrimaryTextField } from "../../../Common/textfields";
 import MenuColumn from "../../../Dashboard/Components/MenuColumn";
 
-export const AlbumPage = () => {
-    const album = useSelector((state: RootState) => state.selectedAlbum.Album);
+export const TrackPage = () => {
+    const song = useSelector((state: RootState) => state.selectedSong.Song);
     return (
       <div className="h-auto bg-black">
       <div style={{height:"inherit"}}  className="pb-4 flex flex-row ">
@@ -19,19 +19,19 @@ export const AlbumPage = () => {
           <div className="flex flex-row  mx-auto pt-12">
            
               <div className="flex flex-col h-auto w-40">
-                <p className="text-white font-bold pb-4 ">Album</p>
+                <p className="text-white font-bold pb-4 ">Song</p>
                 
-                {album?.imgSrc != null ? <img className="rounded-md h-32 w-32" src={album.imgSrc} />
+                {song?.imgSrc != null ? <img className="rounded-md h-32 w-32" src={song.imgSrc} />
                  : <p className="rounded-md h-32 w-32 bg-fidarrgray-900 flex flex-row items-center text-white">
-                   <span className='mx-auto'>Album Photo</span></p> }
+                   <span className='mx-auto'>Song Photo</span></p> }
                
               </div>
             
               <div className="flex flex-col pl-4 pt-12">
                 <div className="flex flex-row gap-4">
-                  <PrimaryTextField disabled type="text" value={album?.name!!} padX={6} padY={2}  width="full" height="10" label="Name" placeholder="Name" />
+                  <PrimaryTextField disabled type="text" value={song?.name!!} padX={6} padY={2}  width="full" height="10" label="Name" placeholder="Name" />
                  
-                  <PrimaryTextField disabled type="text" value={album?.artist.name!!} padX={6} padY={2} width="full" height="10" label="Artist" placeholder="Artist" />
+                  <PrimaryTextField disabled type="text" value={song?.artistName!!} padX={6} padY={2} width="full" height="10" label="Artist" placeholder="Artist" />
                              
                  
                 </div> 
@@ -42,7 +42,7 @@ export const AlbumPage = () => {
                   </div>
                   <div className='flex flex-row items-center'>
                     {
-                    album?.genres.map( g =>   <div className='flex flex-row items-center'>
+                    song?.genres.map( g =>   <div className='flex flex-row items-center'>
                                                         <input type="checkbox"
                                                         disabled
                                                         checked
@@ -55,24 +55,10 @@ export const AlbumPage = () => {
                  </div>
                 </div>
 
-                <div className='flex flex-col w-full gap-2'>
-                  <div>
-                    <p className='text-sm font-bold text-fidarrgray-900'>Songs</p>
-                  </div>
-                  <div className='flex flex-col w-full items-center'>
-                    {
-                    album?.songs.map( s =>    
-                        <div className="w-full">
-                            <PrimaryTextField disabled type="text" value={`${s.name!!} - ${s.artistName}`} padX={6} padY={2} width="full" height="10" label="" placeholder="" />
-                        </div>                  
-                  
-                    )
-                  }
-                 </div>
-                </div>
+               
 
                 <div>
-                <TextArea name="bio" disabled value={album?.description!!} padX={6} padY={2}  width="full" height="10"  placeholder="Description" label="Description"  />
+                <TextArea name="bio" disabled value={song?.name!!} padX={6} padY={2}  width="full" height="10"  placeholder="Description" label="Description"  />
                       
                  
                 </div>

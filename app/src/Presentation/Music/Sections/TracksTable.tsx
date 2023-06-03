@@ -6,6 +6,10 @@ import { Track } from "../../../Domain/Model/Music/Track";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { PAGE_SIZE } from "../../../Data/Utils/constants";
 import { useState } from "react";
+import { confirmAlert } from "react-confirm-alert";
+import { setPlaylist, setSong } from "../../../StateManagement/redux/musicReduer";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 export type SongCardProps = {
@@ -34,11 +38,83 @@ type TracksTableProps = {
     currentPage: number,
     totalCount: number,
     loadMore : () => void,
-    refresh : () => void
+    refresh : () => void,
+    selectedSongs: Track[],
+    selectSong: (track: Track) => void,
+    unSelectSong: (track: Track) => void,
+    deleteItem: (id: string) =>  void,
     
 }
 
-const TracksTable = ({rows,currentPage, totalCount, loadMore, refresh}: TracksTableProps) => {
+const TracksTable = ({rows,currentPage, totalCount, deleteItem, selectSong, unSelectSong, selectedSongs, loadMore, refresh}: TracksTableProps) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [allSelected, setAllSelected] = useState<boolean>(false)
+    const checkSelectAll = (checked: boolean) => {
+        setAllSelected(checked)
+        if(checked){
+            
+            selectAll()
+        }
+        else{
+            
+            unSelectAll()
+        }
+    }
+   
+    const checkSongSelected = (checked: boolean, song: Track) => {
+      
+          if(checked){
+             
+             selectSong(song)
+          }
+          else{
+            unSelectSong(song)
+          }
+    }
+    const selectAll = () => {
+        rows.forEach(song => {
+            
+            if(!selectedSongs.includes(song)){
+                console.log(song)
+                 selectSong(song)
+            }
+            
+        })
+    }
+    const unSelectAll = () => {
+        rows.forEach(song => {
+            if(selectedSongs.includes(song))
+                 unSelectSong(song)
+            
+        })
+    }
+    const deleteSong = (id: string) => {
+        console.log(id)
+        confirmAlert({
+            customUI: ({ onClose }) => {
+              return (
+                <div className='bg-black rounded-lg flex flex-col px-8 py-2'>
+                  <h1 className="text-white text-xl font-bold mx-auto">Confirm action</h1>
+                  <p className="text-white">You want to delete this  Song?</p>
+                  <div className="flex flex-row gap-2 justify-center mt-8">
+                        <button className="bg-red-700 w-24 h-10 text-white font-bold rounded-lg" onClick={onClose}>No</button>
+                        <button className="bg-white w-24 h-10 text-red-700 rounded-lg"
+                            onClick={() => {
+                            deleteItem(id)
+                            onClose();
+                            }}
+                        >
+                            Yes
+                        </button>
+                  </div>
+                
+                </div>
+              );
+            }
+          });
+       
+      }
     return (
         <div className="flex flex-col w-full">
             <div className="w-11/12 self-end">
@@ -61,8 +137,12 @@ const TracksTable = ({rows,currentPage, totalCount, loadMore, refresh}: TracksTa
                         <thead className="text-left">
                             <tr>
                                 <th className="pr-12">
-                                    <div className="flex">
-                                            <input type="checkbox" className=" rounded-md shrink-0 mt-0.5 border-gray-200 text-red-900 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
+                                <div className="flex">
+                                            <input 
+                                            type="checkbox" 
+                                            checked={allSelected}
+                                            onChange={(e) => checkSelectAll(e.target.checked)}
+                                            className=" rounded-md shrink-0 mt-0.5 border-gray-200 text-red-900  focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
                                             
                                     </div>
                             
@@ -87,7 +167,7 @@ const TracksTable = ({rows,currentPage, totalCount, loadMore, refresh}: TracksTa
                             </td>
                             <td className="border-t-0 border-l-0 border-r-0 text-xs whitespace-nowrap py-4">
                                 <div >
-                                <SongCard artistName={track.artistName} name={track.name} imgSrc={track.imgSrc} genres={track.genres} />
+                                <SongCard artistName={track.artistName} name={track.name} imgSrc={track.imgSrc} genres={track.genres.map(g => g.name)} />
                                 </div>
                             </td>
                             <td ><p>{track.streams}</p></td>
@@ -97,14 +177,24 @@ const TracksTable = ({rows,currentPage, totalCount, loadMore, refresh}: TracksTa
                             <td>
                                 <div className="flex flex-row gap-2">
                                     <div className="cursor-pointer">
-                                    <img src={SettingsIcon} />
+                                    <img onClick={() => {
+                                        dispatch(setSong(track))
+                                        navigate(`/music/tracks/${track.id}`)
+                                       }} 
+                                    src={SettingsIcon} />
                                     </div>
                                     <div className="cursor-pointer">
-                                    <img src={EditIcon} />
-                                    </div>
-                                    <div className="cursor-pointer">
-                                    <img src={DeleteIcon} />
-                                    </div>
+                                    <img onClick={() => {
+                                            dispatch(setSong(track))
+                                            navigate(`/music/tracks/edit/${track.id}`)
+                                        }} src={EditIcon} />
+                                </div>
+                                <div className="cursor-pointer">
+                                    <img src={DeleteIcon} onClick={() => {
+                                    
+                                        deleteSong(track.id)
+                                    }} />
+                                </div>
                                 </div>
                             
                             </td>
@@ -129,10 +219,11 @@ type SearchTracksTableProps = {
     refresh : () => void
     selectedSongs: Track[],
     selectSong: (track: Track) => void,
-    unSelectSong: (track: Track) => void
+    unSelectSong: (track: Track) => void,
+    deleteItem?: (id: string) =>  void,
 }
 
-export const SearchTracksTable = ({rows,currentPage, unSelectSong,selectSong, selectedSongs, totalCount, loadMore, refresh}: SearchTracksTableProps) => {
+export const SearchTracksTable = ({rows,currentPage,unSelectSong,selectSong, selectedSongs, totalCount, loadMore, refresh}: SearchTracksTableProps) => {
     const [allSelected, setAllSelected] = useState<boolean>(false)
     const checkSelectAll = (checked: boolean) => {
         setAllSelected(checked)
@@ -145,6 +236,7 @@ export const SearchTracksTable = ({rows,currentPage, unSelectSong,selectSong, se
             unSelectAll()
         }
     }
+   
     const checkSongSelected = (checked: boolean, song: Track) => {
       
           if(checked){
@@ -224,7 +316,7 @@ export const SearchTracksTable = ({rows,currentPage, unSelectSong,selectSong, se
                             </td>
                             <td className="px-8 border-t-0 border-l-0 border-r-0 text-xs whitespace-nowrap py-2">
                                 <div >
-                                <SongCard artistName={track.artistName} name={track.name} imgSrc={track.imgSrc} genres={track.genres} />
+                                <SongCard artistName={track.artistName} name={track.name} imgSrc={track.imgSrc} genres={track.genres.map(g => g.name)} />
                                 </div>
                             </td>
                             <td ><p>{track.duration}</p></td>

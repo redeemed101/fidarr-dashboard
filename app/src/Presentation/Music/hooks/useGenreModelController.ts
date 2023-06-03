@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { GenreRepository } from "../../../Domain/Repository/Music/GenreRepository";
-import { RequestStatus, useGetData } from "./common";
+import { PagedData, RequestStatus, useGetData } from "./common";
 import { PAGE_SIZE } from "../../../Data/Utils/constants";
 import { Genre } from "../../../Domain/Model/Music/Genre";
 
@@ -12,7 +12,10 @@ type GenreDetails = {
 export const useGenreModelController = (repository : GenreRepository) => {
 
     const [currentPage, setCurrentPage] = useState(1); 
-    const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getGenresPaging(currentPage, PAGE_SIZE));
+    const [genreModified, setGenreModified] = useState(false)
+    const [fetchStatus, setFetchStatus] = useState<RequestStatus>(RequestStatus.Success);
+    const [data, setData] = useState<PagedData>({count: 0, data: []});
+    //const {fetchStatus,setFetchStatus,setData, data} = useGetData(() => repository.getGenresPaging(currentPage, PAGE_SIZE));
     const [genres, setGenres] = useState<Genre[] | []>([]);
     const getAllGenres = async () =>{
         try{
@@ -20,6 +23,23 @@ export const useGenreModelController = (repository : GenreRepository) => {
           setFetchStatus(RequestStatus.Success)
           setGenres(response)
         }
+       catch(e : any){ setFetchStatus(RequestStatus.Error)} 
+    }
+    const deleteGenre = async (genreId : string, finish: () => void) => {
+      try{
+        setFetchStatus(RequestStatus.Loading)
+        const response = await repository.deleteGenre(genreId);
+        if(response){
+          setFetchStatus(RequestStatus.Success)
+          setGenreModified(true)
+        }
+        else{
+          setFetchStatus(RequestStatus.Error)
+          setGenreModified(false)
+        }
+       
+        
+      }
        catch(e : any){ setFetchStatus(RequestStatus.Error)} 
     }
     const getGenresPaginated = async() => {
@@ -31,6 +51,19 @@ export const useGenreModelController = (repository : GenreRepository) => {
         }
       catch(e : any){ setFetchStatus(RequestStatus.Error)} 
     }
+    const editGenre = async (id: string,genre: GenreDetails,onUploadProgress: any) => {
+      try{
+       setFetchStatus(RequestStatus.Loading)
+       const response = await repository.editGenre(id,{name: genre.name, artworkFile: genre.image}, onUploadProgress)
+       if(response){
+          setFetchStatus(RequestStatus.Success)
+          setGenreModified(true)
+       }
+       else
+          setFetchStatus(RequestStatus.Failure)
+      }
+      catch(e : any){ setFetchStatus(RequestStatus.Error)} 
+   }
     const createGenre = async (genre: GenreDetails,onUploadProgress: any) => {
        try{
         setFetchStatus(RequestStatus.Loading)
@@ -73,6 +106,8 @@ export const useGenreModelController = (repository : GenreRepository) => {
         fetchStatus,
         currentPage,
         genres,
+        editGenre,
+        deleteGenre,
         getGenresPaginated,
         createGenre,
         getAllGenres,

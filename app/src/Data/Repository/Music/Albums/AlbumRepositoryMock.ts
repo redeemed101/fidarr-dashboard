@@ -5,6 +5,7 @@ import { CreateAlbumRequest, CreateAlbumResponse, EditAlbumRequest, EditAlbumRes
 import { GeneralResponse } from "../../../DataSource/Music/Artists/ArtistDataSource";
 import moment from "moment";
 import { Track } from "../../../../Domain/Model/Music";
+import { Genre } from "../../../../Domain/Model/Music/Genre";
 
 @injectable()
 export class AlbumRepositoryMock implements AlbumRepository{
@@ -24,7 +25,17 @@ export class AlbumRepositoryMock implements AlbumRepository{
                         bio: "Nice Artist",               
                         imgSrc : "https://picsum.photos/200",
                         name : `artist ${i}`,
-                        genres : ["Genre 1", "Genre 2"],
+                        genres : [...Array(5)].map(g => {
+                            return  {
+                                imgSrc : "",
+                                name : "Pop",
+                                albums : 0,
+                                tracks : 0,
+                                artists: 0,
+                                lastUpdated: "2019-09-09",
+                                id: "1"
+                            }
+                        }) as Genre[],
                         streams : 100000,
                         tracks : 20,
                         albums: 2,
@@ -36,7 +47,17 @@ export class AlbumRepositoryMock implements AlbumRepository{
                           imgSrc : "https://picsum.photos/200",
                           name : `song ${i}`,
                           artistName: `artist ${i}`,
-                          genres : ["Genre 1", "Genre 2"],
+                          genres: [...Array(5)].map(g => {
+                            return  {
+                                imgSrc : "",
+                                name : "Pop",
+                                albums : 0,
+                                tracks : 0,
+                                artists: 0,
+                                lastUpdated: "2019-09-09",
+                                id: "1"
+                            }
+                        }) as Genre[],
                           streams : "10M",
                           duration : "",
                           lastUpdated: "2023-10-31", 
@@ -44,7 +65,17 @@ export class AlbumRepositoryMock implements AlbumRepository{
                          
                       }
                     }),
-                    genres : ["Genre 1", "Genre 2"],
+                    genres : [...Array(5)].map(g => {
+                        return  {
+                            imgSrc : "",
+                            name : "Pop",
+                            albums : 0,
+                            tracks : 0,
+                            artists: 0,
+                            lastUpdated: "2019-09-09",
+                            id: "1"
+                        }
+                    }) as Genre[],
                     streams : "10M",
                     tracks : 5,
                     releaseDate: "2023-10-31",

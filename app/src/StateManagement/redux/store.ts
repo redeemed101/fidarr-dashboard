@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit"
 import userReducer, { reducer as recoverEmailReducer } from "./userReducer"
-import PlaylistReducer, {reducer as ArtistReducer, selectedAlbumSlice} from "./musicReduer"
+import PlaylistReducer, {reducer as ArtistReducer, selectedAlbumSlice, selectedGenreSlice, selectedSongSlice} from "./musicReduer"
 
 export const store = configureStore({
     reducer: {
@@ -8,7 +8,9 @@ export const store = configureStore({
       recoverEmail : recoverEmailReducer,
       selectedPlaylist: PlaylistReducer,
       selectedArtist: ArtistReducer,
-      selectedAlbum: selectedAlbumSlice.reducer
+      selectedAlbum: selectedAlbumSlice.reducer,
+      selectedSong: selectedSongSlice.reducer,
+      selectedGenre: selectedGenreSlice.reducer
     }
   })
   

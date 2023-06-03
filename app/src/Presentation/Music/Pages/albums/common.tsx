@@ -5,7 +5,10 @@ import { PrimaryTextField } from "../../../Common/textfields"
 import ListIcon from "../../../../Assets/svgs/ListIcon.svg"
 import DeleteIcon from "../../../../Assets/svgs/DeleteIcon.svg"
 import EditIcon from "../../../../Assets/svgs/EditIcon.svg"
+import PlusIcon from "../../../../Assets/svgs/PlusIcon.svg"
+import FolderPlusIcon from "../../../../Assets/svgs/FolderPlusIcon.svg"
 import EditActiveIcon from "../../../../Assets/svgs/EditActiveIcon.svg"
+import { ButtonWithIcon, SecondaryButton, PrimaryButton } from "../../../Common/buttons"
 
 export type MusicTabProps = {
     genres: Genre[]
@@ -23,7 +26,7 @@ export type SongData = {
     name?: string,
     artist?: string,
     featuring?: string[]
-    genres?: string[]
+    genres?: Genre[]
     isrcCode?: string
 
 }
@@ -80,11 +83,11 @@ export const SongItem = ({songData,genres,handleDoneEditing, id,handleDelete, ed
     const [artist, setArtist] = useState(songData?.artist??"")
     const [isrcCode, setIsrcCode] = useState(songData?.isrcCode ?? "")
     const [songFile, setSongFile] = useState<File | null>(null)
-    const [songGenres, setSongGenres] = useState<string[]>(songData?.genres ?? [])
+    const [songGenres, setSongGenres] = useState<Genre[]>(songData?.genres ?? [])
     const [featuringArtists, setFeaturingArtists] = useState([])
     const doneEditing = () =>{
          if(editMode && selectedIndex == id){
-             console.log(songGenres)
+             console.log(songData)
               handleDoneEditing({
                   id: id,
                   file: songFile,
@@ -100,7 +103,7 @@ export const SongItem = ({songData,genres,handleDoneEditing, id,handleDelete, ed
     const onDelete = () => {
         handleDelete(id)
     }
-    const handleOnCheck = (genre : string) => {
+    const handleOnCheck = (genre : Genre) => {
         if(songGenres.includes(genre)){
            
             setSongGenres(prev => (prev.filter(g => g != genre)))
@@ -129,9 +132,9 @@ export const SongItem = ({songData,genres,handleDoneEditing, id,handleDelete, ed
                     </div>
                 </div>
                 <div className="w-10/12 mx-auto relative -mt-2">
-                            <div className="overflow-hidden h-2 text-xs flex rounded bg-fidarrgray-900">
+                            {/*<div className="overflow-hidden h-2 text-xs flex rounded bg-fidarrgray-900">
                                 <div style={{width : "40%"}} className="bg-red-900 shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center "></div>
-                            </div>
+                           </div>*/}
                 </div>
             </div>
            
@@ -151,8 +154,8 @@ export const SongItem = ({songData,genres,handleDoneEditing, id,handleDelete, ed
                                                 name={g.name}
                                                 value={g.id}
                                                 id={g.id}
-                                                checked={songGenres.includes(g.id)}
-                                                onChange={(e) => handleOnCheck(g.id)}
+                                                checked={songGenres.find( ge => ge.id == g.id) != null}
+                                                onChange={(e) => handleOnCheck(g)}
                                                 className="text-fidarrgray-900 hover:bg-fidarrgray-600 cursor-pointer w-6 h-6 border-3 border-amber-500 focus:outline-none rounded" />
                                                 <label htmlFor={g.name} className="text-white mx-4 ">{g.name}</label>
                                         </div>
@@ -172,5 +175,46 @@ export const SongItem = ({songData,genres,handleDoneEditing, id,handleDelete, ed
 
 
     </div>
+    )
+}
+
+
+
+export const AddMusicTab = ({songsData,genres,switchTab,handleDeleteSongItem,handleSongEditing,addSongItem, submitAlbum } : MusicTabProps) => {
+    const [editMode, setEditMode] = useState(false);
+    const [selectedIndex, setSelectedIndex] =  useState(0);
+    const handleEditMode = (id : number) => {
+          const mode = selectedIndex != id ? editMode : !editMode
+          setEditMode(editMode => mode)
+          setSelectedIndex(id)
+          
+      };
+    
+   
+    return (
+        <div className="flex flex-col w-full items-start  px-6">
+            <div className="flex flex-row gap-2 ">
+                <div className="flex flex-row gap-4 ">
+                    <ButtonWithIcon onClicked={addSongItem} imageSrc={PlusIcon} title="Upload Track" />
+                    <ButtonWithIcon imageSrc={FolderPlusIcon} title="Add Existing" />
+                    
+                </div>
+                <div></div>                
+            </div>
+
+            <div className="flex flex-col w-full pt-4">
+              {
+                  songsData.map( (x,i) => 
+                    <SongItem handleDoneEditing={handleSongEditing} songData={x} genres={genres} handleEditMode={handleEditMode} handleDelete={handleDeleteSongItem} id={x.id} selectedIndex={selectedIndex} editMode={editMode} />
+                  )
+              }
+             
+
+            </div>
+            <div className="w-full pt-10 flex flex-row justify-between">
+               <SecondaryButton onClick={switchTab}  title='Back' padY={2} padX={4} height="auto" width="1/6"/>
+               <PrimaryButton disabled={songsData.length < 1} onClick={submitAlbum}  title='Save' padY={2} padX={4} height="auto" width="1/6"/>
+            </div>
+        </div>
     )
 }

@@ -6,6 +6,7 @@ import { TYPES } from "../../../DI/types";
 import { ChartDataSource } from "../../DataSource/Music/Playlists/ChartDataSource";
 import { BASE_URL } from "../../DataSource/API/constant";
 import moment from "moment";
+import { Genre } from "../../../Domain/Model/Music/Genre";
 
 @injectable()
 export class MoodRepositoryImpl implements MoodRepository{
@@ -40,7 +41,17 @@ export class MoodRepositoryImpl implements MoodRepository{
                                     imgSrc : `${BASE_URL}${s?.artworkPath}`,
                                     name : s?.name,
                                     artistName: s?.artist?.name,
-                                    genres : s?.genres?.map(g => g?.name),
+                                    genres : s?.genres?.map(g => {
+                                        return {
+                                            id: g?.id,
+                                            imgSrc : `${BASE_URL}${g?.imageUrl}`,
+                                            name : g?.name,
+                                            albums : g?.albums?.length ?? 0,
+                                            tracks : g?.songs?.length ?? 0,
+                                            artists: g?.artists?.length ?? 0,
+                                            lastUpdated: g?.dateCreated
+                                        } 
+                                      }) as Genre[],
                                     streams : s?.streams ?? "",
                                     duration : "",
                                     releaseDate: moment(Date.parse(s?.releaseDate)).format('MMMM DD, YYYY'),

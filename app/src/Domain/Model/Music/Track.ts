@@ -1,3 +1,4 @@
+import { Genre } from "./Genre"
 
 
 export type Track = {
@@ -5,7 +6,7 @@ export type Track = {
     imgSrc : string,
     name : string,
     artistName: string,
-    genres? : string[],
+    genres : Genre[],
     isrcCode?:string,
     streams : string,
     duration : string,

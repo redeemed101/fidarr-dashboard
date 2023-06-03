@@ -4,6 +4,7 @@ import { Playlist, PlaylistPage } from "../../../Domain/Model/Music/Playlist";
 import { CreatePlaylistRequest, EditPlaylistRequest } from "../../DataSource/Music/Playlists/PlaylistDataSource";
 import moment from "moment";
 import { BASE_URL } from "../../DataSource/API/constant";
+import { Genre } from "../../../Domain/Model/Music/Genre";
 
 @injectable()
 export class PlaylistRepositoryMock implements PlaylistRepository{
@@ -24,7 +25,17 @@ export class PlaylistRepositoryMock implements PlaylistRepository{
                       imgSrc : "https://picsum.photos/200",
                       name : `song ${i}`,
                       artistName: `artist ${i}`,
-                      genres : ["Genre 1", "Genre 2"],
+                      genres : [...Array(5)].map(g => {
+                        return  {
+                            imgSrc : "",
+                            name : "Pop",
+                            albums : 0,
+                            tracks : 0,
+                            artists: 0,
+                            lastUpdated: "2019-09-09",
+                            id: "1"
+                        }
+                    }) as Genre[],
                       streams : "10M",
                       duration : "",
                       lastUpdated: moment(Date.parse("2023-10-31")).format('MMMM DD, YYYY'), 

@@ -1,14 +1,24 @@
 import { injectable } from "inversify";
-import { CreateGenreRequest, CreateGenreResponse, GenreDataSource, Genres, GenresPaging } from "./GenreDataSource";
+import { CreateGenreRequest, CreateGenreResponse, EditGenreRequest, GenreDataSource, Genres, GenresPaging } from "./GenreDataSource";
 import { graphQLGenreClient } from "../../GraphQL/Client/client";
 import { Genre, GetGenresDocument, GetGenresPagingDocument, GetGenresPagingQueryResult, GetGenresQuery, GetGenresQueryResult } from "../../GraphQL/Generated/Genres/graphql";
-import { postAPI } from "../../API/axios_instance";
+import { deleteAPI, postAPI, putAPI } from "../../API/axios_instance";
+import { GeneralResponse } from "../Artists/ArtistDataSource";
 
 
 
 
 @injectable()
 export class GenreDataSourceImpl implements GenreDataSource{
+    async deleteGenre(id: string): Promise<GeneralResponse> {
+       return await deleteAPI<GeneralResponse>(`AdminGenre/delete/${id}`);
+    }
+    async editGenre(id: string, request: EditGenreRequest, onUploadProgress: any): Promise<GeneralResponse> {
+        let formData = new FormData();  
+        formData.append("name",request.name);
+        formData.append("artworkFile",request.artworkFile);
+        return await putAPI<GeneralResponse>(`AdminGenre/edit/${id}`, formData, { "Content-Type": "multipart/form-data"}, onUploadProgress) 
+    }
     async createGenre(request: CreateGenreRequest, onUploadProgress: any): Promise<CreateGenreResponse> {
         let formData = new FormData();  
         formData.append("name",request.name);

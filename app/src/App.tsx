@@ -34,7 +34,7 @@ import FilesPage from './Presentation/Files/Pages/FilesPage';
 import ProfilePage from './Presentation/Settings/Pages/ProfilePage';
 import TeamPage from './Presentation/Settings/Pages/TeamPage';
 import CreateTeamMemberPage from './Presentation/Settings/Pages/CreateTeamMemberPage';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './StateManagement/redux/store';
 import { useEffect } from 'react';
 import RecoverEmailPage from './Presentation/Authentication/Pages/RecoverEmailPage';
@@ -46,6 +46,10 @@ import UploadAlbumPage from './Presentation/Music/Pages/albums/UploadAlbumPage';
 import { AlbumPage } from './Presentation/Music/Pages/albums/AlbumPage';
 import TracksPage from './Presentation/Music/Pages/songs/TracksPage';
 import EditAlbumPage from './Presentation/Music/Pages/albums/EditAlbumPage';
+import EditTrackPage from './Presentation/Music/Pages/songs/EditTrackPage';
+import { TrackPage } from './Presentation/Music/Pages/songs/TrackPage';
+import { setUser } from './StateManagement/redux/userReducer';
+import EditGenrePage from './Presentation/Music/Pages/genres/EditGenrePage';
 
 
 
@@ -97,9 +101,18 @@ const dashboardRoutes : AuthRoutes[] = [
       page : <ArtistPage />,
       route: "/music/artists/:id"
     },
+    
     {
       page : <UploadTrackPage />,
       route: "/music/tracks/create"
+    },
+    {
+      page : <EditTrackPage />,
+      route: "/music/tracks/edit/:id"
+    },
+    {
+      page : <TrackPage />,
+      route: "/music/tracks/:id"
     },
     {
       page : <UploadAlbumPage />,
@@ -116,6 +129,10 @@ const dashboardRoutes : AuthRoutes[] = [
     {
       page : <CreateGenrePage />,
       route: "/music/genres/create"
+    },
+    {
+      page : <EditGenrePage />,
+      route: "/music/genres/edit/:id"
     },
     {
       page : <CreatePaylistPage />,
@@ -244,10 +261,20 @@ const MenuContextLayout = () => {
 function App() {
   const user = useSelector((state: RootState) => state.user.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setUser({
+      email: "lmsasajnr@gmail.com",
+      username: "lmsasajnr",
+      name: "Lewis Msasa Jr",
+      profilePicPath: "https://picsum.photos/200",
+      id: "12345"
+  }))
+  },[])
   useEffect(() => {
     console.log(user)
     if (user == null) {
-       navigate("/music/artists")
+       navigate("/music/tracks/create")
     } else {
       navigate("/dashboard")
     }
