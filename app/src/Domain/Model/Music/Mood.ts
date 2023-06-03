@@ -10,4 +10,5 @@ export type Mood = {
     name : string,
     playlists: Playlist[]
     dateCreated: string
+    lastUpdated: string
 }

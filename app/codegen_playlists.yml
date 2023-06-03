@@ -1,5 +1,5 @@
 overwrite: true
-schema: "https://d215-102-70-2-208.ngrok-free.app/api/playlistql"
+schema: "https://8f34-102-70-2-16.ngrok-free.app/api/playlistql"
 documents: "src/Data/DataSource/GraphQL/Playlists/*.ts"
 generates:
   src/Data/DataSource/GraphQL/Generated/Playlists/:

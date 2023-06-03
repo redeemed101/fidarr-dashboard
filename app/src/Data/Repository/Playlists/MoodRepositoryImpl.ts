@@ -25,6 +25,8 @@ export class MoodRepositoryImpl implements MoodRepository{
                 name : m.name,
                 id: m.id,
                 imgPath : `${BASE_URL}${m.imagePath}`,
+                lastUpdated: m.lastUpdated,
+                dateCreated: m.dateCreated,
                 playlists: m.playlists?.map(p => 
                     {
                         return {

@@ -50,6 +50,9 @@ import EditTrackPage from './Presentation/Music/Pages/songs/EditTrackPage';
 import { TrackPage } from './Presentation/Music/Pages/songs/TrackPage';
 import { setUser } from './StateManagement/redux/userReducer';
 import EditGenrePage from './Presentation/Music/Pages/genres/EditGenrePage';
+import { MoodsPage } from './Presentation/Music/Pages/moods/MoodsPage';
+import { CreateMoodPage } from './Presentation/Music/Pages/moods/CreateMoodPage';
+import { EditMoodPage } from './Presentation/Music/Pages/moods/EditMoodPage';
 
 
 
@@ -242,6 +245,18 @@ const dashboardRoutes : AuthRoutes[] = [
     {
       page : <CreateTeamMemberPage />,
       route: "/settings/team/create"
+    },
+    {
+      page : <MoodsPage />,
+      route: "/music/moods"
+    },
+    {
+      page : <CreateMoodPage />,
+      route: "/music/moods/create"
+    },
+    {
+      page : <EditMoodPage />,
+      route: "/music/moods/edit/:id"
     }
 
 
@@ -262,7 +277,7 @@ function App() {
   const user = useSelector((state: RootState) => state.user.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  useEffect(() => {
+  /*useEffect(() => {
     dispatch(setUser({
       email: "lmsasajnr@gmail.com",
       username: "lmsasajnr",
@@ -270,11 +285,11 @@ function App() {
       profilePicPath: "https://picsum.photos/200",
       id: "12345"
   }))
-  },[])
+  },[])*/
   useEffect(() => {
     console.log(user)
     if (user == null) {
-       navigate("/music/tracks/create")
+       navigate("/music/moods")
     } else {
       navigate("/dashboard")
     }

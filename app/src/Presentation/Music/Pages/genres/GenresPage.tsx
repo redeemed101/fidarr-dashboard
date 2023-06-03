@@ -54,7 +54,7 @@ const GenresPage = () => {
              selectedGenres={selectedGenres}
              totalCount={count} 
              currentPage={currentPage} 
-             loadMore={getMoreGenresPaginated} rows={currentGenres} />  }
+             loadMore={getMoreGenresPaginated} rows={genres} />  }
              {fetchStatus == RequestStatus.Error ? <div className="mx-auto"><p className="text-red-600">Error fetching data</p></div> : ""}
            
           </div>   

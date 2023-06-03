@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { Playlist } from "../../Domain/Model/Music/Playlist"
 import { Album, Artist, Track } from "../../Domain/Model/Music"
 import { Genre } from "../../Domain/Model/Music/Genre"
+import { Mood } from "../../Domain/Model/Music/Mood"
 
 export interface SelectedPlaylistState {
     playlist : Playlist | null 
@@ -119,6 +120,29 @@ export const selectedGenreSlice  = createSlice({
  },
 })
 export const { setGenre, removeGenre } = selectedGenreSlice.actions
+
+
+
+export interface SelectedMoodState {
+  Mood : Mood | null 
+}
+const MoodState  : SelectedMoodState = {
+  Mood : null
+}
+export const selectedMoodSlice  = createSlice({
+ name: 'selectedMood',
+ initialState: MoodState,
+ reducers: {
+   setMood: (state, action: PayloadAction<Mood>) => {
+     state.Mood = action.payload
+   },
+   removeMood: (state) => {
+     state.Mood = null
+   }
+ 
+ },
+})
+export const { setMood, removeMood } = selectedMoodSlice.actions
 
 
 

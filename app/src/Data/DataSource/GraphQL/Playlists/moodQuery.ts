@@ -9,6 +9,8 @@ query getMoods($page:Int!,$size:Int!){
         name
         id
         imagePath
+        lastUpdated
+        dateCreated
       }
     }
   }

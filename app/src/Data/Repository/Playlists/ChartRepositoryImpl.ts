@@ -106,7 +106,8 @@ export class ChartRepositoryImpl implements ChartRepository{
                      }
                    } as SongPosition
                 }),
-                dateCreated: ""
+                dateCreated: c.dateCreated,
+                lastUpdated : c.lastUpdated
 
             } as Chart
           }

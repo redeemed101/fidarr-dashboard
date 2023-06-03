@@ -10,6 +10,7 @@ export type Chart = {
     name : string,
     positions: SongPosition[]
     dateCreated: string
+    lastUpdated: string
 }
 export type SongPosition = {
     position: number,

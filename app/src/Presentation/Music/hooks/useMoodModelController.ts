@@ -32,12 +32,14 @@ export const useMoodModelController = (repository : MoodRepository) => {
         catch(e : any){ setFetchStatus(RequestStatus.Error)} 
 
     }
-    const deleteMood = async (id:string) => {
+    const deleteMood = async (id:string, finish: () => void) => {
 
         try{
             const result = await repository.deleteMood(id)
-            if(result)
+            if(result){
                 setFetchStatus(RequestStatus.Success)
+                finish()
+            }
             else
                 setFetchStatus(RequestStatus.Error)
         }

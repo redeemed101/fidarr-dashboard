@@ -69,6 +69,8 @@ export type AlbumStream = {
 
 export type Artist = {
   __typename?: 'Artist';
+  /**  Address. */
+  address: Scalars['String'];
   /** Albums */
   albums?: Maybe<Array<Maybe<Album>>>;
   /**  Bio. */
@@ -99,10 +101,14 @@ export type Artist = {
 
 export type Chart = {
   __typename?: 'Chart';
+  /** DateCreated. */
+  dateCreated: Scalars['DateTime'];
   /**  Id. */
   id: Scalars['String'];
   /** Image. */
   imagePath: Scalars['String'];
+  /** LastUpdated. */
+  lastUpdated: Scalars['DateTime'];
   /** Name. */
   name: Scalars['String'];
   positions?: Maybe<Array<Maybe<ChartPosition>>>;
@@ -147,10 +153,14 @@ export type Genre = {
 
 export type Mood = {
   __typename?: 'Mood';
+  /** DateCreated. */
+  dateCreated: Scalars['DateTime'];
   /**  Id. */
   id: Scalars['String'];
   /** Image. */
   imagePath: Scalars['String'];
+  /** LastUpdated. */
+  lastUpdated: Scalars['DateTime'];
   /** Name. */
   name: Scalars['String'];
   playlists?: Maybe<Array<Maybe<Playlist>>>;
@@ -317,7 +327,7 @@ export type GetMoodsQueryVariables = Exact<{
 }>;
 
 
-export type GetMoodsQuery = { __typename?: 'PlaylistQuery', moodsPaging?: Array<{ __typename?: 'MoodPaging', count: number, moods?: Array<{ __typename?: 'Mood', name: string, id: string, imagePath: string } | null> | null } | null> | null };
+export type GetMoodsQuery = { __typename?: 'PlaylistQuery', moodsPaging?: Array<{ __typename?: 'MoodPaging', count: number, moods?: Array<{ __typename?: 'Mood', name: string, id: string, imagePath: string, lastUpdated: any, dateCreated: any } | null> | null } | null> | null };
 
 export type GetFidarrPlaylistsPagingByGenreQueryVariables = Exact<{
   page: Scalars['Int'];
@@ -475,6 +485,8 @@ export const GetMoodsDocument = gql`
       name
       id
       imagePath
+      lastUpdated
+      dateCreated
     }
   }
 }

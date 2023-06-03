@@ -39,6 +39,8 @@ import { MoodRepositoryImpl } from "../Data/Repository/Playlists/MoodRepositoryI
 import { MoodDataSource } from "../Data/DataSource/Music/Playlists/MoodDataSource";
 import { MoodDataSourceImpl } from "../Data/DataSource/Music/Playlists/MoodDataSourceImpl";
 import { PlaylistRepositoryMock } from "../Data/Repository/Playlists/PlaylistRepositoryMock";
+import { MoodRepositoryMock } from "../Data/Repository/Playlists/MoodRepositoryMock";
+import { ChartRepositoryMock } from "../Data/Repository/Playlists/ChartRepositoryMock";
 
 const myContainer = new Container();
 myContainer.bind<AlbumDataSource>(TYPES.AlbumDataSource).to(AlbumDataSourceImpl);
@@ -51,8 +53,8 @@ myContainer.bind<ArtistRepository>(TYPES.ArtistRepository).to(ArtistRepositoryMo
 myContainer.bind<GenreRepository>(TYPES.GenreRepository).to(GenreRepositoryMock);
 myContainer.bind<SongRepository>(TYPES.SongRepository).to(SongRepositoryMock);
 myContainer.bind<PlaylistRepository>(TYPES.PlaylistRepository).to(PlaylistRepositoryMock);
-myContainer.bind<ChartRepository>(TYPES.ChartRepository).to(ChartRepositoryImpl);
-myContainer.bind<MoodRepository>(TYPES.MoodRepository).to(MoodRepositoryImpl);
+myContainer.bind<ChartRepository>(TYPES.ChartRepository).to(ChartRepositoryMock);
+myContainer.bind<MoodRepository>(TYPES.MoodRepository).to(MoodRepositoryMock);
 
 myContainer.bind<AuthenticationDataSource>(TYPES.AuthenticationDataSource).to(AuthenticationDataSourceMock);
 myContainer.bind<AuthenticationRepository>(TYPES.AuthenticationRepository).to(AuthenticationRepositoryImpl);

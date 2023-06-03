@@ -12,7 +12,9 @@ export const enum MusicMenuType{
      Tracks,
      Albums,
      Genres,
-     Playlists
+     Playlists,
+     Moods,
+     Charts
 }
 export const menuItems : MusicMenu [] = [
     {
@@ -41,6 +43,16 @@ export const menuItems : MusicMenu [] = [
         title : "Playlists",
         route: "/music/playlists",
         type : MusicMenuType.Playlists
+    },
+    {
+        title : "Moods",
+        route: "/music/moods",
+        type : MusicMenuType.Moods
+    },
+    {
+        title : "Charts",
+        route: "/music/charts",
+        type : MusicMenuType.Charts
     }
 
 ]
