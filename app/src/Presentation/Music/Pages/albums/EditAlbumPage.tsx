@@ -301,21 +301,22 @@ const EditAlbumPage = () => {
         setActiveTab(TABS.AddMusic);
     };
     const submitAlbum = () => {
-        editAlbum(album?.id!!,albumDetails?.artworkFile!, songsData.map(s => s.file!),{
-            name: albumDetails?.name!,
-            description: albumDetails?.description!,
-            artistId : albumDetails?.artistId!,
-            genres: albumDetails?.genres!,
-            songNames: songsData.map(s => s.name!),
-            songGenres: songsData.map(s => s.genres!!.map(g => g.id)),
-            songArtists: songsData.map(s => s.artist!),
-            songsISRCCodes: songsData.map(s => s.isrcCode!),
-            songFiles: songsData.map(s => s.file!),
-            songDescriptions: [],
-            releaseDate: new Date(albumDetails?.releaseDate!),
-        } , (progressEvent : AxiosProgressEvent)  => {
+        editAlbum(album?.id!!,albumDetails?.artworkFile!,  songsData.filter(s => !s.existing).map(s => s.file!),{
+          name: albumDetails?.name!,
+          description: albumDetails?.description!,
+          artistId : albumDetails?.artistId!,
+          genres: albumDetails?.genres!,
+          existingSongs: songsData.filter(s => s.existing).map(s => s.existingSongId!),
+          songNames: songsData.filter(s => !s.existing).map(s => s.name!),
+          songGenres: songsData.filter(s => !s.existing).map(s => s.genres!.map(g => g.id)),
+          songArtists: songsData.filter(s => !s.existing).map(s => s.artist!),
+          songsISRCCodes: songsData.filter(s => !s.existing).map(s => s.isrcCode!),
+          songFiles: songsData.filter(s => !s.existing).map(s => s.file!),
+          songDescriptions: [],
+          releaseDate: new Date(albumDetails?.releaseDate!),
+      } , (progressEvent : AxiosProgressEvent)  => {
 
-        })
+      })
     }
     return (
        
