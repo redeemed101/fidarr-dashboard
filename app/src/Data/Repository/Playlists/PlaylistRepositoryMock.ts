@@ -24,7 +24,28 @@ export class PlaylistRepositoryMock implements PlaylistRepository{
                       id: `track-${i}`,                    
                       imgSrc : "https://picsum.photos/200",
                       name : `song ${i}`,
-                      artistName: `artist ${i}`,
+                      artist:{
+                        id: `artist ${i}`,     
+                        website: "www.google.com",
+                        bio: "Nice Artist",               
+                        imgSrc : "https://picsum.photos/200",
+                        name : `artist ${i}`,
+                        genres : [...Array(5)].map(g => {
+                            return  {
+                                imgSrc : "",
+                                name : "Pop",
+                                albums : 0,
+                                tracks : 0,
+                                artists: 0,
+                                lastUpdated: "2019-09-09",
+                                id: "1"
+                            }
+                        }) as Genre[],
+                        streams : 100000,
+                        tracks : 20,
+                        albums: 2,
+                        lastUpdated: moment(Date.parse("2023-10-31")).format('MMMM DD, YYYY'),
+                    },
                       genres : [...Array(5)].map(g => {
                         return  {
                             imgSrc : "",

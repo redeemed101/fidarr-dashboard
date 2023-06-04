@@ -43,7 +43,28 @@ export class ChartRepositoryImpl implements ChartRepository{
                         imgSrc : `${BASE_URL}${p?.song?.artworkPath}`,
                         id: p?.song?.id,
                         name : p?.song?.name,
-                        artistName: p?.song?.artist?.name,
+                        artist:{
+                            id: p?.song?.artist?.id,
+                            website: p?.song?.artist?.website,
+                            bio: p?.song?.artist?.bio,
+                            imgSrc : `${BASE_URL}${p?.song?.artist?.imagePath}`,
+                            name : p?.song?.artist?.name,
+                            genres : p?.song?.artist?.genres?.map(g => {
+                                return {
+                                    id: g?.id,
+                                    imgSrc : `${BASE_URL}${g?.imageUrl}`,
+                                    name : g?.name,
+                                    albums : g?.albums?.length ?? 0,
+                                    tracks : g?.songs?.length ?? 0,
+                                    artists: g?.artists?.length ?? 0,
+                                    lastUpdated: g?.dateCreated
+                                } 
+                              }) as Genre[],
+                            streams : p?.song?.artist?.songs?.reduce( (a,b) => a + (b?.streams?.length ?? 0) ,0) ?? 0,
+                            tracks : p?.song?.artist?.songs?.length ?? 0,
+                            albums: p?.song?.artist?.albums?.length ?? 0,
+                            lastUpdated: p?.song?.artist?.lastUpdated
+                        },
                         genres : p?.song?.genres?.map(g => {
                             return {
                                 id: g?.id,
@@ -87,7 +108,28 @@ export class ChartRepositoryImpl implements ChartRepository{
                         imgSrc : `${BASE_URL}${p?.song?.artworkPath}`,
                         id: p?.song?.id,
                         name : p?.song?.name,
-                        artistName: p?.song?.artist?.name,
+                        artist:{
+                            id: p?.song?.artist?.id,
+                            website: p?.song?.artist?.website,
+                            bio: p?.song?.artist?.bio,
+                            imgSrc : `${BASE_URL}${p?.song?.artist?.imagePath}`,
+                            name : p?.song?.artist?.name,
+                            genres : p?.song?.artist?.genres?.map(g => {
+                                return {
+                                    id: g?.id,
+                                    imgSrc : `${BASE_URL}${g?.imageUrl}`,
+                                    name : g?.name,
+                                    albums : g?.albums?.length ?? 0,
+                                    tracks : g?.songs?.length ?? 0,
+                                    artists: g?.artists?.length ?? 0,
+                                    lastUpdated: g?.dateCreated
+                                } 
+                              }) as Genre[],
+                            streams : p?.song?.artist?.songs?.reduce( (a,b) => a + (b?.streams?.length ?? 0) ,0) ?? 0,
+                            tracks : p?.song?.artist?.songs?.length ?? 0,
+                            albums: p?.song?.artist?.albums?.length ?? 0,
+                            lastUpdated: p?.song?.artist?.lastUpdated
+                        },
                         genres : p?.song?.genres?.map(g => {
                             return {
                                 id: g?.id,

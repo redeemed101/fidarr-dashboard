@@ -42,7 +42,28 @@ export class MoodRepositoryImpl implements MoodRepository{
                                     id: s?.id,
                                     imgSrc : `${BASE_URL}${s?.artworkPath}`,
                                     name : s?.name,
-                                    artistName: s?.artist?.name,
+                                    artist:{
+                                        id: s?.artist?.id,
+                                        website: s?.artist?.website,
+                                        bio: s?.artist?.bio,
+                                        imgSrc : `${BASE_URL}${s?.artist?.imagePath}`,
+                                        name : s?.artist?.name,
+                                        genres : s?.artist?.genres?.map(g => {
+                                            return {
+                                                id: g?.id,
+                                                imgSrc : `${BASE_URL}${g?.imageUrl}`,
+                                                name : g?.name,
+                                                albums : g?.albums?.length ?? 0,
+                                                tracks : g?.songs?.length ?? 0,
+                                                artists: g?.artists?.length ?? 0,
+                                                lastUpdated: g?.dateCreated
+                                            } 
+                                          }) as Genre[],
+                                        streams : s?.artist?.songs?.reduce( (a,b) => a + (b?.streams?.length ?? 0) ,0) ?? 0,
+                                        tracks : s?.artist?.songs?.length ?? 0,
+                                        albums: s?.artist?.albums?.length ?? 0,
+                                        lastUpdated: s?.artist?.lastUpdated
+                                       },
                                     genres : s?.genres?.map(g => {
                                         return {
                                             id: g?.id,

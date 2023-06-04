@@ -165,7 +165,7 @@ const EditPlaylistPage = () => {
                                   </div>
                                   <div className=" pr-8  flex flex-col w-10/12">
                                       <div className="px-2 bg-white rounded h-10 w-full">
-                                        <p className=" text-black">{song.name} - {song.artistName}</p>
+                                        <p className=" text-black">{song.name} - {song.artist.name}</p>
                                       </div>
                                       {/*<PrimaryTextField type="text" value={song.name} padX={2} padY={1} width="full" height="10" label="" placeholder="Imela.mp3" />
                                       <div className="relative -mt-2">

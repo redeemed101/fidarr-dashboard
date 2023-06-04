@@ -161,13 +161,15 @@ const TracksTable = ({rows,currentPage, totalCount, deleteItem, selectSong, unSe
                             <tr className="text-left">
                             <td className="pr-12">
                             <div className="flex">
-                                    <input type="checkbox" className="shrink-0 mt-0.5 border-gray-200 rounded-md text-red-900 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
-                                    
+                                <input type="checkbox" 
+                                          checked={selectedSongs.find(p => p.id == track.id) != null}                                 
+                                          onChange={(e) => checkSongSelected(e.target.checked, track)}
+                                          className="shrink-0 mt-0.5 border-gray-200 rounded-md text-red-900  focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"  />
                                 </div>
                             </td>
                             <td className="border-t-0 border-l-0 border-r-0 text-xs whitespace-nowrap py-4">
                                 <div >
-                                <SongCard artistName={track.artistName} name={track.name} imgSrc={track.imgSrc} genres={track.genres.map(g => g.name)} />
+                                <SongCard artistName={track.artist.name} name={track.name} imgSrc={track.imgSrc} genres={track.genres.map(g => g.name)} />
                                 </div>
                             </td>
                             <td ><p>{track.streams}</p></td>
@@ -250,7 +252,7 @@ export const SearchTracksTable = ({rows,currentPage,unSelectSong,selectSong, sel
     const selectAll = () => {
         rows.forEach(song => {
             
-            if(!selectedSongs.includes(song)){
+            if(!selectedSongs.find(s => s.id == song.id)){
                 console.log(song)
                  selectSong(song)
             }
@@ -259,7 +261,7 @@ export const SearchTracksTable = ({rows,currentPage,unSelectSong,selectSong, sel
     }
     const unSelectAll = () => {
         rows.forEach(song => {
-            if(selectedSongs.includes(song))
+            if(selectedSongs.find(a => a.id == song.id))
                  unSelectSong(song)
             
         })
@@ -308,7 +310,7 @@ export const SearchTracksTable = ({rows,currentPage,unSelectSong,selectSong, sel
                             <td className="pl-8">
                             <div className="flex">
                                     <input type="checkbox" 
-                                          checked={selectedSongs.includes(track)}                                 
+                                          checked={selectedSongs.find( t => t.id == track.id) != null}                                 
                                           onChange={(e) => checkSongSelected(e.target.checked, track)}
                                           className="shrink-0 mt-0.5 border-gray-200 rounded-md text-red-900  focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"  />
                                     
@@ -316,7 +318,7 @@ export const SearchTracksTable = ({rows,currentPage,unSelectSong,selectSong, sel
                             </td>
                             <td className="px-8 border-t-0 border-l-0 border-r-0 text-xs whitespace-nowrap py-2">
                                 <div >
-                                <SongCard artistName={track.artistName} name={track.name} imgSrc={track.imgSrc} genres={track.genres.map(g => g.name)} />
+                                <SongCard artistName={track.artist.name} name={track.name} imgSrc={track.imgSrc} genres={track.genres.map(g => g.name)} />
                                 </div>
                             </td>
                             <td ><p>{track.duration}</p></td>

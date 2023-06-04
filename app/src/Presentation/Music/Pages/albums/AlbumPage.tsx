@@ -63,7 +63,7 @@ export const AlbumPage = () => {
                     {
                     album?.songs.map( s =>    
                         <div className="w-full">
-                            <PrimaryTextField disabled type="text" value={`${s.name!!} - ${s.artistName}`} padX={6} padY={2} width="full" height="10" label="" placeholder="" />
+                            <PrimaryTextField disabled type="text" value={`${s.name!!} - ${s.artist.name}`} padX={6} padY={2} width="full" height="10" label="" placeholder="" />
                         </div>                  
                   
                     )

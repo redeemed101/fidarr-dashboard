@@ -241,7 +241,7 @@ const EditAlbumPage = () => {
                 return {
                     id: i,
                     name: s.name,
-                    artist: s.artistName,
+                    artist: s.artist.name,
                     featuring: [],
                     genres: s.genres,
                     isrcCode: s.isrcCode
@@ -263,7 +263,7 @@ const EditAlbumPage = () => {
       setSongsData([...songsData,{
         id: songCount,
         name: song.name,
-        artist: song.artistName,
+        artist: song.artist.name,
         featuring: [],
         genres: song.genres,
         isrcCode: song.isrcCode,

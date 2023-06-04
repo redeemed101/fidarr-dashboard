@@ -74,7 +74,7 @@ const ArtistsTable = ({rows, currentPage, totalCount, selectedArtists, unSelectA
     const selectAll = () => {
         rows.forEach(artist => {
             
-            if(!selectedArtists.includes(artist)){
+            if(!selectedArtists.find(a => a.id == artist.id)){
                 console.log(artist)
                  selectArtist(artist)
             }
@@ -83,7 +83,7 @@ const ArtistsTable = ({rows, currentPage, totalCount, selectedArtists, unSelectA
     }
     const unSelectAll = () => {
         rows.forEach(artist => {
-            if(selectedArtists.includes(artist))
+            if(selectedArtists.find(a => a.id == artist.id))
                  unSelectArtist(artist)
             
         })
@@ -164,7 +164,7 @@ const ArtistsTable = ({rows, currentPage, totalCount, selectedArtists, unSelectA
                            <div className="flex">
                                 <input
                                  type="checkbox"
-                                 checked={selectedArtists.includes(artist)}                                 
+                                 checked={selectedArtists.find(a => a.id == artist.id) != null}                                 
                                           onChange={(e) => checkArtistSelected(e.target.checked, artist)}
                                  className="shrink-0 mt-0.5 border-gray-200 rounded-md text-red-900 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
                                 
@@ -257,7 +257,7 @@ export const SearchArtistsTable = (props: SearchArtistTableProps) => {
     const selectAll = () => {
         props.rows.forEach(artist => {
             
-            if(!props.selectedArtists.includes(artist)){
+            if(!props.selectedArtists.find(a => a.id == artist.id)){
                 
                props.selectArtist(artist)
             }
@@ -266,7 +266,7 @@ export const SearchArtistsTable = (props: SearchArtistTableProps) => {
     }
     const unSelectAll = () => {
         props.rows.forEach(artist => {
-            if(props.selectedArtists.includes(artist))
+            if(props.selectedArtists.find(a => a.id == artist.id))
                  props.unSelectArtist(artist)
             
         })
@@ -323,7 +323,7 @@ export const SearchArtistsTable = (props: SearchArtistTableProps) => {
                                         checked={props.selectedArtists.includes(artist)}
                                   />
                                    :<input type="checkbox" 
-                                          checked={props.selectedArtists.includes(artist)}                                 
+                                          checked={props.selectedArtists.find(a => a.id == artist.id) != null}                                 
                                           onChange={(e) => checkArtistSelected(e.target.checked, artist)}
                                           className="shrink-0 mt-0.5 border-gray-200 rounded-md text-red-900  focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"  />
                                    }

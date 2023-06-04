@@ -19,7 +19,28 @@ export class ChartRepositoryMock implements ChartRepository{
                                 id: `track-${y}`,                    
                                 imgSrc : "https://picsum.photos/200",
                                 name : `song ${y}`,
-                                artistName: `artist ${y}`,
+                                artist:{
+                                    id: `artist ${i}`,     
+                                    website: "www.google.com",
+                                    bio: "Nice Artist",               
+                                    imgSrc : "https://picsum.photos/200",
+                                    name : `artist ${i}`,
+                                    genres : [...Array(5)].map(g => {
+                                        return  {
+                                            imgSrc : "",
+                                            name : "Pop",
+                                            albums : 0,
+                                            tracks : 0,
+                                            artists: 0,
+                                            lastUpdated: "2019-09-09",
+                                            id: "1"
+                                        }
+                                    }) as Genre[],
+                                    streams : 100000,
+                                    tracks : 20,
+                                    albums: 2,
+                                    lastUpdated: "2023-10-31",
+                                },
                                 genres : [...Array(5)].map(g => {
                                     return  {
                                         imgSrc : "",
@@ -63,7 +84,28 @@ export class ChartRepositoryMock implements ChartRepository{
                                 id: `track-${y}`,                    
                                 imgSrc : "https://picsum.photos/200",
                                 name : `song ${y}`,
-                                artistName: `artist ${y}`,
+                                artist:{
+                                    id: `artist ${i}`,     
+                                    website: "www.google.com",
+                                    bio: "Nice Artist",               
+                                    imgSrc : "https://picsum.photos/200",
+                                    name : `artist ${i}`,
+                                    genres : [...Array(5)].map(g => {
+                                        return  {
+                                            imgSrc : "",
+                                            name : "Pop",
+                                            albums : 0,
+                                            tracks : 0,
+                                            artists: 0,
+                                            lastUpdated: "2019-09-09",
+                                            id: "1"
+                                        }
+                                    }) as Genre[],
+                                    streams : 100000,
+                                    tracks : 20,
+                                    albums: 2,
+                                    lastUpdated: "2023-10-31",
+                                },
                                 genres : [...Array(5)].map(g => {
                                     return  {
                                         imgSrc : "",

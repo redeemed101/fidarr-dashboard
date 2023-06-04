@@ -22,12 +22,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../StateManagement/redux/store";
 import { Genres } from "../../../../Data/DataSource/Music/Genres/GenreDataSource";
 import { Genre } from "../../../../Domain/Model/Music/Genre";
+import FidarrModal from "../../../Common/modal";
+import SearchArtists from "../../Components/SearchArtists";
+import { Artist } from "../../../../Domain/Model/Music";
 
 
 type FormData = {
   name : string,
   description: string,
-  artistId: string,
   upcCode: string,
   isrcCode: string,
   cLine:string,
@@ -53,6 +55,8 @@ const schema = yup.object({
 
 const EditTrackPage = () => {
   const song = useSelector((state: RootState) => state.selectedSong.Song);
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedArtists, setSelectedArtists] = useState<Artist[]>([])
   const {genres, getAllGenres} = useGenreModelController(genreRepository)
   const [songGenres, setSongGenres] = useState<Genre[]>([])
   const [imagePath, setImagePath] = useState<string | null>(null);
@@ -65,13 +69,13 @@ const EditTrackPage = () => {
        getAllGenres()
        setImagePath(song?.imgSrc!!)
        setSongGenres(song?.genres!!)
+       setSelectedArtists([song?.artist!!])
   }, []);
   const { control, handleSubmit, formState: { errors }  } = useForm<FormData>({
     resolver: yupResolver(schema),
     defaultValues: {
       name : song?.name,
       description: song?.name,
-      artistId: "",
       featuringArtists: [],
       genres: song?.genres.map(g => g.id),
       albumId: "",
@@ -85,6 +89,21 @@ const EditTrackPage = () => {
       releaseDate: song?.releaseDate
     }
   });
+  const selectArtist = (artist: Artist) => {
+       
+    setSelectedArtists(prev => ([artist]))
+
+  }
+  const unSelectArtist = (artist: Artist) => {
+   
+    setSelectedArtists(prev => ([...prev.filter(t => t.id != artist.id)]))
+    
+  }
+  const doneSelecting = () => {
+        console.log(selectedArtists)
+        setModalOpen(prev =>false)
+       
+  }
   const setImagePreview = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {files} = event.target
     console.log(files?.[0])
@@ -96,11 +115,11 @@ const EditTrackPage = () => {
   }
   const onSubmit = (data : FormData) => {
     console.log(data);
-    if(songFile != null)
+    if(songFile != null && selectedArtists.length > 0)
       editSong(song?.id!!,songFile, {
         name: data.name,
         description: data.description,
-        artistId: data.artistId,
+        artistId: selectedArtists[0].id,
         featuringArtists : data.featuringArtists,
         genres : data.genres,
         albumId : data.albumId,
@@ -112,6 +131,16 @@ const EditTrackPage = () => {
     return (
        
        <div className="h-auto bg-black">
+         <FidarrModal height={500} width={800} title="Sure" close={() => setModalOpen(false)} afterOpen={() =>{}} isOpen={modalOpen}>
+          <div className="w-full flex flex-col gap-4">
+               <div className="w-1/4 self-end">
+                <PrimaryButton disabled={selectedArtists.length < 1} type="button" onClick={() => doneSelecting()} title='Done' padY={2} padX={3} height="10" width="full" />
+               </div>
+             <SearchArtists selectOne unSelectArtist={unSelectArtist} 
+             selectedArtists={selectedArtists} selectArtist={selectArtist} />
+           
+           </div>
+        </FidarrModal>
         <div style={{height:"inherit"}}  className="pb-4 flex flex-row ">
           <MenuColumn />
           <div className="flex  gap-4 flex-col w-full">
@@ -157,12 +186,7 @@ const EditTrackPage = () => {
                   
                    {/*<PrimarySelect  options={genres.map(g => {
                     return {label : g.name, value: g.id} as PrimarySelectOption }) } label="Genre" width="full" padX={3} />*/}
-                    
-                    <Controller
-                                    name="artistId"
-                                    control={control}
-                                    render={({ field }) => <PrimaryTextField name={field.name} type="text" value={field.value} padX={6} padY={2} onChanged={field.onChange} width="full" height="10" label="Artist" placeholder="Artist" />}
-                   />     
+                  <PrimaryTextField  onClicked={() => setModalOpen(true)} name="artist" type="text" value={selectedArtists[0]?.name} padX={6} padY={2}  width="full" height="10" label="Artist" placeholder="Artist" /> 
                   <div className=' col-span-2 flex flex-col gap-2'>
                     <div>
                       <p className='text-sm font-bold text-fidarrgray-900'>Genres</p>

@@ -85,7 +85,7 @@ const AlbumsTable = (props: AlbumsTableProps) => {
     const selectAll = () => {
         props.rows.forEach(album => {
             
-            if(!props.selectedAlbums.includes(album)){
+            if(!props.selectedAlbums.find(a => a.id == album.id)){
                 console.log(album)
                  props.selectAlbum(album)
             }
@@ -94,7 +94,7 @@ const AlbumsTable = (props: AlbumsTableProps) => {
     }
     const unSelectAll = () => {
         props.rows.forEach(album => {
-            if(props.selectedAlbums.includes(album))
+            if(props.selectedAlbums.find(a => a.id == album.id))
                  props.unSelectAlbum(album)
             
         })
@@ -172,7 +172,7 @@ const AlbumsTable = (props: AlbumsTableProps) => {
                        <div className="flex">
                                 <input
                                  type="checkbox"
-                                 checked={props.selectedAlbums.includes(album)}                                 
+                                 checked={props.selectedAlbums.find(a => a.id == album.id) != null}                                 
                                           onChange={(e) => checkAlbumSelected(e.target.checked, album)}
                                  className="shrink-0 mt-0.5 border-gray-200 rounded-md text-red-900 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" />
                                 

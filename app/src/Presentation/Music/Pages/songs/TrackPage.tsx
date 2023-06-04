@@ -31,7 +31,7 @@ export const TrackPage = () => {
                 <div className="flex flex-row gap-4">
                   <PrimaryTextField disabled type="text" value={song?.name!!} padX={6} padY={2}  width="full" height="10" label="Name" placeholder="Name" />
                  
-                  <PrimaryTextField disabled type="text" value={song?.artistName!!} padX={6} padY={2} width="full" height="10" label="Artist" placeholder="Artist" />
+                  <PrimaryTextField disabled type="text" value={song?.artist.name!!} padX={6} padY={2} width="full" height="10" label="Artist" placeholder="Artist" />
                              
                  
                 </div> 
