@@ -267,7 +267,8 @@ const EditAlbumPage = () => {
         featuring: [],
         genres: song.genres,
         isrcCode: song.isrcCode,
-        existing: true
+        existing: true,
+        existingSongId: song.id
     
     }])
     setSongCount(songCount+1)

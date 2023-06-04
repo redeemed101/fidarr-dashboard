@@ -32,7 +32,8 @@ export type SongData = {
     featuring?: string[]
     genres?: Genre[]
     isrcCode?: string
-    existing?: boolean
+    existing?: boolean,
+    existingSongId?:string
 
 }
 export type SongItemProps = { 
@@ -202,6 +203,10 @@ export const AddMusicTab = ({songsData,genres,switchTab,handleDeleteSongItem,han
       const unSelectSong = (track: Track) => {
         console.log("bubbled unselect "+ track.id)
         setSelectedSongs(prev => ([...prev.filter(t => t.id != track.id)]))
+        var s = songsData.find( sd => sd.existingSongId == track.id)
+        if(s != null){
+            handleDeleteSongItem(s.id)
+        }
         
       }
       const doneSelecting = () => {
