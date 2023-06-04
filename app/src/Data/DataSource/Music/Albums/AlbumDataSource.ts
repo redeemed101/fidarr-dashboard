@@ -24,6 +24,7 @@ export interface CreateAlbumRequest {
    genres: string[],
    songNames: string[],
    songDescriptions: string[],
+   existingSongs: string[]
    artworkFile: File,
    songFiles : File[],
    releaseDate: Date,

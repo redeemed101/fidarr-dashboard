@@ -35,6 +35,9 @@ export class AlbumDataSourceImpl implements AlbumDataSource{
         request.songDescriptions.forEach(element => {
             formData.append("songDescriptions[]",element);
         });
+        request.existingSongs.forEach(element => {
+            formData.append("existingSongs[]",element);
+        });
         request.genres.forEach(element => {
             formData.append("genres[]",element);
         });
