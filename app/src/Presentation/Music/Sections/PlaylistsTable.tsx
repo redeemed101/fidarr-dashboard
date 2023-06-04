@@ -34,7 +34,7 @@ export const PlaylistCard = ({imgSrc,name} : PlaylistCardProps) => {
 }
 
 
-type GenresTableProps = {
+type PlaylistsTableProps = {
     rows: Playlist[],
     currentPage: number,
     totalCount: number,
@@ -47,7 +47,7 @@ type GenresTableProps = {
 
 }
 
-const PlaylistsTable = ({rows, currentPage, totalCount, selectedPlaylists,deleteItem, selectPlaylist, unSelectPlaylist , loadMore, refresh}: GenresTableProps) => {
+const PlaylistsTable = ({rows, currentPage, totalCount, selectedPlaylists,deleteItem, selectPlaylist, unSelectPlaylist , loadMore, refresh}: PlaylistsTableProps) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [allSelected, setAllSelected] = useState<boolean>(false)

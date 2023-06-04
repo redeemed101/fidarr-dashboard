@@ -3,6 +3,7 @@ import { Playlist } from "../../Domain/Model/Music/Playlist"
 import { Album, Artist, Track } from "../../Domain/Model/Music"
 import { Genre } from "../../Domain/Model/Music/Genre"
 import { Mood } from "../../Domain/Model/Music/Mood"
+import { Chart } from "../../Domain/Model/Music/Chart"
 
 export interface SelectedPlaylistState {
     playlist : Playlist | null 
@@ -143,6 +144,30 @@ export const selectedMoodSlice  = createSlice({
  },
 })
 export const { setMood, removeMood } = selectedMoodSlice.actions
+
+
+
+
+export interface SelectedChartState {
+  Chart : Chart | null 
+}
+const ChartState  : SelectedChartState = {
+  Chart : null
+}
+export const selectedChartSlice  = createSlice({
+ name: 'selectedChart',
+ initialState: ChartState,
+ reducers: {
+   setChart: (state, action: PayloadAction<Chart>) => {
+     state.Chart = action.payload
+   },
+   removeChart: (state) => {
+     state.Chart = null
+   }
+ 
+ },
+})
+export const { setChart, removeChart } = selectedChartSlice.actions
 
 
 
