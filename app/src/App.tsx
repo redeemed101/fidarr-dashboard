@@ -53,6 +53,9 @@ import EditGenrePage from './Presentation/Music/Pages/genres/EditGenrePage';
 import { MoodsPage } from './Presentation/Music/Pages/moods/MoodsPage';
 import { CreateMoodPage } from './Presentation/Music/Pages/moods/CreateMoodPage';
 import { EditMoodPage } from './Presentation/Music/Pages/moods/EditMoodPage';
+import { CreateChartPage } from './Presentation/Music/Pages/charts/CreateChartPage';
+import { EditChartPage } from './Presentation/Music/Pages/charts/EditChartPage';
+import ChartsPage from './Presentation/Music/Pages/charts/ChartsPage';
 
 
 
@@ -257,6 +260,18 @@ const dashboardRoutes : AuthRoutes[] = [
     {
       page : <EditMoodPage />,
       route: "/music/moods/edit/:id"
+    },
+    {
+      page : <ChartsPage />,
+      route: "/music/charts"
+    },
+    {
+      page : <CreateChartPage />,
+      route: "/music/charts/create"
+    },
+    {
+      page : <EditChartPage />,
+      route: "/music/charts/edit/:id"
     }
 
 
@@ -289,7 +304,7 @@ function App() {
   useEffect(() => {
     console.log(user)
     if (user == null) {
-       navigate("/music/albums/create")
+       navigate("/music/charts/create")
     } else {
       navigate("/dashboard")
     }

@@ -91,7 +91,7 @@ export const ChartsTable = ({rows, currentPage, totalCount, selectedCharts,delet
         confirmAlert({
             customUI: ({ onClose }) => {
               return (
-                <div className='bg-black rounded-lg flex flex-col px-8 py-2'>
+                <div key={id} className='bg-black rounded-lg flex flex-col px-8 py-2'>
                   <h1 className="text-white text-xl font-bold mx-auto">Confirm action</h1>
                   <p className="text-white">You want to delete this  Chart?</p>
                   <div className="flex flex-row gap-2 justify-center mt-8">
@@ -151,7 +151,7 @@ export const ChartsTable = ({rows, currentPage, totalCount, selectedCharts,delet
                     <tbody >
                         {
                         rows.map( chart => 
-                        <tr className="text-left">
+                        <tr  key={chart.id} className="text-left">
                         <td className="pr-12">
                         <div className="flex">
                                 <input

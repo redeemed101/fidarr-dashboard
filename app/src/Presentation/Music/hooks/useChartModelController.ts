@@ -8,6 +8,7 @@ import { PAGE_SIZE } from "../../../Data/Utils/constants";
 
 export const useChartModelController = (repository : ChartRepository) => {
     const [currentPage, setCurrentPage] = useState(1); 
+    const [chartModified, setChartModified]= useState(false)
     const [fetchStatus, setFetchStatus] = useState<RequestStatus>(RequestStatus.Success);
     const [data, setData] = useState<PagedData>({count: 0, data: []});
 
@@ -15,8 +16,10 @@ export const useChartModelController = (repository : ChartRepository) => {
     const createChart = async (request: CreateChartRequest) => {
         try{
         const result = await repository.createChart(request)
-        if(result)
+        if(result){
             setFetchStatus(RequestStatus.Success)
+            setChartModified(true)
+        }
         else
             setFetchStatus(RequestStatus.Error)
         }
@@ -125,6 +128,7 @@ export const useChartModelController = (repository : ChartRepository) => {
         count: data.count,
         fetchStatus,
         currentPage,
+        chartModified,
         editChart,
         createChart,
         deleteChart,

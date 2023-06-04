@@ -269,6 +269,7 @@ const UploadAlbumPage = () => {
     const handleDeleteSongItem = (id: number) => {
             
             setSongsData(songsData.filter(i => i.id != id))
+            setSongCount(songCount-1)
            
       }
     useEffect( () => {
