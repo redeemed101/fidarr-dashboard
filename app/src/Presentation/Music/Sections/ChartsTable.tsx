@@ -43,7 +43,7 @@ type ChartsTableProps = {
 
 }
 
-const ChartsTable = ({rows, currentPage, totalCount, selectedCharts,deleteItem, selectChart, unSelectChart , loadMore, refresh}: ChartsTableProps) => {
+export const ChartsTable = ({rows, currentPage, totalCount, selectedCharts,deleteItem, selectChart, unSelectChart , loadMore, refresh}: ChartsTableProps) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [allSelected, setAllSelected] = useState<boolean>(false)

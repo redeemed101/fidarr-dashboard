@@ -34,12 +34,14 @@ export const useChartModelController = (repository : ChartRepository) => {
         catch(e : any){ setFetchStatus(RequestStatus.Error)} 
 
     }
-    const deleteChart = async (chartId:string) => {
+    const deleteChart = async (chartId:string, finish: () => void) => {
 
         try{
             const result = await repository.deleteChart(chartId)
-            if(result)
+            if(result){
                 setFetchStatus(RequestStatus.Success)
+                finish()
+            }
             else
                 setFetchStatus(RequestStatus.Error)
         }
