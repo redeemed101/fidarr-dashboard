@@ -56,6 +56,7 @@ import { EditMoodPage } from './Presentation/Music/Pages/moods/EditMoodPage';
 import { CreateChartPage } from './Presentation/Music/Pages/charts/CreateChartPage';
 import { EditChartPage } from './Presentation/Music/Pages/charts/EditChartPage';
 import ChartsPage from './Presentation/Music/Pages/charts/ChartsPage';
+import RegisterPage from './Presentation/Authentication/Pages/register';
 
 
 
@@ -304,7 +305,7 @@ function App() {
   useEffect(() => {
     console.log(user)
     if (user == null) {
-       navigate("/music/charts/create")
+       navigate("/")
     } else {
       navigate("/dashboard")
     }
@@ -321,6 +322,7 @@ function App() {
           </Route>
           <Route path="/" element={<LoginPage /> } />
           <Route path="/login" element={<LoginPage /> } />
+          <Route path="/register" element={<RegisterPage /> } />
           <Route path="/recover" element={<RecoverEmailPage /> } />
           <Route path="*" element={<Status404Page />} />
 

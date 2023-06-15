@@ -1,5 +1,5 @@
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from "@apollo/client";
-import { ALBUM_GRAPH_URL, ARTIST_GRAPH_URL, BASE_URL, GENRE_GRAPH_URL, SONG_GRAPH_URL } from "../../API/constant";
+import { ALBUM_GRAPH_URL, ARTIST_GRAPH_URL, BASE_URL, GENRE_GRAPH_URL, SONG_GRAPH_URL, USERS_GRAPH_URL } from "../../API/constant";
 import { setContext } from '@apollo/client/link/context';
 import { onError } from "@apollo/client/link/error";
 import { tokenManager } from "../../API/token";
@@ -98,6 +98,15 @@ const authLink = setContext((_, { headers }) => {
   })
   export const graphQLSongClient = new ApolloClient({
     link:   ApolloLink.from([ errorLink, authLink,songQL])
+    ,
+    cache: new InMemoryCache(),
+  });
+
+  const userQL = new HttpLink({
+    uri: `${BASE_URL}${USERS_GRAPH_URL}`,
+  })
+  export const graphQLUserClient = new ApolloClient({
+    link:   ApolloLink.from([ errorLink, authLink,userQL])
     ,
     cache: new InMemoryCache(),
   });

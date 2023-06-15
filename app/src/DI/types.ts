@@ -24,6 +24,10 @@ const TYPES = {
 
     AuthenticationDataSource : Symbol.for("AuthenticationDataSource"),
     AuthenticationRepository : Symbol.for("AuthenticationRepository"),
+
+    PeopleDataSource : Symbol.for("PeopleDataSource"),
+    PeopleRepository : Symbol.for("PeopleRepository"),
 };
+
 
 export { TYPES };

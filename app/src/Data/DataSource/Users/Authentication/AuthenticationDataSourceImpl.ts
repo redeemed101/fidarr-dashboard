@@ -1,10 +1,16 @@
 import { injectable } from "inversify";
-import { AuthenticationDataSource, CountryResponse, GeneralResponse, PasswordChangeRequest, PasswordResetRequest, SignInRequest, SignInResponse, SignupRequest, SignupResponse, VerifyCodeRequest } from "./AuthenticationDataSource";
+import { AuthenticationDataSource, CountryResponse, GeneralResponse, InviteUserRequest, PasswordChangeRequest, PasswordResetRequest, SignInRequest, SignInResponse, SignupRequest, SignupResponse, VerifyCodeRequest } from "./AuthenticationDataSource";
 import { getAPI, postAPI } from "../../API/axios_instance";
 
 
 @injectable()
 export class AuthenticationDataSourceImpl implements AuthenticationDataSource{
+    inviteUser(request: InviteUserRequest): Promise<GeneralResponse> {
+      throw new Error("Method not implemented.");
+    }
+    checkInviteCode(code: string): Promise<GeneralResponse> {
+      throw new Error("Method not implemented.");
+    }
     emailExists(email: string): Promise<GeneralResponse> {
       throw new Error("Method not implemented.");
     }

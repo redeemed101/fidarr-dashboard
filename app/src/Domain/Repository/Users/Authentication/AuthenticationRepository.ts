@@ -1,4 +1,4 @@
-import { PasswordChangeRequest, PasswordResetRequest, SignupRequest, VerifyCodeRequest } from "../../../../Data/DataSource/Users/Authentication/AuthenticationDataSource";
+import { GeneralResponse, InviteUserRequest, PasswordChangeRequest, PasswordResetRequest, SignupRequest, VerifyCodeRequest } from "../../../../Data/DataSource/Users/Authentication/AuthenticationDataSource";
 import { Country } from "../../../Model/Auth/Country";
 import { User } from "../../../Model/Auth/User";
 
@@ -19,6 +19,8 @@ export class Feedback{
     message! : string;
 }
 export interface AuthenticationRepository{
+    inviteUser(request: InviteUserRequest): Promise<GeneralResponse>
+    checkInviteCode(code: string) : Promise<GeneralResponse>
     signin(email: string, password: string) : Promise<SignIn>
     signUp(request: SignupRequest): Promise<Signup>
     getCountries() : Promise<Country[]>

@@ -118,13 +118,15 @@ export const useAuthenticationModelController = (repository : AuthenticationRepo
    const [fetchStatus, setFetchStatus] = useState<RequestStatus>();
    const [countries, setCountries] = useState<Country[]>([])
    const [emailExists, setEmailExists] = useState<boolean>(true)
+   const [successful, setSuccess] = useState<boolean>(true)
+   const [processing, setProcessing] = useState<boolean>(false);
    const dispatch = useDispatch();
    const navigate = useNavigate();
    const logout = async () => {
       try{
          setFetchStatus(RequestStatus.Loading)
          await repository.logout()
-        
+         setFetchStatus(RequestStatus.Success)
       }
       catch(err : any){
          
@@ -132,16 +134,45 @@ export const useAuthenticationModelController = (repository : AuthenticationRepo
           setFetchStatus(RequestStatus.Error)
       }
    }
-   const emailCheck = async (email: string) => {
+   const checkInvitationCode = async (code: string) => {
       try{
-         setFetchStatus(RequestStatus.Loading)
-         const response = await repository.emailExists(email)
-         setEmailExists(response.success)
+         setProcessing(true)
+         const response = await repository.checkInviteCode(code)
+         setSuccess(response.success)
+         setProcessing(false)
       }
       catch(err : any){
-         
+         setSuccess(false)
          console.log(err.message)
-          setFetchStatus(RequestStatus.Error)
+         setProcessing(false)
+      }
+   }
+   const inviteUser = async (email: string) => {
+      try{
+        
+         setProcessing(true)
+         const response = await repository.inviteUser({email: email})
+         setSuccess(response.success)
+         setProcessing(false)
+       
+      }
+      catch(err : any){
+         setSuccess(false)
+         console.log(err.message)
+         setProcessing(false)
+      }
+   }
+   const emailCheck = async (email: string) => {
+      try{
+         setProcessing(true)
+         const response = await repository.emailExists(email)
+         setEmailExists(response.success)
+         setProcessing(false)
+      }
+      catch(err : any){
+         setSuccess(false)
+         console.log(err.message)
+         setProcessing(false)
       }
    }
    const getCountries = async () => {
@@ -149,6 +180,7 @@ export const useAuthenticationModelController = (repository : AuthenticationRepo
          setFetchStatus(RequestStatus.Loading)
          const response = await repository.getCountries()
          setCountries(response)
+         setFetchStatus(RequestStatus.Success)
       }
       catch(err : any){
          
@@ -206,6 +238,10 @@ export const useAuthenticationModelController = (repository : AuthenticationRepo
       getCountries,
       logout,
       emailCheck,
+      checkInvitationCode,
+      inviteUser,
+      processing,
+      successful,
       countries,
       emailExists,
       fetchStatus,

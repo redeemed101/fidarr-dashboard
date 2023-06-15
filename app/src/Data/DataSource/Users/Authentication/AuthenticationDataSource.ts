@@ -50,9 +50,14 @@ export type PasswordResetRequest = {
     password: string;
     code: string;
 }
+export type InviteUserRequest = {
+    email: string
+}
 
 
 export interface AuthenticationDataSource{
+    inviteUser(request: InviteUserRequest): Promise<GeneralResponse>
+    checkInviteCode(code: string) : Promise<GeneralResponse>
     signIn(request : SignInRequest) : Promise<SignInResponse>
     signUp(request: SignupRequest): Promise<SignupResponse>
     getCountries() : Promise<CountryResponse>

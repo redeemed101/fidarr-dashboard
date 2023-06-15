@@ -54,7 +54,8 @@
     "codegen-albums": "graphql-codegen --config codegen_albums.yml",
     "codegen-genres": "graphql-codegen --config codegen_genres.yml",
     "codegen-songs": "graphql-codegen --config codegen_songs.yml",
-    "codegen-playlists": "graphql-codegen --config codegen_playlists.yml"
+    "codegen-playlists": "graphql-codegen --config codegen_playlists.yml",
+    "codegen-users": "graphql-codegen --config codegen_users.yml"
   },
   "eslintConfig": {
     "extends": [

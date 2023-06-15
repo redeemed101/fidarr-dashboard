@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { AuthenticationRepository, Feedback, SignIn, Signup } from "../../../../Domain/Repository/Users/Authentication/AuthenticationRepository";
-import { AuthenticationDataSource, PasswordChangeRequest, PasswordResetRequest, SignupRequest, VerifyCodeRequest } from "../../../DataSource/Users/Authentication/AuthenticationDataSource";
+import { AuthenticationDataSource, GeneralResponse, InviteUserRequest, PasswordChangeRequest, PasswordResetRequest, SignupRequest, VerifyCodeRequest } from "../../../DataSource/Users/Authentication/AuthenticationDataSource";
 import { TYPES } from "../../../../DI/types";
 import { Country } from "../../../../Domain/Model/Auth/Country";
 
@@ -12,6 +12,12 @@ export class AuthenticationRepositoryImpl implements AuthenticationRepository{
         @inject(TYPES.AuthenticationDataSource) dataSource : AuthenticationDataSource
     ){
         this._dataSource = dataSource
+    }
+    inviteUser(request: InviteUserRequest): Promise<GeneralResponse> {
+        return this._dataSource.inviteUser(request)
+    }
+    checkInviteCode(code: string): Promise<GeneralResponse> {
+        return this._dataSource.checkInviteCode(code)
     }
     async signUp(request: SignupRequest): Promise<Signup> {
         const response = await this._dataSource.signUp(request)

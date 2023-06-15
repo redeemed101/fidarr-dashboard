@@ -1,9 +1,21 @@
 import { injectable } from "inversify";
-import { AuthenticationDataSource, CountryResponse, GeneralResponse, PasswordChangeRequest, PasswordResetRequest, SignInRequest, SignInResponse, SignupRequest, SignupResponse, VerifyCodeRequest } from "./AuthenticationDataSource";
+import { AuthenticationDataSource, CountryResponse, GeneralResponse, InviteUserRequest, PasswordChangeRequest, PasswordResetRequest, SignInRequest, SignInResponse, SignupRequest, SignupResponse, VerifyCodeRequest } from "./AuthenticationDataSource";
 import { Country } from "../../../../Domain/Model/Auth/Country";
 
 @injectable()
 export class AuthenticationDataSourceMock implements AuthenticationDataSource{
+    inviteUser(request: InviteUserRequest): Promise<GeneralResponse> {
+        return new Promise(resolve => setTimeout(() => resolve({
+            message :"invite successfully resend",
+            success: true
+        }), 5000)) ;
+    }
+    checkInviteCode(code: string): Promise<GeneralResponse> {
+        return new Promise(resolve => setTimeout(() => resolve({
+            message :"code found",
+            success: true
+        }), 5000)) ;
+    }
     emailExists(email: string): Promise<GeneralResponse> {
         return new Promise(resolve => setTimeout(() => resolve({
             message :"email not taken",

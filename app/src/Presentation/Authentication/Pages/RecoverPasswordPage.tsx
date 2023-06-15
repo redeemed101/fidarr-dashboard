@@ -11,6 +11,8 @@ import { RequestStatus } from '../../Music/hooks/common';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../StateManagement/redux/store';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type FormData = {
     code: string;
@@ -83,8 +85,10 @@ const RecoverPasswordPage = () => {
                                         rules={{ required: true }}
                                         render={({ field }) =>  <PasswordToggleField value={field.value} name={field.name} onChanged={field.onChange} toggleShow={() => toggleShowPassword(!showPassword)}  type="password" show={showPassword} padX={6} padY={2} width="full" height="10" placeholder="Confirm New Password" />  }
                             />
-                            
-                            <PrimaryButton title='Change Password' padY={2} padX={3} height="10" width="full" />
+                             {fetchStatus == RequestStatus.Loading ? 
+                               <div className='w-full bg-red-700 flex flex-col h-10 justify-center items-center rounded-md'><FontAwesomeIcon className='text-white spinner'  icon={faSpinner} /></div> 
+                               : <PrimaryButton title='Change Password' padY={2} padX={3} height="10" width="full" />
+                             }
                             </div>
                         
                         </div>

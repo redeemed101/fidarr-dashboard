@@ -1,0 +1,12 @@
+overwrite: true
+schema: "https://daa3-102-70-3-133.ngrok-free.app/api/users/graphql"
+documents: "src/Data/DataSource/GraphQL/Users/*.ts"
+generates:
+  src/Data/DataSource/GraphQL/Generated/Users/:
+    preset: "client"
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      withHooks: true
