@@ -1,59 +1,23 @@
 import EditIcon from "../../../Assets/svgs/EditIcon.svg"
 import DeleteIcon from "../../../Assets/svgs/DeleteIcon.svg"
 import OnOffIcon from "../../../Assets/svgs/OnOffIcon.svg"
+import { User } from "../../../Domain/Model/Auth/User"
 
-type SubscribersRow = {
-    id : string,
-    email : string,
-    name : string,
-    roles: string[],
-    dateJoined: string,
-    lastUpdated: string,
-    username: string,
-    imgSrc : string,
-}
 
-const subscribers : SubscribersRow[] =  [
-    {
-        id: "1234",
-        name : "Enyo Sam",
-        email : "enyo@fidarr.com",
-        roles : ["Administrator"],
-        dateJoined: "March 24, 2023",
-        lastUpdated: "March 24, 2023",
-        username: "@enyo",
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg"
-
-    },
-    {
-        id: "1234",
-        name : "Williams",
-        email : "williams@fidarr.com",
-        roles : ["Content Manager"],
-        dateJoined: "March 24, 2023",
-        lastUpdated: "March 24, 2023",
-        username: "@wills",
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg"
-
-    },
-    {
-        id: "1234",
-        name : "Lewis Msasa",
-        email : "lewis@fidarr.com",
-        roles : ["Administrator"],
-        dateJoined: "March 24, 2023",
-        lastUpdated: "March 24, 2023",
-        username: "@lmsasa",
-        imgSrc : "https://randomuser.me/api/portraits/women/81.jpg"
-
-    }
-]
 
 type SubscribersTableProps = {
-    rows? : SubscribersRow[]
+    rows : User[],
+    currentPage: number,
+    totalCount: number,
+    selectedUsers : User[],
+    loadMore : () => void,
+    refresh : () => void
+    selectUser : (user: User) => void,
+    unSelectUser : (user: User) => void,
+    deleteItem: (id: string) => void
 }
 
-const SubscribersTable = ({rows = subscribers} : SubscribersTableProps) => {
+const SubscribersTable = (props : SubscribersTableProps) => {
    return (
     <div className="flex flex-col w-full  px-12">
     <table className="table-auto text-white w-11/12">
@@ -76,7 +40,7 @@ const SubscribersTable = ({rows = subscribers} : SubscribersTableProps) => {
     </thead>
     <tbody >
         {
-        rows.map( member => 
+        props.rows.map( member => 
         <tr className="text-left">
        <td className="pr-12">
            <div className="flex">
@@ -87,7 +51,7 @@ const SubscribersTable = ({rows = subscribers} : SubscribersTableProps) => {
             <td className="border-t-0 border-l-0 border-r-0 text-xs whitespace-nowrap py-4">
                 <div className="flex flex-row gap-2 items-center">
                     <div>
-                        <img className="rounded h-16 w-16" src={member.imgSrc} />
+                        <img className="rounded h-16 w-16" src={member.profilePicPath} />
                     </div>
                     <div className="flex flex-col">
                         <p className="text-white text-bold text-sm">{member.name}</p>
@@ -96,8 +60,8 @@ const SubscribersTable = ({rows = subscribers} : SubscribersTableProps) => {
                 </div>
             </td>
             <td ><p>{member.username}</p></td>
-            <td ><p>{member.roles.map(r => r,)}</p></td>
-            <td ><p>{member.dateJoined}</p></td>                
+            <td ><p>{member.roles?.map(r => r,)}</p></td>
+            <td ><p>{member.dateCreated}</p></td>                
             <td><p>{member.lastUpdated}</p></td>
             <td>
                 <div className="flex flex-row gap-2">
