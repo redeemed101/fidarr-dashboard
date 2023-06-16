@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PAGE_SIZE } from "../../../Data/Utils/constants";
 import { UpdateUserRequest } from "../../../Data/DataSource/Users/People/PeopleDataSource";
+import { User } from "../../../Domain/Model/Auth/User";
 
 export const usePeopleModelController = (repository : PeopleRepository) => {   
     const [successful, setSuccess] = useState<boolean>(true)
@@ -21,13 +22,35 @@ export const usePeopleModelController = (repository : PeopleRepository) => {
         }
         catch(e : any){ setSuccess(false)}   
     }
-    const deleteUser = async (id: string) => {
+    const deleteUser = async (id: string,finish: () => void) => {
         try{
            var response =  await repository.deleteUser(id)
+           if(response)
+              finish()
            setSuccess(response.success)
 
         }
         catch(e : any){ setSuccess(false)}   
+    }
+    const refreshSubscribers= async () =>  {
+      try{
+        setFetchStatus(RequestStatus.Loading)
+        const newPage = 1;
+        setCurrentPage(newPage)
+        const response = await repository.getSubscribersPaging(newPage, PAGE_SIZE);
+        setFetchStatus(RequestStatus.Success)
+        setData({count: response.count, data : response.data});
+        }catch(e : any){ setFetchStatus(RequestStatus.Error)}    
+    }
+    const refreshPeople = async () =>  {
+      try{
+        setFetchStatus(RequestStatus.Loading)
+        const newPage = 1;
+        setCurrentPage(newPage)
+        const response = await repository.getUsersPaging(newPage, PAGE_SIZE);
+        setFetchStatus(RequestStatus.Success)
+        setData({count: response.count, data : response.data});
+        }catch(e : any){ setFetchStatus(RequestStatus.Error)}    
     }
     const getPeople = async (more: boolean = true) => {
         try{
@@ -80,6 +103,11 @@ export const usePeopleModelController = (repository : PeopleRepository) => {
     return{
         fetchStatus,
         successful,
+        currentUsers : data.data as User[],
+        count: data.count,
+        currentPage,
+        refreshPeople,
+        refreshSubscribers,
         getPeople,
         getSubscribers,
         updateUser,

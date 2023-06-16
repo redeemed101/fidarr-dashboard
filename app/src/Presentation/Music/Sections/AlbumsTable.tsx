@@ -106,7 +106,7 @@ const AlbumsTable = (props: AlbumsTableProps) => {
               return (
                 <div className='bg-black rounded-lg flex flex-col px-8 py-2'>
                   <h1 className="text-white text-xl font-bold mx-auto">Confirm action</h1>
-                  <p className="text-white">You want to delete this artist?</p>
+                  <p className="text-white">You want to delete this album?</p>
                   <div className="flex flex-row gap-2 justify-center mt-8">
                         <button className="bg-red-700 w-24 h-10 text-white font-bold rounded-lg" onClick={onClose}>No</button>
                         <button className="bg-white w-24 h-10 text-red-700 rounded-lg"
@@ -189,7 +189,7 @@ const AlbumsTable = (props: AlbumsTableProps) => {
                 <td><p>{album.lastUpdated}</p></td>
                 <td>
                     <div className="flex flex-row gap-2">
-                    <div className="cursor-pointer">
+                        <div className="cursor-pointer">
                           <img onClick={() => {
                                 dispatch(setAlbum(album))
                                 navigate(`/music/albums/${album.id}`)
