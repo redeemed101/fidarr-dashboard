@@ -53,3 +53,29 @@ const initialState: UserState = {
 export const { setUser, removeUser } = userSlice.actions
 
 export default userSlice.reducer
+
+
+
+export interface SelectedUserState {
+  user : User | null
+ }
+
+const initialSelectedUserState: UserState = {
+     user: null
+}
+
+export const selectedUserSlice  = createSlice({
+   name: 'selectedUser',
+   initialState,
+   reducers: {
+     setSelectedUser: (state, action: PayloadAction<User>) => {
+       state.user = action.payload
+     },
+     removeSelectedUser: (state) => {
+       state.user = null
+     }
+   
+   },
+ })
+
+export const { setSelectedUser, removeSelectedUser } = selectedUserSlice.actions

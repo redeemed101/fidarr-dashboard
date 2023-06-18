@@ -9,6 +9,7 @@ import InfiniteScroll from "react-infinite-scroll-component"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { PAGE_SIZE } from "../../../Data/Utils/constants"
+import { setSelectedUser } from "../../../StateManagement/redux/userReducer";
 
 
 
@@ -169,15 +170,15 @@ const AccountsTable = (props : AccountTableProps) => {
                 <div className="flex flex-row gap-2">
                 <div className="cursor-pointer">
                           <img onClick={() => {
-                                //dispatch(setUserSelected(user))
-                                navigate(`/people/subscribers/${user.id}`)
+                                dispatch(setSelectedUser(user))
+                                navigate(`/people/accounts/${user.id}`)
                             }} 
                              src={SettingsIcon} />
                         </div>
                         <div className="cursor-pointer">
                             <img onClick={() => {
-                               //dispatch(setUserSelected(user))
-                               navigate(`/people/subscribers/${user.id}`)
+                               dispatch(setSelectedUser(user))
+                               navigate(`/people/accounts/${user.id}`)
                             }} src={EditIcon} />
                         </div>
                         <div className="cursor-pointer">

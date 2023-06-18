@@ -9,6 +9,7 @@ import { useState } from "react"
 import { confirmAlert } from "react-confirm-alert"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { PAGE_SIZE } from "../../../Data/Utils/constants"
+import { setSelectedUser } from "../../../StateManagement/redux/userReducer";
 
 
 
@@ -169,14 +170,14 @@ const SubscribersTable = (props : SubscribersTableProps) => {
                 <div className="flex flex-row gap-2">
                 <div className="cursor-pointer">
                           <img onClick={() => {
-                                //dispatch(setUserSelected(user))
+                                dispatch(setSelectedUser(user))
                                 navigate(`/people/subscribers/${user.id}`)
                             }} 
                              src={SettingsIcon} />
                         </div>
                         <div className="cursor-pointer">
                             <img onClick={() => {
-                               //dispatch(setUserSelected(user))
+                               dispatch(setSelectedUser(user))
                                navigate(`/people/subscribers/${user.id}`)
                             }} src={EditIcon} />
                         </div>

@@ -55,6 +55,7 @@ export const usePeopleModelController = (repository : PeopleRepository) => {
     const getPeople = async (more: boolean = true) => {
         try{
             if(more){
+              setFetchStatus(RequestStatus.Loading)
               const newPage = currentPage + 1;
               setCurrentPage(newPage)
               console.log("Page number ", currentPage, " ", newPage)
@@ -82,6 +83,7 @@ export const usePeopleModelController = (repository : PeopleRepository) => {
               const newPage = currentPage + 1;
               setCurrentPage(newPage)
               console.log("Page number ", currentPage, " ", newPage)
+              setFetchStatus(RequestStatus.Loading)
               const response = await repository.getSubscribersPaging(newPage, PAGE_SIZE);
               setFetchStatus(RequestStatus.Success)
               const oldData = data.data

@@ -34,7 +34,7 @@ const PeopleAccountsPage = () => {
         <MenuColumn />
         <div className="flex   gap-4 flex-col w-full">
        
-           <PeopleHeader selectedType={PeopleMenuType.Accounts} menus={peopleMenuItems} buttonComp={ <Link to="/people/accounts/create"><ButtonWithIcon title="Add Member" imageSrc={PlusIcon} /></Link> } />
+           <PeopleHeader selectedType={PeopleMenuType.Accounts} menus={peopleMenuItems} buttonComp={ <Link to="/settings/team/create"><ButtonWithIcon title="Add Member" imageSrc={PlusIcon} /></Link> } />
            {fetchStatus == RequestStatus.Loading ? <div className="mx-auto"><p className="text-white">Loading...</p></div> :
                    <AccountsTable 
                    refresh={refreshPeople} 

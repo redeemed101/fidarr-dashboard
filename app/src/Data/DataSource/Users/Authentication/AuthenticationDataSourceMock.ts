@@ -29,6 +29,8 @@ export class AuthenticationDataSourceMock implements AuthenticationDataSource{
         res.success = true
         res.user = {
          email: request.username,
+         lastUpdated: "2023-07-07",
+         dateCreated:"2023-06-06",
          username: "lmsasajnr",
          name: "Lewis Msasa",
          profilePicPath: "https://picsum.photos/200",
@@ -71,6 +73,8 @@ export class AuthenticationDataSourceMock implements AuthenticationDataSource{
         res.success = true
         res.user = {
          email: request.username,
+         lastUpdated: "2023-07-07",
+         dateCreated:"2023-06-06",
          username: "lmsasajnr",
          name: "Lewis Msasa",
          profilePicPath: "https://picsum.photos/200",
@@ -105,6 +109,8 @@ export class AuthenticationDataSourceMock implements AuthenticationDataSource{
         email: request.username,
         username: "lmsasajnr",
         name: "Lewis Msasa",
+        lastUpdated: "2023-07-07",
+        dateCreated:"2023-06-06",
         profilePicPath: "https://picsum.photos/200",
         id: "1234"
        }

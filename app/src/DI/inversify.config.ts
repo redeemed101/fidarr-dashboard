@@ -45,6 +45,7 @@ import { PeopleDataSource } from "../Data/DataSource/Users/People/PeopleDataSour
 import { PeopleDataSourceImpl } from "../Data/DataSource/Users/People/PeopleDataSourceImpl";
 import { PeopleRepository } from "../Domain/Repository/Users/people/PeopleRepository";
 import { PeopleRepositoryImpl } from "../Data/Repository/Users/people/PeopleRepositoryImpl";
+import { PeopleRepositoryMock } from "../Data/Repository/Users/people/PeopleRepositoryMock";
 
 const myContainer = new Container();
 myContainer.bind<AlbumDataSource>(TYPES.AlbumDataSource).to(AlbumDataSourceImpl);
@@ -64,7 +65,7 @@ myContainer.bind<AuthenticationDataSource>(TYPES.AuthenticationDataSource).to(Au
 myContainer.bind<AuthenticationRepository>(TYPES.AuthenticationRepository).to(AuthenticationRepositoryImpl);
 
 myContainer.bind<PeopleDataSource>(TYPES.PeopleDataSource).to(PeopleDataSourceImpl);
-myContainer.bind<PeopleRepository>(TYPES.PeopleRepository).to(PeopleRepositoryImpl);
+myContainer.bind<PeopleRepository>(TYPES.PeopleRepository).to(PeopleRepositoryMock);
 
 myContainer.bind<PlaylistDataSource>(TYPES.PlaylistDataSource).to(PlaylistDataSourceImpl);
 myContainer.bind<ChartDataSource>(TYPES.ChartDataSource).to(ChartDataSourceImpl);

@@ -323,7 +323,7 @@ function App() {
           <Route path="/" element={<LoginPage /> } />
           <Route path="/login" element={<LoginPage /> } />
           <Route path="/register" element={<RegisterPage /> } />
-          <Route path="/recover" element={<RecoverEmailPage /> } />
+          <Route path="/recover" element={<RecoverEmailPage /> } /> 
           <Route path="*" element={<Status404Page />} />
 
       </Routes>

@@ -5,10 +5,13 @@ import { Link } from "react-router-dom";
 import SettingsHeader from "../Sections/SettingsHeader";
 import { SettingsMenuType, settingsMenuItems } from "../../../StateManagement/SettingsMenu";
 import { PasswordToggleField, PrimaryTextField } from "../../Common/textfields";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../StateManagement/redux/store";
 
 
 
 const ProfilePage = () => {
+  const user = useSelector((state: RootState) => state.user.user);
     return (
        
        
@@ -18,13 +21,13 @@ const ProfilePage = () => {
          
              <SettingsHeader selectedType={SettingsMenuType.Profile} menus={settingsMenuItems} />
              <div className="flex flex-col gap-2 w-1/3 mx-12">
-                <div className="w-full">
-                  <PrimaryTextField type="text" value="" padX={6} padY={2} width="full" height="10" label="Name" placeholder="Name" />
+                <div className="flex flex-row gap-2">
+                  <PrimaryTextField type="text" value={user?.name!} padX={6} padY={2} width="full" height="10" label="Name" placeholder="Name" />
+                  <PrimaryTextField type="text" value={user?.email!} padX={6} padY={2} width="full" height="10" label="Email" placeholder="Email" />
                 </div>
                 <div className="flex flex-row gap-2">
                   <PrimaryTextField type="password" value="" padX={6} padY={2} width="full" height="10" label="Password" placeholder="Password" />
-                
-                  <PrimaryTextField type="text" value="" padX={6} padY={2} width="full" height="10" label="Email" placeholder="Email" />
+                  <PrimaryTextField type="password" value="" padX={6} padY={2} width="full" height="10" label="Confirm Password" placeholder="Confirm Password" />
                 </div>
                 
                 <div className="mt-6 self-end">

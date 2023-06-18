@@ -24,7 +24,7 @@ const PeopleHeader = ({menus, buttonComp, selectedType} : PeopleHeaderProps) => 
         <div className="w-full">
             <div className="flex flex-col bg-fidarrgray-600 pb-4 w-full">
                 <div className="pl-8">
-                  <HeaderSection title="CMS" />
+                  <HeaderSection title="People" />
                   <div className="flex flex-row pt-12 ml-4 items-center justify-between">
                         <div className="flex flex-row gap-6">
                             { menus.map(m => <Link  to={m.route}><PeopleMenuItem action={() => setSelectedPeopleMenu(m)} title={m.title} isSelected={selectedPeopleMenu == m} /></Link> )}

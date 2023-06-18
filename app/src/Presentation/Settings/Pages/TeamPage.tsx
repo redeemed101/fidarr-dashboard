@@ -16,7 +16,8 @@ const TeamPage = () => {
           <MenuColumn />
           <div className="flex  gap-4 flex-col w-full">
          
-             <SettingsHeader selectedType={SettingsMenuType.Team} menus={settingsMenuItems}  buttonComp={ <Link to="/settings/team/create"><ButtonWithIcon imageSrc={PlusIcon} title="Add Member" /></Link> } />
+             <SettingsHeader selectedType={SettingsMenuType.Team} menus={settingsMenuItems} 
+              buttonComp={ <Link to="/settings/team/create"><ButtonWithIcon imageSrc={PlusIcon} title="Add Member" /></Link> } />
              <TeamTable />
           </div>   
        
