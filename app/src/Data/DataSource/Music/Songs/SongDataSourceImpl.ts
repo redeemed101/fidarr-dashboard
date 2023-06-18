@@ -78,6 +78,6 @@ export class SongDataSourceImpl implements SongDataSource{
         return await postAPI<EditSongResponse>("AdminSong/edit", formData, { "Content-Type": "multipart/form-data"}, onUploadProgress) 
     }
     async deleteSong(songId: string): Promise<GeneralResponse> {
-       return await deleteAPI<GeneralResponse>(`AdminSong/delete/${songId}`)
+       return await deleteAPI<GeneralResponse>(`api/AdminSong/${songId}`)
     }
 }

@@ -1,4 +1,4 @@
-export const BASE_URL : string = "https://010a-102-70-3-20.ngrok-free.app/"; 
+export const BASE_URL : string = "https://c8a1-102-70-2-217.ngrok-free.app/"; 
 export const ALBUM_GRAPH_URL="api/albumql"
 export const SONG_GRAPH_URL="api/songql"
 export const GENRE_GRAPH_URL="api/genreql"

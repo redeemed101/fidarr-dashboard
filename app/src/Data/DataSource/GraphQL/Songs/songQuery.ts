@@ -10,6 +10,8 @@ searchSongsPaging(page:$page,size:$size,searchWord:$searchWord){
     path
     artworkPath
     isTrending
+    releaseDate
+    lastUpdated
     forYou
     topSong
     artist{
@@ -44,6 +46,8 @@ export const QUERY_SONG_PAGINING = gql`query getSongPaging($page:Int!,$size:Int!
         path
         artworkPath
         isTrending
+        releaseDate
+        lastUpdated
         forYou
         topSong
         artist{
@@ -83,6 +87,8 @@ export const QUERY_TRENDING_SONG_PAGINING = gql`query getTrendingSongPaging($pag
         isTrending
         forYou
         topSong
+        releaseDate
+        lastUpdated
         artist{
             name
             id                
@@ -119,6 +125,8 @@ export const QUERY_FORYOUSONG_PAGINING = gql`query getForYouSongPaging($page:Int
         isTrending
         forYou
         topSong
+        releaseDate
+        lastUpdated
         artist{
             name
             id                
@@ -155,6 +163,8 @@ export const QUERY_TOP_SONG_PAGINING = gql`query getTopSongPaging($page:Int!,$si
         isTrending
         forYou
         topSong
+        releaseDate
+        lastUpdated
         artist{
             name
             id                

@@ -56,7 +56,7 @@ myContainer.bind<SongDataSource>(TYPES.SongDataSource).to(SongDataSourceImpl);
 myContainer.bind<AlbumRepository>(TYPES.AlbumRepository).to(AlbumRepositoryMock);
 myContainer.bind<ArtistRepository>(TYPES.ArtistRepository).to(ArtistRepositoryMock);
 myContainer.bind<GenreRepository>(TYPES.GenreRepository).to(GenreRepositoryMock);
-myContainer.bind<SongRepository>(TYPES.SongRepository).to(SongRepositoryMock);
+myContainer.bind<SongRepository>(TYPES.SongRepository).to(SongRepositoryImpl);
 myContainer.bind<PlaylistRepository>(TYPES.PlaylistRepository).to(PlaylistRepositoryMock);
 myContainer.bind<ChartRepository>(TYPES.ChartRepository).to(ChartRepositoryMock);
 myContainer.bind<MoodRepository>(TYPES.MoodRepository).to(MoodRepositoryMock);

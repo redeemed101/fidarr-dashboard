@@ -47,7 +47,7 @@ const TracksPage = () => {
              {fetchStatus == RequestStatus.Loading ? <div className="mx-auto"><p className="text-white">Loading...</p></div> : 
              <TracksTable 
              deleteItem={(id:string) => {
-                  
+                 console.log("this") 
                deleteSong(id, ()=>setSongs(prev => prev.filter(p => p.id != id))) 
              }}
              selectedSongs={selectedSongs}
@@ -56,7 +56,7 @@ const TracksPage = () => {
              refresh={refreshSongsPaginated} 
              totalCount={count} 
              currentPage={currentPage} 
-             loadMore={getMoreSongsPaginated} rows={currentSongs}  /> }
+             loadMore={getMoreSongsPaginated} rows={songs}  /> }
              {fetchStatus == RequestStatus.Error ? <div className="mx-auto"><p className="text-red-600">Error fetching data</p></div> : ""}
           </div>   
        

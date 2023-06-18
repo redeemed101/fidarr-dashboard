@@ -14,7 +14,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { CreateSongResponse } from '../Music/Songs/SongDataSource'
 
 
-var axiosInstance : AxiosInstance = axios//.create({  baseURL: BASE_URL,  timeout: 5000});
+var axiosInstance : AxiosInstance = axios.create({  baseURL: BASE_URL});
  
   
 
@@ -60,18 +60,15 @@ var axiosInstance : AxiosInstance = axios//.create({  baseURL: BASE_URL,  timeou
     return Promise.reject(error);
   };
   
-  export const setupInterceptorsTo = (
-    axiosInstance: AxiosInstance
-  ): AxiosInstance => {
-    axiosInstance.interceptors.request.use(onRequest, onRequestError);
-    axiosInstance.interceptors.response.use(onResponse, onResponseError);
-    return axiosInstance;
-  };
+  
+ axiosInstance.interceptors.request.use(onRequest, onRequestError);
+ axiosInstance.interceptors.response.use(onResponse, onResponseError);
+
 
   //axiosInstance = setupInterceptorsTo(axiosInstance)
 
 
- const mockApi = (axiosInstance : AxiosInstance) => {
+ /*const mockApi = (axiosInstance : AxiosInstance) => {
   var mock = new MockAdapter(axiosInstance)
   const sleep = (value: number) =>
     new Promise((resolve) => setTimeout(resolve, value));
@@ -92,7 +89,7 @@ var axiosInstance : AxiosInstance = axios//.create({  baseURL: BASE_URL,  timeou
         id : "1234"
     } as CreateSongResponse];
   });
- }
+ }*/
 
 
 
@@ -101,6 +98,7 @@ const postConfig : Params = {
   baseUrl: BASE_URL,
   headers: {
               "Authorization": `Bearer ${tokenManager.getToken()}`,
+              "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE"
               //"Content-Type": "multipart/form-data",
           },
   method: 'post'
@@ -119,8 +117,8 @@ data : any
 
 export const  getAPI = async <IEntity,>(url : string ,extraHeaders: any | null = null, onDownloadProgress : undefined | any  = undefined) : Promise<IEntity> => {
   try { 
-    mockApi(axiosInstance)
-    axiosInstance = setupInterceptorsTo(axiosInstance)
+    //mockApi(axiosInstance)
+    //axiosInstance = setupInterceptorsTo(axiosInstance)
     var headers = extraHeaders != null ? {
       ...postConfig.headers,
       ...extraHeaders
@@ -142,14 +140,14 @@ export const  getAPI = async <IEntity,>(url : string ,extraHeaders: any | null =
 }
 
 export const deleteAPI = async <IEntity,>(url: string, extraHeaders: any | null = null,onUploadProgress : undefined | any = undefined): Promise<IEntity> => {
-  mockApi(axiosInstance)
-  axiosInstance = setupInterceptorsTo(axiosInstance)
+ // mockApi(axiosInstance)
+  //axiosInstance = setupInterceptorsTo(axiosInstance)
   var headers = extraHeaders != null ? {
    ...postConfig.headers,
    ...extraHeaders
   } : postConfig.headers;
   const {data, status } = await axiosInstance<IEntity>({        
-    url: `${postConfig.baseUrl}/${url}`,
+    url: `${postConfig.baseUrl}${url}`,
     method: "delete",
     headers : headers,
     onUploadProgress: onUploadProgress
@@ -159,8 +157,8 @@ export const deleteAPI = async <IEntity,>(url: string, extraHeaders: any | null 
 
 export  const postAPI = async <IEntity,> (url: string, payload : any, extraHeaders: any | null = null, onUploadProgress : undefined | any = undefined) : Promise<IEntity> => {
 try{
-   mockApi(axiosInstance)
-   axiosInstance = setupInterceptorsTo(axiosInstance)
+   //mockApi(axiosInstance)
+   //axiosInstance = setupInterceptorsTo(axiosInstance)
    var headers = extraHeaders != null ? {
     ...postConfig.headers,
     ...extraHeaders
@@ -183,8 +181,8 @@ catch(error){
 }
 export  const putAPI = async <IEntity,> (url: string, payload : any, extraHeaders: any | null = null, onUploadProgress : undefined | any = undefined) : Promise<IEntity> => {
   try{
-     mockApi(axiosInstance)
-     axiosInstance = setupInterceptorsTo(axiosInstance)
+     //mockApi(axiosInstance)
+     //axiosInstance = setupInterceptorsTo(axiosInstance)
      var headers = extraHeaders != null ? {
       ...postConfig.headers,
       ...extraHeaders
