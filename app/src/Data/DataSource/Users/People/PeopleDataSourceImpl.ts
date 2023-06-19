@@ -1,12 +1,15 @@
 import { id, injectable } from "inversify";
-import { PeopleDataSource, SubscriptionsPaging, UpdateUserRequest, UsersPaging } from "./PeopleDataSource";
+import { PeopleDataSource, RolesResponse, SubscriptionsPaging, UpdateUserRequest, UsersPaging } from "./PeopleDataSource";
 import { GeneralResponse } from "../Authentication/AuthenticationDataSource";
-import { deleteAPI, postAPI } from "../../API/axios_instance";
+import { deleteAPI, getAPI, postAPI } from "../../API/axios_instance";
 import { graphQLUserClient } from "../../GraphQL/Client/client";
 import { GetSubscriptionPagingDocument, GetSubscriptionPagingQueryResult, GetUsersPagingDocument, GetUsersPagingQueryResult } from "../../GraphQL/Generated/Users/graphql";
 
 @injectable()
 export class PeopleDataSourceImpl implements PeopleDataSource{
+    async getRoles(): Promise<RolesResponse> {
+        return await getAPI<RolesResponse>(`Role/roles`)
+    }
     async updateUser(request: UpdateUserRequest): Promise<GeneralResponse> {
         return await postAPI<GeneralResponse>(`Adminuser/update`,request)
     }

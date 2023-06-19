@@ -7,18 +7,19 @@ type PrimarySelectProps = {
     options : PrimarySelectOption[],
     value? : string,
     width : string,
-    padX : number
+    padX : number,
+    onChanged?: (target: any) => void
 
 }
 
-const PrimarySelect = ({label, options, value, width, padX} : PrimarySelectProps) => {
+const PrimarySelect = ({label, options, value, width, padX, onChanged} : PrimarySelectProps) => {
     return (
         <div className={`w-${width}  px-${padX} mb-6 md:mb-0` }>
             <label className=" tracking-wide text-fidarrgray-500 text-xs font-bold mb-2" htmlFor="grid-state">
                 {label}
             </label>
         <div className="relative">
-            <select value={value} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+            <select value={value} onChange={onChanged} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
              <option className="text-fidarrgray-900">Select</option>
             { options.map( o => <option value={o.value}>{o.label}</option> ) }
             

@@ -34,12 +34,12 @@ const menus : Menu[] = [
         route: "/music",
         key: "MUSIC"
     },
-    {
+    /*{
         title : "CMS",
         imgSrc : Copy,
         route : "/cms",
         key: "CMS"
-    },
+    },*/
     {
         title: "People",
         imgSrc: People,

@@ -2,7 +2,7 @@ import { inject, injectable } from "inversify";
 import { PeopleRepository } from "../../../../Domain/Repository/Users/people/PeopleRepository";
 import { UserPage } from "../../../../Domain/Model/Auth/User";
 import { GeneralResponse } from "../../../DataSource/Users/Authentication/AuthenticationDataSource";
-import { PeopleDataSource, UpdateUserRequest } from "../../../DataSource/Users/People/PeopleDataSource";
+import { PeopleDataSource, RolesResponse, UpdateUserRequest } from "../../../DataSource/Users/People/PeopleDataSource";
 import { TYPES } from "../../../../DI/types";
 import { BASE_URL } from "../../../DataSource/API/constant";
 import moment from "moment";
@@ -15,6 +15,9 @@ export class PeopleRepositoryImpl implements PeopleRepository{
         @inject(TYPES.PeopleDataSource) dataSource : PeopleDataSource
     ){
         this._dataSource = dataSource
+    }
+    async getRoles(): Promise<RolesResponse> {
+       return this._dataSource.getRoles()
     }
     async getSubscribersPaging(page: number, size: number): Promise<UserPage> {
         const userResponse = await this._dataSource.getSubscribersPaging(page,size)

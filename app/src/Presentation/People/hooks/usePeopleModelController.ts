@@ -4,7 +4,7 @@ import { PagedData, RequestStatus } from "../../Music/hooks/common";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PAGE_SIZE } from "../../../Data/Utils/constants";
-import { UpdateUserRequest } from "../../../Data/DataSource/Users/People/PeopleDataSource";
+import { Role, UpdateUserRequest } from "../../../Data/DataSource/Users/People/PeopleDataSource";
 import { User } from "../../../Domain/Model/Auth/User";
 
 export const usePeopleModelController = (repository : PeopleRepository) => {   
@@ -12,6 +12,7 @@ export const usePeopleModelController = (repository : PeopleRepository) => {
     const [currentPage, setCurrentPage] = useState(1); 
     const [fetchStatus, setFetchStatus] = useState<RequestStatus>(RequestStatus.Success);
     const [data, setData] = useState<PagedData>({count: 0, data: []});
+    const [roles, setRoles] = useState<Role[]>([])
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const updateUser = async (request: UpdateUserRequest) => {
@@ -41,6 +42,14 @@ export const usePeopleModelController = (repository : PeopleRepository) => {
         setFetchStatus(RequestStatus.Success)
         setData({count: response.count, data : response.data});
         }catch(e : any){ setFetchStatus(RequestStatus.Error)}    
+    }
+    const getRoles = async () => {
+        try{
+          setFetchStatus(RequestStatus.Loading)
+          const response = await repository.getRoles()
+          setRoles(response.roles)
+          setFetchStatus(RequestStatus.Success)
+      }catch(e : any){ setFetchStatus(RequestStatus.Error)} 
     }
     const refreshPeople = async () =>  {
       try{
@@ -108,6 +117,8 @@ export const usePeopleModelController = (repository : PeopleRepository) => {
         currentUsers : data.data as User[],
         count: data.count,
         currentPage,
+        roles,
+        getRoles,
         refreshPeople,
         refreshSubscribers,
         getPeople,

@@ -21,10 +21,19 @@ export type UpdateUserRequest = {
     phoneNumber : string,
     countryId : number,
 }
+export interface RolesResponse {
+    roles: Role[]
+  }
+  
+  export interface Role {
+    id: string
+    name: string
+  }
 
 export interface PeopleDataSource{
     getSubscribersPaging(page: number, size:number) : Promise<SubscriptionsPaging>
     getUsersPaging(page: number, size:number) : Promise<UsersPaging>
     updateUser(request: UpdateUserRequest): Promise<GeneralResponse>
     deleteUser(id: string): Promise<GeneralResponse>
+    getRoles():Promise<RolesResponse>
 }
