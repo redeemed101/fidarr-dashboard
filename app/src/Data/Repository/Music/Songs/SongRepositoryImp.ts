@@ -64,7 +64,7 @@ export class SongRepositoryImpl implements SongRepository{
                     } 
                   }) as Genre[],
                 streams : s.streams?.length ?? "0",
-                duration : "",
+                duration : s.duration,
                 releaseDate: moment(Date.parse(s?.releaseDate)).format('MMMM DD, YYYY'),
                 lastUpdated: moment(Date.parse(s?.lastUpdated)).format('MMMM DD, YYYY')
             } as Track
@@ -117,7 +117,7 @@ export class SongRepositoryImpl implements SongRepository{
                     } 
                   }) as Genre[],
                 streams : s.streams?.length ?? "0",
-                duration : "",
+                duration : s.duration,
                 releaseDate: moment(Date.parse(s?.releaseDate)).format('MMMM DD, YYYY'),
                 lastUpdated: moment(Date.parse(s?.lastUpdated)).format('MMMM DD, YYYY')
             } as Track

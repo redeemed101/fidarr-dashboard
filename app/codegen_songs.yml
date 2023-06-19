@@ -1,5 +1,5 @@
 overwrite: true
-schema: " https://c8a1-102-70-2-217.ngrok-free.app/api/songql"
+schema: "https://1c4b-102-70-0-8.ngrok-free.app/api/songql"
 documents: "src/Data/DataSource/GraphQL/Songs/*.ts"
 generates:
   src/Data/DataSource/GraphQL/Generated/Songs/:

@@ -14,6 +14,7 @@ searchSongsPaging(page:$page,size:$size,searchWord:$searchWord){
     lastUpdated
     forYou
     topSong
+    duration
     artist{
         name
         id                
@@ -50,6 +51,7 @@ export const QUERY_SONG_PAGINING = gql`query getSongPaging($page:Int!,$size:Int!
         lastUpdated
         forYou
         topSong
+        duration
         artist{
             name
             id                
@@ -89,6 +91,7 @@ export const QUERY_TRENDING_SONG_PAGINING = gql`query getTrendingSongPaging($pag
         topSong
         releaseDate
         lastUpdated
+        duration
         artist{
             name
             id                
@@ -127,6 +130,7 @@ export const QUERY_FORYOUSONG_PAGINING = gql`query getForYouSongPaging($page:Int
         topSong
         releaseDate
         lastUpdated
+        duration
         artist{
             name
             id                
@@ -165,6 +169,7 @@ export const QUERY_TOP_SONG_PAGINING = gql`query getTopSongPaging($page:Int!,$si
         topSong
         releaseDate
         lastUpdated
+        duration
         artist{
             name
             id                

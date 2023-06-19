@@ -127,6 +127,8 @@ export type Song = {
   artworkPath: Scalars['String'];
   /** description */
   description: Scalars['String'];
+  /** Flags */
+  duration?: Maybe<Scalars['String']>;
   /** FeaturingArtists */
   featuringArtists?: Maybe<Array<Maybe<Artist>>>;
   /** ForYou */
@@ -229,7 +231,7 @@ export type GetSearchSongsPagingQueryVariables = Exact<{
 }>;
 
 
-export type GetSearchSongsPagingQuery = { __typename?: 'SongQuery', searchSongsPaging?: { __typename?: 'SongPaging', count: number, songs?: Array<{ __typename?: 'Song', id: string, name: string, path: string, artworkPath: string, isTrending: boolean, releaseDate: any, lastUpdated: any, forYou: boolean, topSong: boolean, artist?: { __typename?: 'Artist', name: string, id: string } | null, likes?: Array<{ __typename?: 'SongLike', userId: string } | null> | null, streams?: Array<{ __typename?: 'SongStream', id: string } | null> | null, featuringArtists?: Array<{ __typename?: 'Artist', id: string, name: string, imagePath: string } | null> | null, genres?: Array<{ __typename?: 'Genre', id: string, name: string } | null> | null } | null> | null } | null };
+export type GetSearchSongsPagingQuery = { __typename?: 'SongQuery', searchSongsPaging?: { __typename?: 'SongPaging', count: number, songs?: Array<{ __typename?: 'Song', id: string, name: string, path: string, artworkPath: string, isTrending: boolean, releaseDate: any, lastUpdated: any, forYou: boolean, topSong: boolean, duration?: string | null, artist?: { __typename?: 'Artist', name: string, id: string } | null, likes?: Array<{ __typename?: 'SongLike', userId: string } | null> | null, streams?: Array<{ __typename?: 'SongStream', id: string } | null> | null, featuringArtists?: Array<{ __typename?: 'Artist', id: string, name: string, imagePath: string } | null> | null, genres?: Array<{ __typename?: 'Genre', id: string, name: string } | null> | null } | null> | null } | null };
 
 export type GetSongPagingQueryVariables = Exact<{
   page: Scalars['Int'];
@@ -237,7 +239,7 @@ export type GetSongPagingQueryVariables = Exact<{
 }>;
 
 
-export type GetSongPagingQuery = { __typename?: 'SongQuery', songsPaging?: { __typename?: 'SongPaging', count: number, songs?: Array<{ __typename?: 'Song', id: string, name: string, path: string, artworkPath: string, isTrending: boolean, releaseDate: any, lastUpdated: any, forYou: boolean, topSong: boolean, artist?: { __typename?: 'Artist', name: string, id: string } | null, likes?: Array<{ __typename?: 'SongLike', userId: string } | null> | null, streams?: Array<{ __typename?: 'SongStream', id: string } | null> | null, featuringArtists?: Array<{ __typename?: 'Artist', id: string, name: string, imagePath: string } | null> | null, genres?: Array<{ __typename?: 'Genre', id: string, name: string } | null> | null } | null> | null } | null };
+export type GetSongPagingQuery = { __typename?: 'SongQuery', songsPaging?: { __typename?: 'SongPaging', count: number, songs?: Array<{ __typename?: 'Song', id: string, name: string, path: string, artworkPath: string, isTrending: boolean, releaseDate: any, lastUpdated: any, forYou: boolean, topSong: boolean, duration?: string | null, artist?: { __typename?: 'Artist', name: string, id: string } | null, likes?: Array<{ __typename?: 'SongLike', userId: string } | null> | null, streams?: Array<{ __typename?: 'SongStream', id: string } | null> | null, featuringArtists?: Array<{ __typename?: 'Artist', id: string, name: string, imagePath: string } | null> | null, genres?: Array<{ __typename?: 'Genre', id: string, name: string } | null> | null } | null> | null } | null };
 
 export type GetTrendingSongPagingQueryVariables = Exact<{
   page: Scalars['Int'];
@@ -245,7 +247,7 @@ export type GetTrendingSongPagingQueryVariables = Exact<{
 }>;
 
 
-export type GetTrendingSongPagingQuery = { __typename?: 'SongQuery', trendingSongsPaging?: { __typename?: 'SongPaging', count: number, songs?: Array<{ __typename?: 'Song', id: string, name: string, path: string, artworkPath: string, isTrending: boolean, forYou: boolean, topSong: boolean, releaseDate: any, lastUpdated: any, artist?: { __typename?: 'Artist', name: string, id: string } | null, likes?: Array<{ __typename?: 'SongLike', userId: string } | null> | null, streams?: Array<{ __typename?: 'SongStream', id: string } | null> | null, featuringArtists?: Array<{ __typename?: 'Artist', id: string, name: string, imagePath: string } | null> | null, genres?: Array<{ __typename?: 'Genre', id: string, name: string } | null> | null } | null> | null } | null };
+export type GetTrendingSongPagingQuery = { __typename?: 'SongQuery', trendingSongsPaging?: { __typename?: 'SongPaging', count: number, songs?: Array<{ __typename?: 'Song', id: string, name: string, path: string, artworkPath: string, isTrending: boolean, forYou: boolean, topSong: boolean, releaseDate: any, lastUpdated: any, duration?: string | null, artist?: { __typename?: 'Artist', name: string, id: string } | null, likes?: Array<{ __typename?: 'SongLike', userId: string } | null> | null, streams?: Array<{ __typename?: 'SongStream', id: string } | null> | null, featuringArtists?: Array<{ __typename?: 'Artist', id: string, name: string, imagePath: string } | null> | null, genres?: Array<{ __typename?: 'Genre', id: string, name: string } | null> | null } | null> | null } | null };
 
 export type GetForYouSongPagingQueryVariables = Exact<{
   page: Scalars['Int'];
@@ -253,7 +255,7 @@ export type GetForYouSongPagingQueryVariables = Exact<{
 }>;
 
 
-export type GetForYouSongPagingQuery = { __typename?: 'SongQuery', forYouSongsPaging?: { __typename?: 'SongPaging', count: number, songs?: Array<{ __typename?: 'Song', id: string, name: string, path: string, artworkPath: string, isTrending: boolean, forYou: boolean, topSong: boolean, releaseDate: any, lastUpdated: any, artist?: { __typename?: 'Artist', name: string, id: string } | null, likes?: Array<{ __typename?: 'SongLike', userId: string } | null> | null, streams?: Array<{ __typename?: 'SongStream', id: string } | null> | null, featuringArtists?: Array<{ __typename?: 'Artist', id: string, name: string, imagePath: string } | null> | null, genres?: Array<{ __typename?: 'Genre', id: string, name: string } | null> | null } | null> | null } | null };
+export type GetForYouSongPagingQuery = { __typename?: 'SongQuery', forYouSongsPaging?: { __typename?: 'SongPaging', count: number, songs?: Array<{ __typename?: 'Song', id: string, name: string, path: string, artworkPath: string, isTrending: boolean, forYou: boolean, topSong: boolean, releaseDate: any, lastUpdated: any, duration?: string | null, artist?: { __typename?: 'Artist', name: string, id: string } | null, likes?: Array<{ __typename?: 'SongLike', userId: string } | null> | null, streams?: Array<{ __typename?: 'SongStream', id: string } | null> | null, featuringArtists?: Array<{ __typename?: 'Artist', id: string, name: string, imagePath: string } | null> | null, genres?: Array<{ __typename?: 'Genre', id: string, name: string } | null> | null } | null> | null } | null };
 
 export type GetTopSongPagingQueryVariables = Exact<{
   page: Scalars['Int'];
@@ -261,7 +263,7 @@ export type GetTopSongPagingQueryVariables = Exact<{
 }>;
 
 
-export type GetTopSongPagingQuery = { __typename?: 'SongQuery', topSongsPaging?: { __typename?: 'SongPaging', count: number, songs?: Array<{ __typename?: 'Song', id: string, name: string, path: string, artworkPath: string, isTrending: boolean, forYou: boolean, topSong: boolean, releaseDate: any, lastUpdated: any, artist?: { __typename?: 'Artist', name: string, id: string } | null, likes?: Array<{ __typename?: 'SongLike', userId: string } | null> | null, streams?: Array<{ __typename?: 'SongStream', id: string } | null> | null, featuringArtists?: Array<{ __typename?: 'Artist', id: string, name: string, imagePath: string } | null> | null, genres?: Array<{ __typename?: 'Genre', id: string, name: string } | null> | null } | null> | null } | null };
+export type GetTopSongPagingQuery = { __typename?: 'SongQuery', topSongsPaging?: { __typename?: 'SongPaging', count: number, songs?: Array<{ __typename?: 'Song', id: string, name: string, path: string, artworkPath: string, isTrending: boolean, forYou: boolean, topSong: boolean, releaseDate: any, lastUpdated: any, duration?: string | null, artist?: { __typename?: 'Artist', name: string, id: string } | null, likes?: Array<{ __typename?: 'SongLike', userId: string } | null> | null, streams?: Array<{ __typename?: 'SongStream', id: string } | null> | null, featuringArtists?: Array<{ __typename?: 'Artist', id: string, name: string, imagePath: string } | null> | null, genres?: Array<{ __typename?: 'Genre', id: string, name: string } | null> | null } | null> | null } | null };
 
 
 export const GetSearchSongsPagingDocument = gql`
@@ -278,6 +280,7 @@ export const GetSearchSongsPagingDocument = gql`
       lastUpdated
       forYou
       topSong
+      duration
       artist {
         name
         id
@@ -345,6 +348,7 @@ export const GetSongPagingDocument = gql`
       lastUpdated
       forYou
       topSong
+      duration
       artist {
         name
         id
@@ -411,6 +415,7 @@ export const GetTrendingSongPagingDocument = gql`
       topSong
       releaseDate
       lastUpdated
+      duration
       artist {
         name
         id
@@ -477,6 +482,7 @@ export const GetForYouSongPagingDocument = gql`
       topSong
       releaseDate
       lastUpdated
+      duration
       artist {
         name
         id
@@ -543,6 +549,7 @@ export const GetTopSongPagingDocument = gql`
       topSong
       releaseDate
       lastUpdated
+      duration
       artist {
         name
         id
