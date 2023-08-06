@@ -1,46 +1,47 @@
 import { injectable } from "inversify";
 import { AuthenticationDataSource, CountryResponse, GeneralResponse, InviteUserRequest, PasswordChangeRequest, PasswordResetRequest, SignInRequest, SignInResponse, SignupRequest, SignupResponse, VerifyCodeRequest } from "./AuthenticationDataSource";
 import { getAPI, postAPI } from "../../API/axios_instance";
+import { USERS_URL } from "../../API/constant";
 
 
 @injectable()
 export class AuthenticationDataSourceImpl implements AuthenticationDataSource{
-    inviteUser(request: InviteUserRequest): Promise<GeneralResponse> {
-      throw new Error("Method not implemented.");
+    async inviteUser(request: InviteUserRequest): Promise<GeneralResponse> {
+      return await postAPI<GeneralResponse>(`${USERS_URL}User/invite`, request)   
     }
-    checkInviteCode(code: string): Promise<GeneralResponse> {
-      throw new Error("Method not implemented.");
+    async checkInviteCode(code: string): Promise<GeneralResponse> {
+      return await postAPI<GeneralResponse>(`${USERS_URL}User/checkCode`, { code : code})   
     }
-    emailExists(email: string): Promise<GeneralResponse> {
-      throw new Error("Method not implemented.");
+    async emailExists(email: string): Promise<GeneralResponse> {
+      return await postAPI<GeneralResponse>(`${USERS_URL}User/checkEmail`, {email : email})   
     }
-    resetPassword(request: PasswordResetRequest): Promise<SignInResponse> {
-      throw new Error("Method not implemented.");
+    async resetPassword(request: PasswordResetRequest): Promise<SignInResponse> {
+      return await postAPI<SignInResponse>(`${USERS_URL}User/reset`, request)   
     }
-    verifyCode(request: VerifyCodeRequest): Promise<GeneralResponse> {
-      throw new Error("Method not implemented.");
+    async verifyCode(request: VerifyCodeRequest): Promise<GeneralResponse> {
+      return await postAPI<GeneralResponse>(`${USERS_URL}User/verifyCode`, request)   
     }
-    resendCode(username: string): Promise<GeneralResponse> {
-      throw new Error("Method not implemented.");
+    async resendCode(username: string): Promise<GeneralResponse> {
+      return await postAPI<GeneralResponse>(`${USERS_URL}User/resendCode`, {username : username})   
     }
-    forgotPassword(email: string): Promise<GeneralResponse> {
-      throw new Error("Method not implemented.");
+    async forgotPassword(email: string): Promise<GeneralResponse> {
+      return await postAPI<GeneralResponse>(`${USERS_URL}User/forgotPassword`, {email : email}) 
     }
-    changePassword(request: PasswordChangeRequest): Promise<GeneralResponse> {
-      throw new Error("Method not implemented.");
+    async changePassword(request: PasswordChangeRequest): Promise<GeneralResponse> {
+      return await postAPI<GeneralResponse>(`${USERS_URL}User/changePassword`, request) 
     }
     logout(): Promise<void> {
       throw new Error("Method not implemented.");
     }
     async signUp(request: SignupRequest): Promise<SignupResponse> {
-      return await postAPI<SignupResponse>("User/signup", request)   
+      return await postAPI<SignupResponse>(`${USERS_URL}User/signup`, request)   
     }
     async getCountries(): Promise<CountryResponse> {
-      return await getAPI<CountryResponse>("Country/countries");
+      return await getAPI<CountryResponse>(`${USERS_URL}Country/countries`);
     }
     async signIn(request: SignInRequest): Promise<SignInResponse> {
       
-      return await postAPI<SignInResponse>("User/signin", request)       
+      return await postAPI<SignInResponse>(`${USERS_URL}User/signin`, request)       
         
     }
 

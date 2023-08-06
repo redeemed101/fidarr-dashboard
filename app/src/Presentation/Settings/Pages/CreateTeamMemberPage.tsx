@@ -52,8 +52,11 @@ const CreateTeamMemberPage = () => {
                   <p className="text-white text-bold text-xl">Invite New Members</p>
                   <p className="text-white">Enter the email address of the member you'd like to invite and choose the role they should have</p>
                 </div>
-                <p className="text-red-600">{errors.email?.message}</p>
-                <p className="text-red-600">{errors.role?.message}</p>
+                <div className='flex flex-row gap-2'>
+                  <p className="text-red-600">*{errors.email?.message}</p>
+                  <p className="text-red-600">*{errors.role?.message}</p>
+                </div>
+               
                 <div className="flex flex-row gap-2">
                   <div className="w-3/4 flex flex-col">
                                

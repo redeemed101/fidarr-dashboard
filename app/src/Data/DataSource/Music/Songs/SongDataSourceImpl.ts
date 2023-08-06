@@ -4,6 +4,7 @@ import { graphQLSongClient } from "../../GraphQL/Client/client";
 import { GetSearchSongsPagingDocument, GetSearchSongsPagingQueryResult, GetSongPagingDocument, GetSongPagingQueryResult } from "../../GraphQL/Generated/Songs/graphql";
 import { deleteAPI, postAPI } from "../../API/axios_instance";
 import { GeneralResponse } from "../../Users/Authentication/AuthenticationDataSource";
+import { MUSIC_URL } from "../../API/constant";
 
 @injectable()
 export class SongDataSourceImpl implements SongDataSource{
@@ -56,7 +57,7 @@ export class SongDataSourceImpl implements SongDataSource{
         })
         
         request.albumId  && formData.append("albumId",request.albumId);
-        return await postAPI<CreateSongResponse>("AdminSong/create", formData, { "Content-Type": "multipart/form-data"}, onUploadProgress) 
+        return await postAPI<CreateSongResponse>(`${MUSIC_URL}AdminSong/create`, formData, { "Content-Type": "multipart/form-data"}, onUploadProgress) 
     }
     async editSong(request: EditSongRequest, onUploadProgress: any): Promise<EditSongResponse> {
         let formData = new FormData();  
@@ -75,9 +76,9 @@ export class SongDataSourceImpl implements SongDataSource{
             formData.append("genres[]",genre);
         })
         request.albumId  && formData.append("albumId",request.albumId);
-        return await postAPI<EditSongResponse>("AdminSong/edit", formData, { "Content-Type": "multipart/form-data"}, onUploadProgress) 
+        return await postAPI<EditSongResponse>(`${MUSIC_URL}AdminSong/edit`, formData, { "Content-Type": "multipart/form-data"}, onUploadProgress) 
     }
     async deleteSong(songId: string): Promise<GeneralResponse> {
-       return await deleteAPI<GeneralResponse>(`api/AdminSong/${songId}`)
+       return await deleteAPI<GeneralResponse>(`${MUSIC_URL}AdminSong/${songId}`)
     }
 }

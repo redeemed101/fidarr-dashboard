@@ -95,7 +95,7 @@ var axiosInstance : AxiosInstance = axios.create({  baseURL: BASE_URL});
 
 
 const postConfig : Params = {
-  baseUrl: BASE_URL,
+  baseUrl: BASE_URL!,
   headers: {
               "Authorization": `Bearer ${tokenManager.getToken()}`,
               "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE"
@@ -104,7 +104,7 @@ const postConfig : Params = {
   method: 'post'
 }
 const getConfig : Params = {
-  baseUrl: BASE_URL,
+  baseUrl: BASE_URL!,
   headers: {
           "Authorization": `Bearer ${tokenManager.getToken()}`
   },

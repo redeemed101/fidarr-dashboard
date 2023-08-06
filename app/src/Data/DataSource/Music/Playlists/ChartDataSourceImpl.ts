@@ -4,12 +4,13 @@ import { graphQLPlaylistClient } from "../../GraphQL/Client/client";
 import { GetDailyChartPagingDocument, GetDailyChartPagingQueryResult, GetWeeklyChartPagingDocument, GetWeeklyChartPagingQueryResult } from "../../GraphQL/Generated/Playlists/graphql";
 import { GeneralResponse } from "../Artists/ArtistDataSource";
 import { deleteAPI, postAPI, putAPI } from "../../API/axios_instance";
+import { MUSIC_URL } from "../../API/constant";
 
 
 @injectable()
 export class ChartDataSourceImpl implements ChartDataSource{
     async deleteChart(chartId: string): Promise<GeneralResponse> {
-        return deleteAPI<GeneralResponse>(`AdminChart/delete/${chartId}`)
+        return deleteAPI<GeneralResponse>(`${MUSIC_URL}AdminChart/delete/${chartId}`)
     }
     async createChart(request: CreateChartRequest): Promise<GeneralResponse> {
         let formData = new FormData();  
@@ -31,7 +32,7 @@ export class ChartDataSourceImpl implements ChartDataSource{
         request.positions.forEach(position => {
             formData.append("positions[]",JSON.stringify(position));
         })
-        return putAPI<GeneralResponse>(`AdminChart/${chartId}`, formData)
+        return putAPI<GeneralResponse>(`${MUSIC_URL}AdminChart/${chartId}`, formData)
     }
     async getDailyCharts(page: number, size: number): Promise<DailyChartPaging> {
         const result = await graphQLPlaylistClient.query<GetDailyChartPagingQueryResult>({

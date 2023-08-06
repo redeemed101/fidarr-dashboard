@@ -4,6 +4,7 @@ import { GeneralResponse } from "../Artists/ArtistDataSource";
 import { GetAllPlaylistsPagingDocument, GetAllPlaylistsPagingQueryResult, GetFidarrPlaylistsPagingByGenreDocument, GetFidarrPlaylistsPagingByGenreQueryResult, GetFidarrPlaylistsPagingDocument, GetFidarrPlaylistsPagingQueryResult, SearchPlaylistsPagingDocument, SearchPlaylistsPagingQueryResult } from "../../GraphQL/Generated/Playlists/graphql";
 import { graphQLPlaylistClient } from "../../GraphQL/Client/client";
 import { deleteAPI, postAPI, putAPI } from "../../API/axios_instance";
+import { MUSIC_URL } from "../../API/constant";
 
 @injectable()
 export class PlaylistDataSourceImpl implements PlaylistDataSource{
@@ -69,7 +70,7 @@ export class PlaylistDataSourceImpl implements PlaylistDataSource{
             formData.append("songIds[]", song)
         })
         
-        return await postAPI<GeneralResponse>("AdminPlaylist", formData, { "Content-Type": "multipart/form-data"}) 
+        return await postAPI<GeneralResponse>(`${MUSIC_URL}AdminPlaylist`, formData, { "Content-Type": "multipart/form-data"}) 
     }
     async editPlaylist(playlistId: string, request: EditPlaylistRequest): Promise<GeneralResponse> {
         let formData = new FormData();  
@@ -80,9 +81,9 @@ export class PlaylistDataSourceImpl implements PlaylistDataSource{
             formData.append("songIds[]", song)
         })
         
-        return await putAPI<GeneralResponse>(`AdminPlaylist/${playlistId}`, formData, { "Content-Type": "multipart/form-data"})
+        return await putAPI<GeneralResponse>(`${MUSIC_URL}AdminPlaylist/${playlistId}`, formData, { "Content-Type": "multipart/form-data"})
     }
     async deletePlaylist(playlistId: string): Promise<GeneralResponse> {
-        return await deleteAPI<GeneralResponse>(`AdminPlaylist/delete/${playlistId}`)
+        return await deleteAPI<GeneralResponse>(`${MUSIC_URL}AdminPlaylist/delete/${playlistId}`)
     }
 }

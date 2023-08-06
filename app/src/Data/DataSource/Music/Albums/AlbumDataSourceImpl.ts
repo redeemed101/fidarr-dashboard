@@ -4,12 +4,13 @@ import { graphQLAlbumClient } from "../../GraphQL/Client/client";
 import { Album, GetAlbumPagingDocument, GetAlbumPagingQueryResult, GetSearchingAlbumsPagingDocument, GetSearchingAlbumsPagingQueryResult } from "../../GraphQL/Generated/Albums/graphql";
 import { deleteAPI, postAPI } from "../../API/axios_instance";
 import { GeneralResponse } from "../Artists/ArtistDataSource";
+import { MUSIC_URL } from "../../API/constant";
 
 
 @injectable()
 export class AlbumDataSourceImpl implements AlbumDataSource{
     async deleteAlbum(albumId: string, onUploadProgress: any): Promise<GeneralResponse> {
-        return await deleteAPI<GeneralResponse>(`AdminAlbum/delete/${albumId}`)
+        return await deleteAPI<GeneralResponse>(`${MUSIC_URL}AdminAlbum/delete/${albumId}`)
     }
    
     async searchAlbumsPaging(searchText: string, page: number, size: number): Promise<SearchAlbumsPaging> {
@@ -48,7 +49,7 @@ export class AlbumDataSourceImpl implements AlbumDataSource{
             formData.append("songFiles[]", song)
         })
         formData.append("releaseDate",request.releaseDate.toDateString())
-        return await postAPI<CreateAlbumResponse>("AdminAlbum/create", formData, { "Content-Type": "multipart/form-data"}, onUploadProgress) 
+        return await postAPI<CreateAlbumResponse>(`${MUSIC_URL}AdminAlbum/create`, formData, { "Content-Type": "multipart/form-data"}, onUploadProgress) 
     }
     async editAlbum(request: EditAlbumRequest, onUploadProgress: any): Promise<EditAlbumResponse> {
         let formData = new FormData();  
@@ -70,7 +71,7 @@ export class AlbumDataSourceImpl implements AlbumDataSource{
             formData.append("songFiles[]", song)
         })
         formData.append("releaseDate",request.releaseDate.toDateString())
-        return await postAPI<EditAlbumResponse>("AdminAlbum/edit", formData, { "Content-Type": "multipart/form-data"}, onUploadProgress) 
+        return await postAPI<EditAlbumResponse>(`${MUSIC_URL}AdminAlbum/edit`, formData, { "Content-Type": "multipart/form-data"}, onUploadProgress) 
     }
     async getAlbumsPaging(page: number, size: number): Promise<AlbumsPaging> {
         const result = await graphQLAlbumClient.query<GetAlbumPagingQueryResult>({

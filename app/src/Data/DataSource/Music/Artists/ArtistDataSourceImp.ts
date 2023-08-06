@@ -3,12 +3,13 @@ import { ArtistDataSource, ArtistsPaginated, ArtistsPaging, CreateArtist, EditAr
 import { graphQLArtistClient } from "../../GraphQL/Client/client";
 import { GetArtistsPagingDocument, GetArtistsPagingQueryResult, GetSearchArtistsPagingDocument, GetSearchArtistsPagingQueryResult } from "../../GraphQL/Generated/Artists/graphql";
 import { deleteAPI, postAPI } from "../../API/axios_instance";
+import { MUSIC_URL } from "../../API/constant";
 
 
 @injectable()
 export class ArtistDataSourceImpl implements ArtistDataSource{
     async DeleteArtist(artistId: string): Promise<GeneralResponse> {
-        return await deleteAPI<GeneralResponse>(`ArtistAdmin/delete/${artistId}`)
+        return await deleteAPI<GeneralResponse>(`${MUSIC_URL}ArtistAdmin/delete/${artistId}`)
     }
    
     async searchGetArtistsPaging(searchText: string, page: number, size: number): Promise<SearchArtistsPaging> {
@@ -38,7 +39,7 @@ export class ArtistDataSourceImpl implements ArtistDataSource{
         formData.append("user.phoneNumber",request.user.phoneNumber);
         formData.append("user.profile",request.user.profile);
         formData.append("user.username",request.user.username);
-        return await postAPI<GeneralResponse>("AdminArtist/create", formData) 
+        return await postAPI<GeneralResponse>(`${MUSIC_URL}AdminArtist/create`, formData) 
     }
     async EditArtist(request: EditArtist): Promise<GeneralResponse> {
         let formData = new FormData();  
@@ -47,7 +48,7 @@ export class ArtistDataSourceImpl implements ArtistDataSource{
         formData.append("website",request.website);
         formData.append("name",request.name);
         formData.append("address",request.address);
-        return await postAPI<GeneralResponse>("AdminArtist/edit", formData) 
+        return await postAPI<GeneralResponse>(`${MUSIC_URL}AdminArtist/edit`, formData) 
     }
     async getArtistsPaging(page: number, size: number): Promise<ArtistsPaging> {
         const result = await graphQLArtistClient.query<GetArtistsPagingQueryResult>({
